@@ -4,13 +4,17 @@ import re
 import pprint
 
 DATADIR = ""
-DATAFILE = "denhaag.osm"
+DATAFILE = "denhaag_sample.osm"
 #a = ("kade", 'weg', 'straat', 'laan', 'plein', 'singel' 'gracht', 'hof', 'strand', 'weg', 'pad', 'dijk', 'zijde', 'haven', 'gracht', 'duin', 'kant', 'park', 'hout', 'land', 'park', 'wijk', 'waard', 'vaart', 'brug', 'plaats'  )
 #for item in a:
    #street_type_re = re.compile(r'(.*a.*)',re.IGNORECASE)
     #continue
 
-street_type_re = re.compile(r'(.*straat.*)|(.*einde.*)|(.*hoek.*)|(.*kamp.*)|(.*bos.*)|(.*molen.*)|(.*tuin.*)|(.*markt.*)|(.*steeg.*)|(.*rade.*)|(.*pad.*)|(.*laan.*)|(.*dreef.*)|(.*weg.*)|(.*plein.*)|(.*singel.*)|(.*gracht.*)|(.*kade.*)|(.*hof.*)|(.*kade.*)|(.*dijk.*)|(.*kade.*)|(.*haven.*)|(.*kade.*)|(.*zijde.*)|(.*duin.*)|(.*kant.*)|(.*land.*)|(.*zicht.*)|(.*park.*)|(.*wijk.*)|(.*wijck.*)|(.*waard.*)|(.*weide.*)|(.*vaart.*)|(.*veld.*)|(.*plaats.*)|(.*hout.*)|(.*zoom.*)|(.*berg.*)|(.*brug.*)|(.*gaarde.*)|(.*soen.*)|(.*strand.*)|(.*baan.*)|(.*horst.*)|(.*burg.*)|(.*daal.*)', re.IGNORECASE)
+street_type_re = re.compile(r'(.*straat.*)|(.*einde.*)|(.*hoek.*)|(.*kamp.*)|(.*bos.*)|(.*molen.*)|(.*tuin.*)|(.*markt.*)|(.*steeg.*)|(.*rade.*)|(.*pad.*)|(.*laan.*)|(.*dreef.*)|(.*weg.*)|(.*plein.*)|(.*singel.*)|(.*gracht.*)|(.*kade.*)|(.*hof.*)|(.*kade.*)|(.*dijk.*)|(.*kade.*)|(.*haven.*)|(.*kade.*)|(.*zijde.*)|(.*duin.*)|(.*kant.*)|(.*land.*)|(.*zicht.*)|(.*park.*)|(.*wijk.*)|(.*wijck.*)|(.*waard.*)|(.*weide.*)|(.*vaart.*)|(.*veld.*)|(.*plaats.*)|(.*hout.*)|(.*zoom.*)|(.*berg.*)|(.*brug.*)|(.*gaarde.*)|(.*soen.*)|(.*strand.*)|(.*baan.*)|(.*horst.*)|(.*burg.*)|(.*daal.*)|(.*erf*)', re.IGNORECASE)
+
+
+mapping = { "Rossinistraaat": "Rossinistraat",
+            }
 
 def audit_street_type(street_types, street_name):
     street_types2 = {}
@@ -39,8 +43,26 @@ def audit(datafile):
 
     datafile.close()
     #return street_types
-    return list
+    #return sorted(list, reverse = False)
+
+
+def update_name(name, mapping):
+    m = street_type_re.search(name)
+        if m.group() in mapping.keys():
+            if m not in expected:
+                name = re.sub(m.group(), mapping[m.group()], name)
+    return name
+
+
+    # return the cleaned street name, if the street type condition
+    # is met, or just return the original name
+    #return name
+
+
 
     #return street_types2
-pprint.pprint(audit(DATAFILE))
+pprint.pprint(update_name(name, mapping))
+
+    #pprint.pprint(audit(DATAFILE))
+#pprint.pprint(len(audit(DATAFILE)))
 #pprint.pprint(len(dict(audit(DATAFILE))))

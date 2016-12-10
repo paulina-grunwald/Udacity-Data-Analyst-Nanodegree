@@ -6,7 +6,7 @@ import pprint
 DATADIR = ""
 DATAFILE = "denhaag.osm"
 
-expected = ["Den Haag", "Leidschendam", "s-Gravenzande", "Den Hoorn", "Schipluiden", "Kwintsheul", "De Lier", "Berkel en Rodenrijs", "Delft", "Rijswijk", "Voorburg", "Pijnacker", "Naaldwijk", "Wassenaar", "Zoetermeer", "Voorschoten", "Rotterdam", "Maasdijk","Nootdorp", "Wateringen", "Schipluiden", "s-Gravenzande", "Poeldijk", "Monster", "Honselersdijk"]
+expected = ["Den Haag", "Leidschendam", "'s-Gravenzande", "Den Hoorn", "Schipluiden", "Kwintsheul", "De Lier", "Berkel en Rodenrijs", "Delft", "Rijswijk", "Voorburg", "Pijnacker", "Naaldwijk", "Wassenaar", "Zoetermeer", "Voorschoten", "Rotterdam", "Maasdijk","Nootdorp", "Wateringen", "Schipluiden", "s-Gravenzande", "Poeldijk", "Monster", "Honselersdijk"]
 
 #def audit_city(city_name):
  #   for item in city_name:
