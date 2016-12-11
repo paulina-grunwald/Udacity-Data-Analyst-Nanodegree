@@ -10,20 +10,57 @@ Notes:
 
 ### Pseudo-Facebook User Data
 Notes:
+```{r}
+getwd()
+```
+```{r}
+list.files()
+```
+
+The columns in the file are delimitated by tab this we need to use separator = '\t'
 
 ```{r Pseudo-Facebook User Data}
-read.delim('pseudo_facebook.tsv') 
+pf <- read.delim('pseudo_facebook.tsv',sep = '\t') 
 ```
+
+```{r}
+dim(pf)
+```
+
+
+You can see names of the variables using:
+```{r}
+names(pf)
+```
+
 
 ***
 
 ### Histogram of Users' Birthdays
+
 Notes:
 
-```{r Histogram of Users\' Birthdays}
+
+```{r}
 install.packages('ggplot2')
 library(ggplot2)
+
+names(pf)
+qplot(x = dob_day, data = pf)
 ```
+
+
+
+```{r}
+install.packages('ggplot2')
+library(ggplot2)
+
+names(pf)
+qplot(x = dob_day, data = pf) +
+  scale_x_continuous(breaks=1:31)
+
+```
+
 
 ***
 
