@@ -65,27 +65,29 @@ qplot(x = dob_day, data = pf) +
 ***
 
 #### What are some things that you notice about this histogram?
-Response:
+Response: Lot's of people have birthday on 1st of the month
 
 ***
 
 ### Moira's Investigation
 Notes:
+Moira made an investigation to see if peoples perception of their audience matches the reality.
 
 ***
 
 ### Estimating Your Audience Size
-Notes:
+Notes: People dramatically underestimate the size of their audience on facebook.
+
 
 ***
 
 #### Think about a time when you posted a specific message or shared a photo on Facebook. What was it?
-Response:
+Response: Message on that i was going on holidays to Mallorca
 
 #### How many of your friends do you think saw that post?
-Response:
+Response: 30, 20%
 
-#### Think about what percent of your friends on Facebook see any posts or comments that you make in a month. What percent do you think that is?
+#### Think about what percent of your friends on Facebook see any posts or comments that you make in a month. What percent do you think that is? 30%
 Response:
 
 ***
@@ -96,10 +98,34 @@ Notes:
 ***
 ### Faceting
 Notes:
+facet_wrap(formula)
+facet_wrap(~variable)
+facet grid(formula)
+facet_grid(vertical~horizontal)
 
 ```{r Faceting}
+library(ggplot2)
+qplot(x=dob_day, data = pf) +
+  scale_x_continuous(break = 1:31) +
+  facet_wrap(~dob_month, ncol = 3)
 
 ```
+
+
+```{r}
+ggplot(data = pf, aes(x = dob_day)) + 
+  geom_histogram(binwidth = 1) + 
+  scale_x_continuous(breaks = 1:31) + 
+  facet_wrap(~dob_month)
+```
+
+```{r}
+ggplot(data = pf, aes(x = dob_day)) + 
+  geom_histogram(binwidth = 1) + 
+   scale_x_continuous(breaks = 1:31) + 
+   facet_wrap(~dob_month)
+```
+
 
 #### Let’s take another look at our plot. What stands out to you here?
 Response:
