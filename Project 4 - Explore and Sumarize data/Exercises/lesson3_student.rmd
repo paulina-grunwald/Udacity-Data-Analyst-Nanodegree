@@ -100,13 +100,15 @@ Notes:
 Notes:
 facet_wrap(formula)
 facet_wrap(~variable)
+
+
 facet grid(formula)
 facet_grid(vertical~horizontal)
 
 ```{r Faceting}
 library(ggplot2)
 qplot(x=dob_day, data = pf) +
-  scale_x_continuous(break = 1:31) +
+  scale_x_continuous(breaks = 1:31) + 
   facet_wrap(~dob_month, ncol = 3)
 
 ```
@@ -151,6 +153,10 @@ Notes:
 
 ```{r Friend Count}
 
+library(ggplot2)
+qplot(x=friend_count, data = pf, geom="histogram", binwidth = 10,  xlim=c(1,1200), ylim = c(0,600))
+
+
 ```
 
 #### How is this plot similar to Moira's first plot?
@@ -162,8 +168,17 @@ Response:
 Notes:
 
 ```{r Limiting the Axes}
-
+qplot(x = friend_count, data = pf, xlim = c(0,1000))
 ```
+
+
+```{r}
+qplot(x = friend_count, data = pf) +
+  scale_x_continuous(limits = c(0,1000)) +
+  facet_wrap(~gender)
+```
+
+
 
 ### Exploring with Bin Width
 Notes:
@@ -188,7 +203,10 @@ qplot(x = friend_count, data = pf, binwidth = 10) +
 Notes:
 
 ```{r Omitting NA Values}
-
+qplot(x = friend_count, data = subset(pf, !is.na(gender)),
+      binwidth = 10)+
+  scale_x_continuous(limits = c(0,1000), breaks = seq(0,1000,100))+
+  facet_wrap(~gender)
 ```
 
 ***
@@ -198,10 +216,27 @@ Notes:
 
 ```{r Statistics \'by\' Gender}
 
+qplot(x=friend_count, data = pf, binwidth = 25)+ 
+  scale_x_continuous(limits = c(0,1000), breaks = seq(0,1000,50))
 ```
 
 #### Who on average has more friends: men or women?
 Response:
+
+```{r}
+table(pf$gender)
+```
+It looks like men have more friends than woman
+
+```{r}
+by(pf$friend_count, pf$gender, summary)
+```
+
+```{r}
+x = 96-74
+x
+```
+
 
 #### What's the difference between the median friend count for women and men?
 Response:
