@@ -327,6 +327,20 @@ Notes:
 ### Transforming Data
 Notes:
 
+
+```{r}
+p1 <- qplot(x = friend_count , data =pf,color = I("black"), fill = I("#F79420"))
+p2 <- qplot(x = log10(friend_count + 1) , data =pf, color = I("black"), fill = I("#F79420"))
+p3 <- qplot(x = sqrt(friend_count),  data =pf, color = I("black"), fill = I("#F79420"))
+
+grid.arrange(p1, p2, p3, ncol = 1)
+
+```
+
+
+
+
+
 ***
 
 ### Add a Scaling Layer
