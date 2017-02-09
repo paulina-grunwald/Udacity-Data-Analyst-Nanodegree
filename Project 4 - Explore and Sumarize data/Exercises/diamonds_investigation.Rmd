@@ -1,0 +1,526 @@
+---
+title: "Problem set 2 and 3"
+author: "PG"
+date: "December 15, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(dplyr)
+library(tidyr)
+d <- diamonds
+summary(d)
+```
+
+```{r}
+ggplot(data = d, aes(x = price)) +
+  geom_histogram(binwidth = 50)+
+  scale_x_continuous(limits = c(0,3000))
+  
+```
+
+```{r}
+summary(d$price)
+```
+
+```{r}
+
+count <- length(which (d$price >= 1500))
+count
+
+count2 <- length(which (d$price <250))
+count2
+```
+
+```{r}
+less_500 <- subset(d, price >= 1500)
+less_500
+```
+
+```{r}
+library(plyr)
+
+count(d$price >= 1500)
+```
+
+
+
+
+```{r}
+ggplot(data = d, aes(x = price)) +
+  geom_histogram()+
+  scale_x_continuous()+
+  facet_wrap(~cut)
+```
+
+```{r}
+by(d$price,d$cut, max)
+```
+
+```{r}
+by(d$price,d$cut, min)
+```
+Price per Carat by Cut
+
+```{r}
+qplot(x = price, data = diamonds) + 
+  facet_wrap(~cut, scales = "free")
+```
+
+
+Price per Carat by Cut
+
+```{r}
+ggplot(data = d, aes(x = price/carat)) +
+  geom_histogram(binwidth = 0.25)+
+  scale_x_log10()+
+  facet_wrap(~cut, scales = 'free')
+```
+
+```{r}
+library(gridExtra)
+library(grid)
+p1 <- qplot(x= cut , y = price, data = subset(d, !is.na(cut)), geom = 'boxplot')
+p2 <- qplot(x= clarity , y = price, data = subset(d, !is.na(cut)), geom = 'boxplot')
+p3 <- qplot(x= color , y = price, data = subset(d, !is.na(cut)), geom = 'boxplot')
+
+grid.arrange(p1,p2,p3)
+
+
+```
+
+
+Whats is the price range for the middle 50% of diamonds with color D?
+J -worst
+D- best
+
+
+
+```{r}
+by(diamonds$price,diamonds$color,summary)
+by(diamonds$price,diamonds$color,IQR)
+```
+
+# Investigate the price per carat of diamonds across the different colors of diamonds using boxplots.
+
+```{r}
+p1 <- qplot(x= color , y = price/carat, data = subset(d, !is.na(color)), geom = 'boxplot', color = color)
+p1
+```
+
+#Investigate the weight of the diamonds (carat) using a frequency polygon. Use different bin width to see how the freqency polygon changes. What carat size has a count greater than 2000?
+
+```{r}
+qplot(carat, data = d, geom = 'freqpoly')+
+    scale_x_continuous(lim = c(0,2), breaks = seq(0,2,0.1))+
+  geom_hline(yintercept=2000)
+
+```
+
+
+#Problem Set 4
+
+##Question 1: Price vs. x
+
+
+```{r}
+# Your first task is to create a
+# scatterplot of price vs x.
+# using the ggplot syntax.
+ggplot(aes(x = price, y = x), data = d)+
+  geom_point( color = 'darkblue')
+```
+ 
+ 
+```{r}
+#Create same plot but with ln(price)
+ggplot(aes(x = log(price), y = x), data = d)+
+  geom_point( color = 'darkblue')
+```
+
+##Question 2: Findings - price vs. x
+
+We can observe some outliers at 0 and an exponential relationship between price and x.
+
+
+##Question 3: Correlations
+
+What is the correlation between price and x?
+What is the correlation between price and y?
+What is the correlation between price and z?
+
+```{r}
+#Calculte correlation between x and price
+cor.test(d$x,d$price)
+```
+
+```{r}
+#Calculte correlation between y and price
+cor.test(d$y,d$price)
+```
+
+```{r}
+#Calculte correlation between z and price
+cor.test(d$z,d$price)
+```
+
+##Question 4 and 5: Price vs. depth
+
+```{r}
+#Create a scatterplot of price vs depth in ggplot
+# Change the code to make the transparency of the
+# points to be 1/100 of what they are now and mark
+# the x-axis every 2 units. See the instructor notes
+# for two hints.
+
+ggplot(aes(x = price, y = depth), data = d)+
+  geom_point( color = 'darkblue', alpha =0.01)+
+  scale_x_continuous(breaks = seq(0,20000,2000))+
+  scale_y_continuous(breaks = seq(0,75,2))
+```
+
+##Question 6: Typical Depth Range
+Based on the scatterplot of depth vs price, most diamonds are between what values of depth? Answer: 61 - 64
+
+##Question 7: Correlation - price vs. depth
+
+```{r}
+#Calculte correlation between depth and price
+cor.test(d$depth,d$price)
+```
+
+##Question 8: Correlation - price vs. carat
+
+```{r}
+# Create a scatterplot of price vs carat
+# and omit the top 1% of price and carat
+# values.
+
+ggplot(data = diamonds,aes(x = carat, y = price)) + 
+  xlim(0,quantile(diamonds$carat,0.99)) +
+  ylim(0,quantile(diamonds$price,0.99)) +
+  geom_point(color = 'darkblue')
+```
+
+##Question 8: Correlation - price vs. volume
+
+```{r}
+# Create a scatterplot of price vs. volume (x * y * z).
+# This is a very rough approximation for a diamond's volume.
+
+# Create a new variable for volume in the diamonds data frame.
+# This will be useful in a later exercise.
+
+# Don't make any adjustments to the plot just yet.
+
+# This assignment is not graded and
+# will be marked as correct when you submit.
+
+d$volume <- d$x*d$y*d$z
+head(d)
+```
+
+```{r}
+#Create scatterplot
+
+ggplot(data = d, aes(x = volume, y = price)) +
+  geom_point(color = 'darkblue')
+
+```
+
+
+```{r}
+#Find outliers with volume = 0
+library(plyr)
+count(d$volume == 0)
+```
+
+There is a correlation, however there are few outlier with high volume with low price makes it hard to see the correlation. There are 20 diamonds have zero volume which are outliers.
+
+##Question 9: Correlations on subsets
+
+What is the correlation of price and volume? Exclude the diamonds that have a volume of 0 or greater than or equal to 800?
+
+```{r}
+d2 <- d%>%
+  subset(volume > 0 & volume<= 800) 
+
+cor.test(d2$volume, d2$price)
+```
+
+##Question 10: Adjustments - price vs. volume
+
+
+additional info on geom_smooth() : http://www.ats.ucla.edu/stat/r/faq/smooths.htm
+
+```{r}
+# Subset the data to exclude diamonds with a volume
+# greater than or equal to 800. Also, exclude diamonds
+# with a volume of 0. Adjust the transparency of the
+# points and add a linear model to the plot. (See the
+# Instructor Notes or look up the documentation of
+# geom_smooth() for more details about smoothers.)
+
+# Use deafult geom_smooth()
+g1 <- ggplot(data = subset(d2, (volume > 0) & (volume <= 800)),aes(x = volume, y = price)) +
+  geom_point()+
+  coord_cartesian(ylim = c(0,20000))+
+  geom_smooth()
+
+# Try to find liniar fit
+g2 <- ggplot(data = subset(d2, (volume > 0) & (volume <= 800)), aes(x = volume, y = price)) +
+  geom_point()+
+  coord_cartesian(ylim = c(0,20000))+
+  stat_smooth(method = "lm", formula = y ~ x, size = 1)
+
+# Try to find fit using ploty() function of order 2
+g3 <- ggplot(data = subset(d2, (volume > 0) & (volume <= 800)),aes(x = volume, y = price)) +
+  geom_point()+
+  coord_cartesian(ylim = c(0,20000))+
+  stat_smooth(method = "lm", formula = y ~ poly(x, 2), size = 1)
+
+# Try to find fit using ploty() function of order 3
+
+g4 <- ggplot(data = subset(d2, (volume > 0) & (volume <= 800)),
+       aes(x = volume, y = price)) +
+  geom_point()+
+   coord_cartesian(ylim = c(0,20000))+
+  stat_smooth(method = "lm", formula = y ~ poly(x, 3), size = 1)
+
+#Plot all the graphs created above
+grid.arrange(g1,g2,g3, g4, ncol =2)
+```
+
+
+##Question 11: Mean Price by Clarity
+
+```{r}
+# Use the function dplyr package
+# to create a new data frame containing
+# info on diamonds by clarity.
+
+# Name the data frame diamondsByClarity
+
+# The data frame should contain the following
+# variables in this order.
+
+#       (1) mean_price
+#       (2) median_price
+#       (3) min_price
+#       (4) max_price
+#       (5) n
+
+# where n is the number of diamonds in each
+# level of clarity.
+
+diamondsByClarity <- d %>%
+  group_by(clarity) %>%
+  summarise(mean_price = mean(price),median_price = median(price),min_price = min(price),
+            max_price = max(price), n = n()) %>%
+  arrange(clarity)
+
+diamondsByClarity
+  
+```
+
+##Question 11: Bar Charts of Mean Price
+
+addtional info:
+http://flowingdata.com/2014/02/27/how-to-read-histograms-and-use-them-in-r/
+
+```{r}
+# We've created summary data frames with the mean price
+# by clarity and color. You can run the code in R to
+# verify what data is in the variables diamonds_mp_by_clarity
+# and diamonds_mp_by_color.
+
+# Your task is to write additional code to create two bar plots
+# on one output image using the grid.arrange() function from the package
+# gridExtra.
+```
+
+```{r}
+diamonds_by_clarity <- group_by(d, clarity)
+diamonds_mp_by_clarity <- summarise(diamonds_by_clarity, mean_price = mean(price))
+
+diamonds_by_color <- group_by(d, color)
+diamonds_mp_by_color <- summarise(diamonds_by_color, mean_price = mean(price))
+
+b1  <- ggplot(diamonds_mp_by_clarity, aes(x = clarity, y = mean_price, fill= clarity)) +
+  geom_bar(stat = "identity")
+
+b2 <- ggplot(diamonds_mp_by_color, aes(x = color, y = mean_price, fill= color)) +
+  geom_bar(stat = "identity")
+
+grid.arrange(b1,b2, ncol =2)
+```
+
+##Question 12: Bar Charts of Mean Price
+
+What do you notice in each pf the bar charts for mean price by clarity and mean by price by color?
+
+Since clarity a measurement of how clear the diamond is (I1 (worst), SI1, SI2, VS1, VS2, VVS1, VVS2, IF (best)). It is surprising that SI2 clarity diamonds have the highest mean price. In the second graph we can observe that J color diamond (which is the worst) has the highest mean price. This is a bot surprising because you would suspect that D (best) would have highest mean price.
+
+
+#Problem Set 5
+
+
+##Question 1:
+```{r, include=FALSE}
+# Create a histogram of diamond prices.
+# Facet the histogram by diamond color
+# and use cut to color the histogram bars.
+
+# The plot should look something like this.
+# http://i.imgur.com/b5xyrOu.jpg
+
+# Note: In the link, a color palette of type
+# 'qual' was used to color the histogram using
+# scale_fill_brewer(type = 'qual')
+
+
+ggplot(aes(x=price, fill=cut), data = d)+
+  geom_histogram()+
+  ylim(0,600)+
+  scale_x_log10()+
+  facet_wrap(~ color, ncol=3)
+
+```
+
+
+##Question 2:
+```{r, include=FALSE}
+# Create a scatterplot of diamond price vs.
+# table and color the points by the cut of
+# the diamond.
+
+# The plot should look something like this.
+# http://i.imgur.com/rQF9jQr.jpg
+
+# Note: In the link, a color palette of type
+# 'qual' was used to color the scatterplot using
+# scale_color_brewer(type = 'qual')
+
+ggplot(aes(x=table, y=price), data = d)+
+  geom_point(aes(color=cut))+
+  scale_x_continuous(limits=c(40,80),breaks = seq(40,80,5))
+
+```
+
+##Question 3:
+
+Q: What is the typical range of the majority of diamonds of IDEAL cut?
+A: 53-57
+
+Q:What is the typical range of the majority of diamonds of PREMIUM cut?
+A: 58:62
+
+##Question 4:
+
+```{r, include=FALSE}
+# Create a scatterplot of diamond price vs.
+# volume (x * y * z) and color the points by
+# the clarity of diamonds. Use scale on the y-axis
+# to take the log10 of price. You should also
+# omit the top 1% of diamond volumes from the plot.
+
+# Note: Volume is a very rough approximation of
+# a diamond's actual volume.
+
+
+d$volume <- d$x * d$y * d$z
+
+ggplot(aes(x=volume, y=price), data = diamonds) +
+  geom_point(aes(color=clarity)) +
+  coord_cartesian(xlim = c(0, quantile(d$volume, 0.99)))+
+  scale_y_log10()
+  
+  
+  
+  
+```
+
+##Question 5:
+
+
+
+```{r, include=FALSE}
+# Many interesting variables are derived from two or more others.
+# For example, we might wonder how much of a person's network on
+# a service like Facebook the user actively initiated. Two users
+# with the same degree (or number of friends) might be very
+# different if one initiated most of those connections on the
+# service, while the other initiated very few. So it could be
+# useful to consider this proportion of existing friendships that
+# the user initiated. This might be a good predictor of how active
+# a user is compared with their peers, or other traits, such as
+# personality (i.e., is this person an extrovert?).
+
+# Your task is to create a new variable called 'prop_initiated'
+# in the Pseudo-Facebook data set. The variable should contain
+# the proportion of friendships that the user initiated
+
+pf$prop_initiated <- pf$friendships_initiated/pf$friend_count
+pf$year_joined <- floor(2014 - pf$tenure/365)
+pf$year_joined.bucket <- cut(pf$year_joined,  c(2004,2009,2011,2012,2014))
+ggplot(aes(x=tenure, y=prop_initiated), data = pf)+
+   geom_line(aes(color = year_joined.bucket), stat = 'summary', fun.y = median)
+
+
+```
+
+
+
+##Question 6:
+
+```{r, include=FALSE}}
+# Smooth the last plot you created of
+# of prop_initiated vs tenure colored by
+# year_joined.bucket. You can bin together ranges
+# of tenure or add a smoother to the plot.
+
+ggplot(aes(x=tenure, y=prop_initiated), data = pf)+
+   geom_line(aes(color = year_joined.bucket), stat = 'summary', fun.y = median)+
+   geom_smooth(method='lm',na.action=na.exclude)
+```
+
+
+##Question 7:
+
+```{r,include=FALSE}
+Largest Group Mean prop_initiated
+group1 <- subset(pf,year_joined.bucket == '(2012,2014]')
+summary(group1)
+```
+
+##Question 8:
+
+
+```{r}
+# Create a scatter plot of the price/carat ratio
+# of diamonds. The variable x should be
+# assigned to cut. The points should be colored
+# by diamond color, and the plot should be
+# faceted by clarity.
+
+ggplot(aes(x=cut, y=price/carat), data=d)+
+   facet_wrap(~clarity)+
+  geom_jitter(aes(color=color), alpha=0.5)
+
+```
+
+##Question 9:
+
+```{r, include=FALSE}
+
+```
+

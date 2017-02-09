@@ -1,0 +1,160 @@
+---
+title: "Oil consumption per capita evaluation"
+author: Paulina Grunwald 
+output: html_notebook
+---
+
+Source:- http://www.gapminder.org/data/
+
+```{r}
+install.packages("tidyr")
+```
+
+
+```{r}
+library("tidyr")
+library("dplyr")
+library(ggplot2)
+library(reshape2)
+library(datasets)
+library(dplyr)
+require(xlsx)
+library(countrycode)
+library(gridExtra)
+library(scales)
+
+setwd("c:/Users/Paulina/Desktop/Udacity-Data-Analyst-Nanodegree/Project 4 - Explore and Sumarize data/Exercises")
+list.files()
+getwd()
+
+#OCPC - Oil consumption per capita
+OCPC <- tbl_df(read.csv("OilConsumptionPerCapita.csv", header=TRUE, check.names = FALSE))
+#HDI - human development index
+IHDI <- read.csv('Indicator_HDI.csv', header=TRUE, check.names = FALSE)
+
+```
+
+
+```{r}
+OCPC
+```
+
+```{r}
+IHDI
+```
+
+
+Now i will change first column name:
+
+```{r}
+colnames(IHDI)[1] <- "country"
+colnames(OCPC)[1] <- "country"
+```
+
+We will use gather() function in order to change layout of the dataframe (from wide data frame format into long one). Gather() breakdowns numerous columns into two key-value pairs. It's an alternative of melt() function [in reshape2 package]. 
+
+Format of the gather() function is following: gather(data, key, value, ...)
+* data: A data frame
+* key, value: Names of key and value columns to create in output
+* . : Specification of columns to gather. Allowed values are:
+  - variable names
+  - if you want to select all variables between a and e, use a:e
+  - if you want to exclude a column name y use -y
+  - for more options, see: dplyr::select()
+
+```{r}
+#dimension of the data frame
+dim(OCPC)
+```
+```{r}
+dim(IHDI)
+```
+
+
+convert = TRUE converts numbers in the keys column from factor to numerics.
+```{r}
+OCPC2 <- OCPC %>%
+  gather("year", "OCPC", 2:47, convert = TRUE) %>%
+  arrange(country, year, OCPC)
+OCPC2
+```
+
+
+```{r}
+IHDI2 <- IHDI %>%
+  gather("year", "HDI", -1, convert = TRUE) %>%
+  arrange(country, year, HDI)
+IHDI2
+```
+
+
+
+```{r}
+df <- OCPC2
+
+
+df = na.omit(df)
+df = data.frame(df, row.names = NULL, check.names = FALSE)
+df %>%
+  arrange_("country", "year")
+```
+
+```{r}
+com_df2 <- com_df %>% 
+  filter(!is.na(OCPC), !is.na(HDI)) %>%
+  arrange_("country","year")
+com_df2
+```
+```{r}
+qplot(x = year, data =df, y = OCPC)+
+  scale_x_continuous(breaks = 1:10)+
+  facet_wrap(~country, ncol = 5)
+
+  
+```
+
+```{r}
+qplot(x = year, data =df, y = OCPC)+
+  scale_x_continuous(breaks = 1:10)+
+  scale_y_continuous(break = 1)
+  facet_wrap(~country)
+```
+
+```{r}
+install.packages("ggvis")
+library(ggvis)
+```
+
+```{r}
+algeria <- filter(com_df2, country %in% c("Algeria"))
+algeria %>%
+  ggvis(x = ~year, y = ~OCPC, data = ~HDI)
+
+```
+
+
+
+```{r}
+df2$continent <- countrycode(df2$country, "country.name", "continent")
+head(df2)
+```HDI
+
+```{r}
+by((subset(df2$!is.na(OCPC)), df2$country, median))
+```
+
+```{r}
+mean(df2$OCPC,df2$country=='Poland', na.rm=T)
+```
+
+median()
+sd()
+quantile(, probs = c(0.01,0.05,0.25,0.5,0.75,0.9,0.95,0.99)
+
+summary()
+
+library(Hmisc)
+describe()
+
+pastecs::stat.desc()
+#it gives coef of var, and CI mean 95%

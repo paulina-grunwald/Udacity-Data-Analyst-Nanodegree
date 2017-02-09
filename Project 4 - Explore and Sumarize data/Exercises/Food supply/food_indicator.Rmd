@@ -1,0 +1,213 @@
+---
+title: "Analysis of k"
+output: html_notebook
+author: Paulina Grunwald
+---
+
+Data source: https://www.gapminder.org/data/
+Medical source references:
+http://www.cvtoolbox.com/cvtoolbox1/cholesterol/ch.html
+
+
+```{r}
+#load packages
+library("tidyr")
+library("dplyr")
+require("XLConnectJars")
+require("XLConnect")
+library(ggplot2)
+library(reshape2)
+library(datasets)
+library(dplyr)
+library(readxl)
+library(countrycode)
+library(gridExtra)
+library(scales)
+
+#set the directory where all the data files are placed
+setwd("c:/Users/Paulina/Desktop/Udacity-Data-Analyst-Nanodegree/Project 4 - Explore and Sumarize data/Exercises/Food supply")
+
+#print list of files in the chosen directory
+list.files()
+
+#IFC - Inficator food consumption (kilocalories/person&day)
+#ITC - Mean total cholesterol index (mmol/L)
+#Load ITC from excel file
+ITC_male <- read_excel("ITC_male.xlsx", sheet = "Data")
+ITC_female <- read_excel("ITC_female.xlsx", sheet = "Data")
+IFC <- read_excel("food_consumption.xlsx", sheet = "Data")
+```
+
+The mean TC (Total Cholesterol) of the female/female population, counted in mmol per L; this mean is calculated as if each country has the same age composition as the world population.
+
+If you total cholesterol is in the 5 to 6 mmol/L range, you have twice the risk of heart attack as compared to your risk if your level was well below 5 mmol/L.
+
+Total cholesteror lowe limit: 3.0 - 3.6
+Total cholesteror upper limit: 5.0-6.5
+
+```{r}
+#create A Data Frame Tbl
+ITC_male <- tbl_df(ITC_male)
+ITC_female <- tbl_df(ITC_female)
+IFC <- tbl_df(IFC)
+
+```
+
+
+```{r}
+#Change the name of the first column to "country"
+colnames(ITC_female)[1] <- "country"
+colnames(ITC_male)[1] <- "country"
+colnames(IFC)[1] <- "country"
+```
+
+```{r}
+dim(ITC_female)
+```
+```{r}
+dim(ITC_male)
+```
+
+```{r}
+dim(IFC)
+```
+
+
+```{r}
+IFC
+```
+
+
+```{r}
+df1 <- ITC_female %>%
+  gather("year", "ITC", 2:30, convert = TRUE) %>%
+  filter(!is.na(ITC)) %>%
+  arrange(country,year, ITC) 
+
+df2 <- ITC_male %>%
+  gather("year", "ITC", 2:30, convert = TRUE) %>%
+  filter(!is.na(ITC)) %>%
+  arrange(country,year, ITC)
+
+df3 <- IFC %>%
+  gather("year", "IFC", 2:48, convert = TRUE) %>%
+  filter(!is.na(IFC))  %>%
+  arrange(country,year, IFC)
+```
+
+```{r}
+unique(df3$year)
+```
+
+```{r}
+unique(df1$year)
+```
+
+
+```{r}
+colnames(df1)[3] <- "ITC_F"
+colnames(df2)[3] <- "ITC_M"
+```
+
+
+```{r}
+df <- left_join(df1, df2, by=c("country", "year"))
+```
+
+
+```{r}
+df_final <- left_join(df,df3, by=c("year", "country")) %>%
+  filter(!is.na(IFC)) 
+```
+
+```{r}
+df_final$continent <- countrycode(df_final$country, "country.name", "continent")
+```
+
+
+```{r}
+df_final
+```
+
+```{r}
+unique(df_final$year)
+```
+
+```{r}
+unique(df_final$continent)
+```
+
+Reordering the collumns in data frame
+```{r}
+df_final = df_final[c("country", "continent", "year", "IFC", "ITC_F", "ITC_M" )]
+```
+
+```{r}
+df_final
+```
+
+
+```{r}
+unique(df_final$year)
+```
+
+Peeking into the extremes of the data
+
+```{r}
+data2007 = subset(df_final, year == 2007)
+summary(data2007)
+```
+
+
+```{r}
+data1980 <- subset(df_final, year==1980)
+  
+summary(data1980)
+```
+
+
+```{r}
+data2007 <- df_final %>%
+  group_by(year==2007) 
+  
+summary(data2007)
+```
+
+```{r}
+test <- df_final %>%
+  group_by(country) %>%
+  group_by(continent) %>%
+  filter(year==2007) %>%
+  summarise(medIFC = median(IFC))
+test
+```
+
+```{r}
+qplot(x = continent, y = ITC_M, geom = 'boxplot', data = data1980)+
+  facet_wrap(~year, ncol = 1)
+```
+
+
+```{r}
+ggplot(data = df_final, aes(year, y = IFC)) +
+  geom_boxplot() + ylab("Food consumption indicator (kcal/day)")+
+  theme(axis.text.x = element_text(angle=90, vjust = 0.5) )+
+  facet_grid(~continent)
+```
+
+
+```{r}
+ggplot(data = data1980, aes(x = continent, y = IFC)) +
+  geom_boxplot() + 
+  ylab("Food consumption indicator (kcal/day)") 
+    
+  
+```
+
+```{r}
+ggplot(data = data2007, aes(x = continent, y = IFC)) +
+  geom_boxplot() + 
+  ylab("Food consumption indicator (kcal/day)") 
+```
+
+

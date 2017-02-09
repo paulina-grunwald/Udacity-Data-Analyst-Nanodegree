@@ -1,0 +1,389 @@
+Lesson 6
+========================================================
+
+### Welcome
+Notes:
+
+***
+
+### Scatterplot Review
+
+```{r Scatterplot Review}
+# Let's start by examining two variables in the data set.
+# The scatterplot is a powerful tool to help you understand
+# the relationship between two continuous variables.
+
+# We can quickly see if the relationship is linear or not.
+# In this case, we can use a variety of diamond
+# characteristics to help us figure out whether
+# the price advertised for any given diamond is 
+# reasonable or a rip-off.
+
+# Let's consider the price of a diamond and it's carat weight.
+# Create a scatterplot of price (y) vs carat weight (x).
+
+# Limit the x-axis and y-axis to omit the top 1% of values.
+
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(dplyr)
+library(tidyr)
+d <- diamonds
+
+
+p1 <- ggplot(aes(x=carat,y=price), data = d)+
+  geom_point(fill='blue', color='darkblue', shape=21)+
+  xlim(quantile(d$carat,0.01),(quantile(d$carat,0.99)))+
+  ylim(quantile(d$price,0.01),(quantile(d$price,0.99)))
+
+p2 <- ggplot(aes(x=carat,y=price), data = d)+
+  geom_point()+
+  xlim(quantile(d$carat,0.01),(quantile(d$carat,0.99)))+
+  ylim(quantile(d$price,0.01),(quantile(d$price,0.99)))
+
+grid.arrange(p1,p2, ncol=2)
+
+#other way of writing the code:
+#xlim=c(0,quantile(diamonds$carat,0.99)) or
+#scale_x_continous(lim=c(0, quantile(d$carat, 0.99)))
+    
+```
+
+
+```{r}
+ggplot(aes(x=carat,y=price), data = d)+
+  geom_point()+
+  xlim(quantile(d$carat,0.01),(quantile(d$carat,0.99)))+
+  ylim(quantile(d$price,0.01),(quantile(d$price,0.99)))
+```
+
+***
+
+### Price and Carat Relationship
+Response:
+
+Seems like the linear relationship between price and carat is lost for the diamonds that have over 1.0 carats. It seems like diamonds with 1 carat have much bigger price variation and then it's hard to say if the high price is attributed only to carat weight.
+
+```{r}
+#Add on linear model
+
+ggplot(aes(x=carat,y=price), data = d)+
+  geom_point(fill='blue', color='darkblue', shape=21)+
+  stat_smooth(method= 'lm', color=)+
+  xlim(quantile(d$carat,0.01),(quantile(d$carat,0.99)))+
+  ylim(quantile(d$price,0.01),(quantile(d$price,0.99)))
+
+```
+
+
+***
+
+### Frances Gerety
+Notes:
+
+#### A diamonds is
+
+
+***
+
+### The Rise of Diamonds
+Notes:
+
+***
+
+### ggpairs Function
+Notes:
+
+```{r ggpairs Function}
+# install these if necessary
+install.packages('GGally')
+install.packages('scales')
+install.packages('memisc')
+install.packages('lattice')
+install.packages('MASS')
+install.packages('car')
+install.packages('reshape')
+install.packages('plyr')
+
+# load the ggplot graphics package and the others
+library(ggplot2)
+library(GGally)
+library(scales)
+library(memisc)
+library(gridExtra)
+
+
+# sample 10,000 diamonds from the data set
+set.seed(20022012)
+diamond_samp <- d[sample(1:length(d$price), 10000), ]
+ggpairs(diamond_samp, 
+  lower = list(continuous = wrap("points", shape = I('.'))), 
+  upper = list(combo = wrap("box", outlier.shape = I('.'))))
+```
+
+What are some things you notice in the ggpairs output?
+Response:
+
+***
+
+### The Demand of Diamonds
+Notes:
+
+```{r The Demand of Diamonds}
+# Create two histograms of the price variable
+# and place them side by side on one output image.
+
+# We've put some code below to get you started.
+
+# The first plot should be a histogram of price
+# and the second plot should transform
+# the price variable using log10.
+
+# Set appropriate bin widths for each plot.
+# ggtitle() will add a title to each histogram.
+
+plot1 <- qplot(x=price, data=d,  fill = I('blue'),binwidth = 100)+
+  ggtitle('Diamonds price histogram')
+
+plot2 <- qplot(x=price, data=d, fill='orange',binwidth = 0.01)+
+  scale_x_log10()+
+  ggtitle('Diamonds price histograme (log10)')
+
+grid.arrange(plot1,plot2, ncol=2)
+```
+
+***
+
+### Connecting Demand and Price Distributions
+Notes:
+
+First we can see break in the price (very low prices) at around 200. In the transformed plot we can see something close to binomial distribution. We see two picks which can be related to poorer and richer customers.
+***
+
+### Scatterplot Transformation
+
+```{r Scatterplot Transformation}
+qplot(carat, price, data=d)+
+  scale_y_continuous(trans=log10_trans())+
+  ggtitle('Price (log10)by Carat')
+```
+
+### Create a new function to transform the carat variable
+
+```{r cuberoot transformation}
+cuberoot_trans = function() trans_new('cuberoot', transform = function(x) x^(1/3),
+                                      inverse = function(x) x^3)
+```
+
+#### Use the cuberoot_trans function
+
+Resource: https://www.youtube.com/watch?v=Z1wB1rHAYzQ&list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP
+
+```{r Use cuberoot_trans}
+ggplot(aes(carat, price), data = diamonds) + 
+  geom_point() + 
+  scale_x_continuous(trans = cuberoot_trans(), limits = c(0.2, 3),
+                     breaks = c(0.2, 0.5, 1, 2, 3)) + 
+  scale_y_continuous(trans = log10_trans(), limits = c(350, 15000),
+                     breaks = c(350, 1000, 5000, 10000, 15000)) +
+  ggtitle('Price (log10) by Cube-Root of Carat')
+```
+
+***
+
+### Overplotting Revisited
+
+```{r Sort and Head Tables}
+head(sort(table(d$carat), decreasing = T))
+head(sort(table(d$price), decreasing = T))
+```
+
+
+```{r Overplotting Revisited}
+ggplot(aes(carat, price), data = d) + 
+  geom_jitter(alpha=1/5, size=3/4) + 
+  scale_x_continuous(trans = cuberoot_trans(), limits = c(0.2, 3),
+                     breaks = c(0.2, 0.5, 1, 2, 3)) + 
+  scale_y_continuous(trans = log10_trans(), limits = c(350, 15000),
+                     breaks = c(350, 1000, 5000, 10000, 15000)) +
+  ggtitle('Price (log10) by Cube-Root of Carat')
+
+#or geom_point(position='jitter')
+```
+
+***
+
+### Other Qualitative Factors
+Notes:
+
+***
+
+### Price vs. Carat and Clarity
+
+Alter the code below.
+```{r Price vs. Carat and Clarity}
+# install and load the RColorBrewer package
+install.packages('RColorBrewer')
+library(RColorBrewer)
+
+
+# Adjust the code below to color the points by clarity.
+
+# A layer called scale_color_brewer() has 
+# been added to adjust the legend and
+# provide custom colors.
+
+ggplot(aes(x = carat, y = price, color =clarity), data = diamonds) + 
+  geom_point(alpha = 0.5, size = 1, position = 'jitter') +
+  scale_color_brewer(type = 'div',
+    guide = guide_legend(title = 'Clarity', reverse = T,
+    override.aes = list(alpha = 1, size = 2))) +  
+  scale_x_continuous(trans = cuberoot_trans(), limits = c(0.2, 3),
+    breaks = c(0.2, 0.5, 1, 2, 3)) + 
+  scale_y_continuous(trans = log10_trans(), limits = c(350, 15000),
+    breaks = c(350, 1000, 5000, 10000, 15000)) +
+  ggtitle('Price (log10) by Cube-Root of Carat and Clarity')
+```
+
+***
+
+### Clarity and Price
+Response:
+
+Obviously clarity has quite an impact on the price. IF clarity diamonds are much more expensive than I1 diamonds so diamonds with lower clarity are cheaper than those that have higher clarity.
+
+***
+
+### Price vs. Carat and Cut
+
+Alter the code below.
+```{r Price vs. Carat and Cut}
+ggplot(aes(x = carat, y = price, color = clarity), data = diamonds) + 
+  geom_point(alpha = 0.5, size = 1, position = 'jitter') +
+  scale_color_brewer(type = 'div',
+                     guide = guide_legend(title = 'Clarity', reverse = T,
+                                          override.aes = list(alpha = 1, size = 2))) +  
+  scale_x_continuous(trans = cuberoot_trans(), limits = c(0.2, 3),
+                     breaks = c(0.2, 0.5, 1, 2, 3)) + 
+  scale_y_continuous(trans = log10_trans(), limits = c(350, 15000),
+                     breaks = c(350, 1000, 5000, 10000, 15000)) +
+  ggtitle('Price (log10) by Cube-Root of Carat and Clarity')
+```
+
+***
+
+### Cut and Price
+Response:
+
+***
+
+### Price vs. Carat and Color
+
+Alter the code below.
+```{r Price vs. Carat and Color}
+ggplot(aes(x = carat, y = price, color = cut), data = diamonds) + 
+  geom_point(alpha = 0.5, size = 1, position = 'jitter') +
+  scale_color_brewer(type = 'div',
+                     guide = guide_legend(title = Cut, reverse = T,
+                                          override.aes = list(alpha = 1, size = 2))) +  
+  scale_x_continuous(trans = cuberoot_trans(), limits = c(0.2, 3),
+                     breaks = c(0.2, 0.5, 1, 2, 3)) + 
+  scale_y_continuous(trans = log10_trans(), limits = c(350, 15000),
+                     breaks = c(350, 1000, 5000, 10000, 15000)) +
+  ggtitle('Price (log10) by Cube-Root of Carat and Cut')
+```
+
+***
+
+### Color and Price
+Response:
+
+***
+
+### Linear Models in R
+Notes:
+
+Response:
+
+***
+
+### Building the Linear Model
+Notes:
+
+```{r Building the Linear Model}
+m1 <- lm(I(log(price)) ~ I(carat^(1/3)), data = diamonds)
+m2 <- update(m1, ~ . + carat)
+m3 <- update(m2, ~ . + cut)
+m4 <- update(m3, ~ . + color)
+m5 <- update(m4, ~ . + clarity)
+mtable(m1, m2, m3, m4, m5)
+```
+
+Notice how adding cut to our model does not help explain much of the variance
+in the price of diamonds. This fits with out exploration earlier.
+
+***
+
+### Model Problems
+Video Notes:
+
+Research:
+(Take some time to come up with 2-4 problems for the model)
+(You should 10-20 min on this)
+
+Response:
+
+***
+
+### A Bigger, Better Data Set
+Notes:
+
+```{r A Bigger, Better Data Set}
+install.package('bitops')
+install.packages('RCurl')
+library('bitops')
+library('RCurl')
+
+diamondsurl = getBinaryURL("https://raw.github.com/solomonm/diamonds-data/master/BigDiamonds.Rda")
+load(rawConnection(diamondsurl))
+```
+
+The code used to obtain the data is available here:
+https://github.com/solomonm/diamonds-data
+
+## Building a Model Using the Big Diamonds Data Set
+Notes:
+
+```{r Building a Model Using the Big Diamonds Data Set}
+
+```
+
+
+***
+
+## Predictions
+
+Example Diamond from BlueNile:
+Round 1.00 Very Good I VS1 $5,601
+
+```{r}
+#Be sure you’ve loaded the library memisc and have m5 saved as an object in your workspace.
+thisDiamond = data.frame(carat = 1.00, cut = "V.Good",
+                         color = "I", clarity="VS1")
+modelEstimate = predict(m5, newdata = thisDiamond,
+                        interval="prediction", level = .95)
+```
+
+Evaluate how well the model predicts the BlueNile diamond's price. Think about the fitted point estimate as well as the 95% CI.
+
+***
+
+## Final Thoughts
+Notes:
+
+***
+
+Click **KnitHTML** to see all of your hard work and to have an html
+page of this lesson, your answers, and your notes!
+
