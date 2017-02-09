@@ -183,7 +183,7 @@ Residual Sugar has right-skewed distribution. We have see a lot of outliers and 
 #Create frequency distribution histogram for  residual sugar with Log10 x axis transformation
 p4.1 <- ggplot(aes(x = residual.sugar),data = df_ww) +
   geom_histogram(fill = "#7CB9E8", color='black') +
-  scale_x_log10(breaks = seq(min(df_ww$residual.sugar), max(df_ww$residual.sugar), 1))+
+  scale_x_log10(breaks = seq(min(df_ww$residual.sugar), max(df_ww$residual.sugar), 15))+
   xlab('Residual sugar [g/dm^3]')+
   ylab('Frequency')+
   ggtitle("Histogram of residual sugar (Log10 scale) ")
@@ -268,7 +268,7 @@ Chlorides are highly right skewed. I will use log10 transformation on x axis.
 #Create frequency histogram for chlorides using Log10 scale on x axis
 p11.1 <- ggplot(aes(x = chlorides),data = df_ww) +
   geom_histogram(fill = "#7CB9E8", color = 'black') +
-  scale_x_log10(breaks = seq(min(df_ww$chlorides), max(df_ww$chlorides), 1))+
+  scale_x_log10(breaks = seq(min(df_ww$chlorides), max(df_ww$chlorides), 0.08))+
   xlab('Chlorides [g/dm^3]')+
   ylab('Frequency')+
   ggtitle("Histogram of chlorides (Log10 scale)")
@@ -615,19 +615,21 @@ In my exploration i will apply following techniques to get better insight from m
 - I will use scatterplots to visualize the data.
 
 
-I would like continue my analysis with a quick look on the boxplot visualization of our variables against the quality factor to get even better insights of the correlatiob between quality and other variables:
+I would like continue my analysis with a quick look on the boxplot visualization of our variables against the quality factor to get even better insights of the correlation between quality and other variables. I will remove to a
 
-```{r echo=FALSE, Bivariate_Boxplots}
+
+```{r echo=FALSE,bivariate_boxplots}
 #Create boxplots for each variable facceted by quality 
 b1 <-  ggplot(aes(group = quality,x = as.factor(quality), y = fixed.acidity), data = df_ww) + 
   geom_boxplot()+
-  scale_x_discrete(breaks = seq(3,9,1))+
+  ylim(quantile(df_ww$fixed.acidity, 0.01), quantile(df_ww$fixed.acidity, 0.99))+
   xlab("Quality")+
   ylab("Fixed acidity [g/dm^3]")+
   theme(axis.text=element_text(size = 8), axis.title=element_text(size = 8))
 
 b2 <-  ggplot(aes(group = quality,x = as.factor(quality), y = volatile.acidity), data = df_ww) + 
   geom_boxplot()+
+  ylim(quantile(df_ww$volatile.acidity, 0.01), quantile(df_ww$volatile.acidity, 0.99))+
   scale_x_discrete(breaks = seq(3,9,1))+
   xlab("Quality")+
   ylab("Volatile acidity [g/dm^3]")+
@@ -635,6 +637,7 @@ b2 <-  ggplot(aes(group = quality,x = as.factor(quality), y = volatile.acidity),
 
 b3 <- ggplot(aes(group = quality,x = as.factor(quality), y = citric.acid), data = df_ww) +
   geom_boxplot()+
+  ylim(quantile(df_ww$citric.acid, 0.01), quantile(df_ww$citric.acid, 0.99))+
   scale_x_discrete(breaks=seq(3,9,1))+
   xlab("Quality")+
   ylab("Citric Acid [g/dm^3]")+
@@ -642,6 +645,7 @@ b3 <- ggplot(aes(group = quality,x = as.factor(quality), y = citric.acid), data 
 
 b4 <- ggplot(aes(group = quality,x = as.factor(quality), y = residual.sugar), data = df_ww) + 
   geom_boxplot()+
+  ylim(quantile(df_ww$residual.sugar, 0.01), quantile(df_ww$residual.sugar, 0.99))+
   scale_x_discrete(breaks = seq(3,9,1))+
   xlab("Quality")+
   ylab("Residual sugar [g/dm^3]")+
@@ -650,6 +654,7 @@ b4 <- ggplot(aes(group = quality,x = as.factor(quality), y = residual.sugar), da
 b5 <- ggplot(aes(group = quality, x = as.factor(quality), y = chlorides), data = df_ww) + 
   geom_boxplot()+
   scale_x_discrete(breaks = seq(3,9,1))+
+  ylim(quantile(df_ww$chlorides, 0.01), quantile(df_ww$chlorides, 0.99))+
   xlab("Quality")+
   ylab("Chlorides [g/dm^3]")+
   theme(axis.text=element_text(size = 8), axis.title=element_text(size = 8))
@@ -657,6 +662,7 @@ b5 <- ggplot(aes(group = quality, x = as.factor(quality), y = chlorides), data =
 b6 <- ggplot(aes(group = quality, x = as.factor(quality), y = free.sulfur.dioxide), data = df_ww) + 
   geom_boxplot()+
   scale_x_discrete(breaks = seq(3,9,1))+
+  ylim(quantile(df_ww$free.sulfur.dioxide, 0.01), quantile(df_ww$free.sulfur.dioxide, 0.99))+
   xlab("Quality")+
   ylab("Free sulfur dioxide")+
   theme(axis.text=element_text(size = 8), axis.title=element_text(size = 8))
@@ -664,6 +670,7 @@ b6 <- ggplot(aes(group = quality, x = as.factor(quality), y = free.sulfur.dioxid
 b7 <- ggplot(aes(group= quality, x = as.factor(quality), y = total.sulfur.dioxide), data = df_ww) + 
   geom_boxplot()+
   scale_x_discrete(breaks = seq(3,9,1))+
+  ylim(quantile(df_ww$total.sulfur.dioxide, 0.01), quantile(df_ww$total.sulfur.dioxide, 0.99))+
   xlab("Quality")+
   ylab("Total sulfur dioxide [mg/dm^3]")+
   theme(axis.text=element_text(size = 8), axis.title = element_text(size = 8))
@@ -671,6 +678,7 @@ b7 <- ggplot(aes(group= quality, x = as.factor(quality), y = total.sulfur.dioxid
 b8 <- ggplot(aes(group = quality, x = as.factor(quality), y = bound.sulfur.dioxide), data = df_ww) + 
   geom_boxplot()+
   scale_x_discrete(breaks = seq(3,9,1))+
+  ylim(quantile(df_ww$bound.sulfur.dioxide, 0.01), quantile(df_ww$bound.sulfur.dioxide, 0.99))+
   xlab("Quality")+
   ylab("Bound sulfur dioxide [mg/dm^3]")+
   theme(axis.text=element_text(size = 8), axis.title = element_text(size = 8))
@@ -678,12 +686,14 @@ b8 <- ggplot(aes(group = quality, x = as.factor(quality), y = bound.sulfur.dioxi
 b9 <- ggplot(aes(group= quality, x = as.factor(quality), y = density), data = df_ww) + 
   geom_boxplot()+
   scale_x_discrete(breaks=seq(3,9,1))+
+  ylim(quantile(df_ww$density, 0.01), quantile(df_ww$density, 0.99))+
   xlab("Quality")+
   ylab("Density [g/dm^3]")+
   theme(axis.text = element_text(size = 8), axis.title = element_text(size = 8))
   
 b10 <- ggplot(aes(group= quality, x = as.factor(quality), y = pH), data = df_ww) + 
   geom_boxplot()+
+  ylim(quantile(df_ww$pH, 0.01), quantile(df_ww$pH, 0.99))+
   scale_x_discrete(breaks=seq(3,9,1))+
   xlab("Quality")+
   ylab("pH")+
@@ -691,6 +701,7 @@ b10 <- ggplot(aes(group= quality, x = as.factor(quality), y = pH), data = df_ww)
   
 b11 <- ggplot(aes(group = quality, x = as.factor(quality), y = sulphates), data = df_ww) + 
   geom_boxplot()+
+  ylim(quantile(df_ww$sulphates, 0.01), quantile(df_ww$sulphates, 0.99))+
   scale_x_discrete(breaks = seq(3,9,1))+
   xlab("Quality")+
   ylab("Sulphates [g/dm^3]")+
@@ -699,10 +710,12 @@ b11 <- ggplot(aes(group = quality, x = as.factor(quality), y = sulphates), data 
 b12 <- ggplot(aes(group = quality, x = as.factor(quality), y = alcohol), data = df_ww) + 
   geom_boxplot()+
   scale_x_discrete(breaks = seq(3,9,1))+
+  ylim(quantile(df_ww$alcohol, 0.01), quantile(df_ww$alcohol, 0.99))+
   xlab("Quality")+
   ylab("Alcohol [% by volume]s")+
   theme(axis.text = element_text(size = 8), axis.title = element_text(size = 8))
 ```
+
 
 ```{r echo=FALSE, fig.width=13, fig.height=13}
 #Display all the box plots
@@ -712,7 +725,7 @@ grid.arrange(b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12, newpage = TRUE)
 
 *1. Quality and alcohol, density, chlorides, free sulfur dioxide*
 
-Let's first explore relationship between quality and few other variables. In quality vs. density and in quality vs. density plots i will remove 1% of top and bottom values for the x axis to get better view of the trend of the data.
+Let's first explore relationship between quality and few other variables. In quality vs. density and in quality vs. chlorides plots i will remove 1% of top and bottom values for the x axis to get better view of the trend of the data.
 
 ```{r echo=FALSE, fig.width=10, fig.height=10}
 
