@@ -1,0 +1,94 @@
+---
+title: "Titanic Passenger Survival Rates"
+author: "Paulina Grunwad"
+date: "February 2017"
+output: html_document
+---
+
+
+```{r}
+#Load packages
+require(knitr)
+require(markdown)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+#Load csv file
+
+titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 6 - Make Effective Data Visualization/Final project/data/titanic_data.csv"))
+```
+
+
+```{r}
+titanic
+```
+
+I will remove columns which i will not use in my investigation.
+
+```{r}
+titanic$PassengerId <- NULL
+titanic$Cabin <- NULL
+titanic$Name <- NULL
+titanic$Ticket <- NULL
+
+titanic[complete.cases(titanic),]
+titanic_df<- na.omit(titanic)
+
+```
+
+```{r}
+count(titanic_df$as.factor(Embarked))
+```
+
+
+Structure of Data:
+
+```{r}
+str(titanic_df)
+```
+
+Summary of data:
+
+```{r}
+summary(titanic_df)
+```
+
+```{r}
+titanic_df$AgeType  = ""
+titanic_df$AgeType[titanic_df$Age < 18] = "Child"
+titanic_df$AgeType[titanic_df$Age >= 18] = "Adult"
+
+
+ggplot(aes(x=AgeType, color=Survived), data= titanic_df)+
+  geom_bar(stat="count")+ 
+             scale_fill_brewer(palette="Dark2"))
+```
+
+
+
+```{r}
+ggplot(aes(x=Sex), data= titanic_df)+
+  geom_histogram(stat='count')+
+  facet_wrap(~Survived)
+```
+
+
+```{r}
+ggplot(aes(x= Age),data=titanic_df) +
+  geom_histogram(fill = "#7CB9E8", color='black', binwidth=5)+
+  facet_wrap(~Sex)
+```
+
+
+
+```{r}
+titanic_df
+# Write CSV in R
+write.table(titanic_df, file = "titanic_df.csv",row.names=FALSE, na="",col.names=FALSE, sep=",")
+```
+
+Rescources:
+
+https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color
+http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts

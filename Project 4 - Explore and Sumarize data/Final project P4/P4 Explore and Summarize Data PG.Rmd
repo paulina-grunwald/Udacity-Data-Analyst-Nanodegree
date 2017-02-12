@@ -10,8 +10,6 @@ knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
 ```{r echo=FALSE,warning=FALSE, message=FALSE}
 #Load packages
 # Load all of the packages 
-library(tidyr)
-library(dplyr)
 library(ggplot2)
 library(reshape2)
 library(gridExtra)
