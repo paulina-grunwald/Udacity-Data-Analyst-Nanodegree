@@ -114,11 +114,11 @@
             .attr("transform", "translate(" + margin + ",0)")
             .call(count_axis);
 
-          debugger;
+          
 
           d3.selectAll("circle")
             .attr("cx", function(d) {
-                debugger;
+                
                 return time_scale(d["date"]);
             })
             .attr("cy", function(d) {

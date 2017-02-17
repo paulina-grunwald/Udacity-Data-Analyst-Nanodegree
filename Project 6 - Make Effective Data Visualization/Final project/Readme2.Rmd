@@ -1,0 +1,42 @@
+---
+title: "baseball"
+author: "PG"
+date: "February 14, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+#Load packages
+require(knitr)
+require(markdown)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+#Load csv file
+
+baseball<-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 6 - Make Effective Data Visualization/Final project/data/baseball_data.csv"))
+```
+
+## Including Plots
+
+
+
+	
+A data set containing 1,157 baseball players including their handedness (right or left handed), height (in inches), weight (in pounds), batting average, and home runs.
+
+```{r table, echo=FALSE}
+baseball
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

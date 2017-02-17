@@ -51,10 +51,13 @@ import json
 import subprocess
 
 def output_image(name, format, bytes):
+    ENCODING = 'utf-8'
     image_start = "BEGIN_IMAGE_f9825uweof8jw9fj4r8"
     image_end = "END_IMAGE_0238jfw08fjsiufhw8frs"
     data = {}
     data['name'] = name
     data['format'] = format
-    data['bytes'] = base64.encodestring(bytes)
-    print image_start+json.dumps(data)+image_end
+    base64_bytes = base64.b64encode(bytes)
+    base64_string = base64_bytes.decode(ENCODING)
+    data['bytes'] = base64_string
+    print(image_start+json.dumps(data)+image_end)

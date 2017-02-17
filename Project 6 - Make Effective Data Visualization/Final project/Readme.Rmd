@@ -20,10 +20,6 @@ titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/
 ```
 
 
-```{r}
-titanic
-```
-
 I will remove columns which i will not use in my investigation.
 
 ```{r}
@@ -31,39 +27,47 @@ titanic$PassengerId <- NULL
 titanic$Cabin <- NULL
 titanic$Name <- NULL
 titanic$Ticket <- NULL
+titanic$Fare <- NULL
+titanic$Cabin <- NULL
+titanic$SibSp <- NULL
+titanic$Parch <- NULL
 
 titanic[complete.cases(titanic),]
-titanic_df<- na.omit(titanic)
+titanic<- na.omit(titanic)
 
+```
+
+
+```{r}
+summary(titanic)
 ```
 
 ```{r}
-count(titanic_df$as.factor(Embarked))
+
+titanic
 ```
 
-
-Structure of Data:
 
 ```{r}
-str(titanic_df)
+titanic$AgeType  = ""
+titanic$AgeType[titanic$Age < 18] = "Child"
+titanic$AgeType[titanic$Age >= 18] = "Adult"
+
+titanic$Survived[titanic$Survived == 0] = "Persihed"
+titanic$Survived[titanic$Survived == 1] = "Survived"
+
+colnames(titanic)[colnames(titanic)=="Pclass"] <- "Class"
+titanic$Class[titanic$Class == 1] = "First"
+titanic$Class[titanic$Class == 2] = "Second"
+titanic$Class[titanic$Class == 3] = "Third"
+
+titanic$Embarked <- as.character(titanic$Embarked)
+titanic$Embarked[titanic$Embarked == "S"] = "Southampton"
+titanic$Embarked[titanic$Embarked == "Q"] = "Queenstown"
+titanic$Embarked[titanic$Embarked == "C"] = "Cherbourg"
+
 ```
 
-Summary of data:
-
-```{r}
-summary(titanic_df)
-```
-
-```{r}
-titanic_df$AgeType  = ""
-titanic_df$AgeType[titanic_df$Age < 18] = "Child"
-titanic_df$AgeType[titanic_df$Age >= 18] = "Adult"
-
-
-ggplot(aes(x=AgeType, color=Survived), data= titanic_df)+
-  geom_bar(stat="count")+ 
-             scale_fill_brewer(palette="Dark2"))
-```
 
 
 
@@ -92,3 +96,4 @@ Rescources:
 
 https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color
 http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts
+https://bost.ocks.org/mike/bar/
