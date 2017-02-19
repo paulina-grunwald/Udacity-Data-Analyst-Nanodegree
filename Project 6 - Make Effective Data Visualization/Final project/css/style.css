@@ -1,0 +1,18 @@
+h2 {text-align: center;
+    color: black;
+    color:  #005ce6;
+    font-family: "Palatino Linotype";
+    font-size: 24px;
+  }
+
+
+h3 {
+        text-align: center
+        color: black;
+        font-style: italic;
+        font-weight: lighter;
+        font-family: "Palatino Linotype";
+        font-size: 14px;
+        height: 100px;
+        width: 400px;
+    }
