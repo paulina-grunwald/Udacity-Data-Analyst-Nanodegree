@@ -4,9 +4,25 @@
         <meta charset="utf-8">
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+
     </head>
     <body>
         <!-- Visible Content and scripts -->
+
+        <style>
+
+      h2 {
+        text-align: left;
+        color: black;
+ 
+      }
+
+      h3 {
+        text-align: center;
+        color: black;
+      }
+
+    
         <div id="chartContainer"></div>
         <script type="text/javascript">
 
@@ -23,14 +39,17 @@
 
         // This is the simple vertical grouped stacked 100% bar example
         // Add an svg object to the body
+
+
         var svg = dimple.newSvg("#chartContainer", 590, 400);
 
         d3.csv("titanic.csv", function(data) {
             var myChart = new dimple.chart(svg, data);
-            //Set the size of the plot within the svg
+
+            /*Set the size of the plot within the svg*/
             myChart.setBounds(65, 45, 505, 315)
 
-            // Setting elements from data to for x axis
+            /*Setting elements from data to for x axis*/
             var x = myChart.addCategoryAxis("x", ["Class", "Sex"]);
             //Set title of the x axis
             x.title ="Passenger Class Split by Gender";
@@ -86,7 +105,7 @@
             myChart.draw();
         });
 
-        // Make title for chart
+        /* Make title for chart*/
         svg.append("text")
             .attr("x", (590 / 2))
             .attr("y", 18)

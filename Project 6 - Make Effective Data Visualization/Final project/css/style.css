@@ -3,6 +3,7 @@ h2 {text-align: center;
     color:  #005ce6;
     font-family: "Palatino Linotype";
     font-size: 24px;
+    height: 100px;
   }
 
 
@@ -14,5 +15,4 @@ h3 {
         font-family: "Palatino Linotype";
         font-size: 14px;
         height: 100px;
-        width: 400px;
     }

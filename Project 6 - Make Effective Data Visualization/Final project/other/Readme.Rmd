@@ -53,7 +53,7 @@ titanic$AgeType  = ""
 titanic$AgeType[titanic$Age < 18] = "Child"
 titanic$AgeType[titanic$Age >= 18] = "Adult"
 
-titanic$Survived[titanic$Survived == 0] = "Persihed"
+titanic$Survived[titanic$Survived == 0] = "Perished"
 titanic$Survived[titanic$Survived == 1] = "Survived"
 
 colnames(titanic)[colnames(titanic)=="Pclass"] <- "Class"
@@ -85,11 +85,15 @@ ggplot(aes(x= Age),data=titanic_df) +
 ```
 
 
+```{r}
+survival_by_class <--
+```
+
 
 ```{r}
-titanic_df
+
 # Write CSV in R
-write.table(titanic_df, file = "titanic_df.csv",row.names=FALSE, na="",col.names=FALSE, sep=",")
+write.table(titanic, file = "titanic.csv",row.names=FALSE, na="",col.names=FALSE, sep=",")
 ```
 
 Rescources:

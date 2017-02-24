@@ -39,4 +39,24 @@ A data set containing 1,157 baseball players including their handedness (right o
 baseball
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+str(baseball)
+```
+
+
+```{r}
+summary(baseball)
+```
+
+```{r}
+ggplot(aes(x=avg, y=weight, color=HR), data=baseball)+
+  geom_jiter()
+```
+
+
+```{r}
+ggplot(aes(x=height), data=baseball)+
+  geom_histogram()
+```
+
