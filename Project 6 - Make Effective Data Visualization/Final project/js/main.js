@@ -17,14 +17,11 @@
     var svg1 = dimple.newSvg("#chart1", 590, 400);
     d3.csv("data/titanic.csv", function (data) {
               var chart = new dimple.chart(svg1, data);
-              var xAxis = chart.addCategoryAxis("x", ["Survived","Sex"]);
-              xAxis.addOrderRule(["First", "Second", "Third"]);
+              var xAxis = chart.addCategoryAxis("x", ["Sex"]);
               var yAxis = chart.addMeasureAxis("y", "Count");
               var Series = chart.addSeries("Survived", dimple.plot.bar);
               Series.addOrderRule(["Survived","Perished"]);
               var Legend = chart.addLegend(65, 10, 510, 20, "right");
-              chart.assignColor("female", "rgb(128, 177, 211)", "rgb(107, 148, 176)", 0.8);
-              chart.assignColor("male","rgb(251, 128, 114)","rgb(210, 107, 95)", 0.8);
               svg1.append("text")
               // Position in the center of the shape (vertical position is
               // manually set due to cross-browser problems with baseline)
@@ -34,100 +31,10 @@
                 .style("text-anchor", "middle")
                 .style("font-weight", "bold")
                 .style("font-family", "sans-serif")
-                .text("Survival Rate per class ")
+                .text("Survival rate by sex ")
+
     chart.draw();
-
-//description graph1
-    var Desc1 = d3.select('#chart1desc')
-                                .append("h4")
-                                .text("We can observed that majority of passangers in third class persihed. ")
-                                .attr("align","center");
-
-
-//Chart 2 - Survival by sex and class
-    var svg2 = dimple.newSvg("#chart2", 590, 400);
-    d3.csv("data/titanic.csv", function (data) {
-              var chart = new dimple.chart(svg2, data);
-              var xAxis = chart.addCategoryAxis("x", ["Class","Sex"]);
-              xAxis.addOrderRule(["First", "Second", "Third"]);
-              var yAxis = chart.addMeasureAxis("y", "Count");
-              var Series = chart.addSeries("Survived", dimple.plot.bar);
-              Series.addOrderRule(["Survived","Perished"]);
-              /*chart.addOrderRule(["Survived","Perished"]);*/
-              var Legend = chart.addLegend(65, 10, 510, 20, "right");
-              chart.assignColor("female", "rgb(128, 177, 211)", "rgb(107, 148, 176)", 0.8);
-              chart.assignColor("male","rgb(251, 128, 114)","rgb(210, 107, 95)", 0.8);
-              svg2.append("text")
-              // Position in the center of the shape (vertical position is
-              // manually set due to cross-browser problems with baseline)
-                .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                .attr("y", chart._yPixels() - 20)
-                 // Align to center
-                .style("text-anchor", "middle")
-                .style("font-weight", "bold")
-                .style("font-family", "sans-serif")
-                .text("Survival Rate per class ")
-    chart.draw();
-    
+    //Change title of y axis
+    yAxis.titleShape.text("Number of passangers");
     });
- 
-
-//description graph2
-    var Desc1 = d3.select('#chart2desc')
-                                .append("h4")
-                                .text("We can observed that majority of passangers in third class persihed. ")
-                                .attr("align","center");
-
-
-
-//Chart 2
-    var svg3 = dimple.newSvg("#chart3", 590, 400);
-    d3.csv("data/titanic.csv", function (data) {
-              var chart = new dimple.chart(svg3, data);
-              var xAxis = chart.addCategoryAxis("x", ["Embarked"]);
-              var yAxis = chart.addPctAxis("y", "Count");
-              var Series = chart.addSeries("Survived", dimple.plot.bar);
-              Series.addOrderRule(["Survived","Perished"]);
-              /*chart.addOrderRule(["Survived","Perished"]);*/
-              var Legend = chart.addLegend(65, 10, 510, 20, "right");
-              svg3.append("text")
-              // Position in the center of the shape (vertical position is
-              // manually set due to cross-browser problems with baseline)
-                .attr("x", chart._xPixels() + chart2._widthPixels() / 2)
-                .attr("y", chart._yPixels() - 20)
-                 // Align to center
-                .style("text-anchor", "middle")
-                .style("font-weight", "bold")
-                .style("font-family", "sans-serif")
-                .text("Survival Rate per class ")
-    char2draw();
-    
-    });
-
-
-//Chart 4
-    var svg4 = dimple.newSvg("#chart4", 590, 400);
-    d3.csv("data/titanic.csv", function (data) {
-              var chart = new dimple.chart(svg4, data);
-              var xAxis = chart.addCategoryAxis("x", ["Class","Age_type"]);
-              xAxis.addOrderRule(["First", "Second", "Third"]);
-              var yAxis = chart.addPctAxis("y", "Count");
-              var Series = chart.addSeries("Survived", dimple.plot.bar);
-              Series.addOrderRule(["Survived","Perished"]);
-              /*chart.addOrderRule(["Survived","Perished"]);*/
-              var Legend = chart.addLegend(65, 10, 510, 20, "right");
-              chart.assignColor("Adult", "rgb(97, 110, 119)", 0.8);
-              chart.assignColor("Child","rgb(251, 128, 114)", 0.8);
-              svg4.append("text")
-              // Position in the center of the shape (vertical position is
-              // manually set due to cross-browser problems with baseline)
-                .attr("x", chart._xPixels() + chart3._widthPixels() / 2)
-                .attr("y", chart._yPixels() - 20)
-                 // Align to center
-                .style("text-anchor", "middle")
-                .style("font-weight", "bold")
-                .style("font-family", "sans-serif")
-                .text("Survival Rate per class ")
-    char3.draw();
-    
-    });
+                          
