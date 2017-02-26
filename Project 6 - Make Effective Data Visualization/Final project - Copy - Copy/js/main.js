@@ -19,7 +19,7 @@
    /*D3.js setup code*/
     scaler = 0.5
     "use strict";
-    var margin = 40,
+    var margin = 60,
     width = 800 * scaler,
     height = 600 * scaler;
 
@@ -41,7 +41,7 @@
               // Position in the center of the shape (vertical position is
               // manually set due to cross-browser problems with baseline)
                 .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                .attr("y", chart._yPixels() - 20)
+                .attr("y", chart._yPixels() - 25)
                  // Align to center
                 .style("text-anchor", "middle")
                 .style("font-weight", "bold")
@@ -70,7 +70,7 @@
               var Legend = chart.addLegend(60, 23, 350, 20, "right");
               svg2.append("text")
                   .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                  .attr("y", chart._yPixels() - 20)
+                  .attr("y", chart._yPixels() - 25)
                    // Align to center
                   .style("text-anchor", "middle")
                   .style("font-weight", "bold")
@@ -86,7 +86,13 @@
 //description graph1
     var Desc1 = d3.select('#description1')
                                 .append("h4")
-                                .text("We can observed that majority of passangers in third class persihed. ")
+                                .text("Looking at above displayed plots we can clearly observe that more women than men survived. Only about 1/5 of all male passangers survived wheras 3/4 of female managed to save their lifes. Being a child (as a child i consider people below and including 18 years old) also turned out have positive infuence on chances of survival.")
+                                .attr("align","center");
+
+//description 
+    var question = d3.select('#question2')
+                                .append("h5")
+                                .text("Rich vs. poor?")
                                 .attr("align","center");
 
 //graph2
@@ -107,7 +113,7 @@
 
                 svg3.append("text")
                     .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                    .attr("y", chart._yPixels() - 20)
+                    .attr("y", chart._yPixels() - 25)
                      // Align to center
                     .style("text-anchor", "middle")
                     .style("font-weight", "bold")
@@ -134,7 +140,7 @@
                 // Position in the center of the shape (vertical position is
                 // manually set due to cross-browser problems with baseline)
                   .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                  .attr("y", chart._yPixels() - 20)
+                  .attr("y", chart._yPixels() - 25)
                    // Align to center
                   .style("text-anchor", "middle")
                   .style("font-weight", "bold")
@@ -147,6 +153,7 @@
 
 //description set of graphs 2
     var Desc2 = d3.select('#description2')
-                                .append("h4")
-                                .text("We can observed that majority of passangers in third class persihed. ")
-                                .attr("align","center");
+                                .append("h6")
+                                .text("Titanic's passangers were separated in three classes. Third class and crew cabins were located in the hold, while promenade areas were on lower decks and in the quarter. They were separated from the promenade decks for wealthier passengers by special partitions – staircases leading to upper decks had metalgates, the keys to which were kept by stewards. Some sources claim that these partitions were required by American immigration laws at the time. The majority of passengers on the Titanic were emigrants. Only 25 percent of the Titanic’s thirdclass passengers survived. On the other hand we can observe high survival rate in the passangers in the first class. It also has to be taken into the account that there were quite big precent of woman in the first class.")
+                                .attr("align","enter");
+                                .attr("width", 200px);
