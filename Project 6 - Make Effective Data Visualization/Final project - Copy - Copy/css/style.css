@@ -2,7 +2,7 @@ h2 {text-align: center;
     color: black;
     color:  #005ce6;
     font-family: "Palatino Linotype";
-    font-size: 27px;
+    font-size: 30px;
     height: 50px;
   }
 
@@ -32,7 +32,7 @@ h4 {
 h5 {    text-align: center;
         color: black;
         font-family: "Palatino Linotype";
-        font-size: 14px;
+        font-size: 18px;
         height: 50px;
         font-weight: bold;
     }
