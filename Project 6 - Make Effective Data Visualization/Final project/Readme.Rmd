@@ -63,7 +63,7 @@ titanic$Embarked[titanic$Embarked == "Q"] = "Queenstown"
 titanic$Embarked[titanic$Embarked == "C"] = "Cherbourg"
 
 titanic$Age_Group   = ""
-titanic$Age_Group <- as.character(titanic$Age_group)
+titanic$Age_Group <- as.character(titanic$Age_Group )
 titanic$Age_Group[titanic$Age <= 10] = "0-10"
 titanic$Age_Group[titanic$Age > 10 & titanic$Age <= 20] = "11-20"
 titanic$Age_Group[titanic$Age > 20 & titanic$Age <= 30] = "21-30"
