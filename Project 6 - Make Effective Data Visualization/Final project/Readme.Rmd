@@ -1,12 +1,14 @@
----
-title: "Titanic Passenger Survival Rates"
-author: "Paulina Grunwad"
-date: "February 2017"
-output: html_document
----
+Survival chances of the Titanic's passangers Analysis by Paulina Grunwald
+============================================================================
+
+```{r global_options, include=FALSE}
+
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
 
 
-```{r}
+```{r echo=FALSE,warning=FALSE, message=FALSE}
 #Load packages
 require(knitr)
 require(markdown)
@@ -22,7 +24,7 @@ titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/
 
 I will remove columns which i will not use in my investigation.
 
-```{r}
+```{r echo=FALSE}
 titanic$PassengerId <- NULL
 titanic$Cabin <- NULL
 titanic$Name <- NULL
@@ -38,12 +40,12 @@ titanic[complete.cases(titanic),]
 ```
 
 
-```{r}
+```{r echo=FALSE}
 summary(titanic)
 ```
 
 
-```{r}
+```{r echo=FALSE}
 titanic$Age_Type  = ""
 titanic$Age_Type[titanic$Age < 18] = "Child"
 titanic$Age_Type[titanic$Age >= 18] = "Adult"
@@ -81,9 +83,8 @@ titanic$Count = "1"
 
 
 
-```{r}
-
-# Write CSV in R
+```{r echo=FALSE, export_to_csv}
+# Write CSV in R with headers
 write.table(titanic, file = "titanic.csv",row.names=FALSE, na="",col.names=TRUE, sep=",")
 ```
 

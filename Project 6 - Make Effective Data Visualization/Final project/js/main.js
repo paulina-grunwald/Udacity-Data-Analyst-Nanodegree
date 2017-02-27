@@ -53,6 +53,77 @@
     yAxis.titleShape.text("Number of Passangers");
     });
 
+    // Upon clicking the button, chart of Class perspective will be created
+
+    d3.select("#btn_1").on("click", function() {
+      d3.select("svg").remove();
+
+      scaler = 0.5
+      "use strict";
+      var margin = 60,
+      width = 800 * scaler,
+      height = 600 * scaler;
+
+      var svg1 = d3.select("#chart1")
+              .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin);
+
+      var svg1 = dimple.newSvg("#chart1");
+
+      d3.csv("data/titanic.csv", function (data) {
+         var chart = new dimple.chart(svg1, data);
+              var xAxis = chart.addCategoryAxis("x", ["Sex"]);
+              var yAxis = chart.addPctAxis("y", "Count");
+              var Series = chart.addSeries("Survived", dimple.plot.bar);
+              Series.addOrderRule(["Survived","Perished"]);
+              var Legend = chart.addLegend(60, 23, 350, 20, "right");
+              svg1.append("text")
+              // Position in the center of the shape (vertical position is
+              // manually set due to cross-browser problems with baseline)
+                .attr("x", chart._xPixels() + chart._widthPixels() / 2)
+                .attr("y", chart._yPixels() - 25)
+                 // Align to center
+                .style("text-anchor", "middle")
+                .style("font-weight", "bold")
+                .style("font-family", "sans-serif")
+                .text("Survival rate by sex ")
+
+    chart.draw();
+    })
+             var svg2 = d3.select("#chart1")
+              .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin);
+
+    d3.csv("data/titanic.csv", function (data) {
+              var chart = new dimple.chart(svg2, data);
+              var xAxis = chart.addCategoryAxis("x", ["Age_Type"]);
+              xAxis.addOrderRule(["Adult", "Child"]);
+              var yAxis = chart.addMeasureAxis("y", "Count");
+              var Series = chart.addSeries("Survived", dimple.plot.bar);
+              Series.addOrderRule(["Survived","Perished"]);
+              var Legend = chart.addLegend(60, 23, 350, 20, "right");
+              svg2.append("text")
+                  .attr("x", chart._xPixels() + chart._widthPixels() / 2)
+                  .attr("y", chart._yPixels() - 50)
+                   // Align to center
+                  .style("text-anchor", "middle")
+                  .style("font-weight", "bold")
+                  .style("font-family", "sans-serif")
+                  .text("Survival by age group ")
+
+    chart.draw();
+    //Change title of y axis
+    yAxis.titleShape.text("Number of Passangers")
+    });
+
+
+    });
+
+
+
+
     //Chart 2 - Survival by sex and class;
 
     var svg2 = d3.select("#chart1")
