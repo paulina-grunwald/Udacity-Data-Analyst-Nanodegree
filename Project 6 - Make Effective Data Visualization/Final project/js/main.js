@@ -157,5 +157,30 @@
                                 .text("Titanic's passangers were separated in three classes. The Titanic's first-class passengers were rich and prominent members of the upper class. Second class' passengers were leisure tourists, academics, members of the clergy and middle class English and American families. The third class passengers were rather poor and left their countires in hope of starting new life in the United States.Third class and crew cabins were located in the hold, while promenade areas were on lower decks and in the quarter. They were separated from the promenade decks for wealthier passengers by special partitions – staircases leading to upper decks had metalgates, the keys to which were kept by stewards. Some sources claim that these partitions were required by American immigration laws at the time. The majority of passengers on the Titanic were emigrants. Only 25 percent of the Titanic’s thirdclass passengers survived. On the other hand we can observe high survival rate in the passangers in the first class. It also has to be taken into the account that there were quite big precent of woman in the first class. Titanic passangers could embark in three ports: Cherbourg (Northern France), Moreover, Passangers embarked in Southampton (The Great Britain) and Queenstown (Ireland). Cherbourg had higher chances of survival than passangers embarked in Queenstown (from literature we know that mostly third class passangeres embarked there) or Southampton.")
                                 .attr("align","enter");
 
-   
+      var svg5 = d3.select("#chart4")
+        .append("svg")
+        .attr("width", width + margin +50)
+        .attr("height", height + margin);
+
+      d3.csv("data/titanic.csv", function (data) {
+              var chart = new dimple.chart(svg5, data);
+              var xAxis = chart.addCategoryAxis("x", ["Age_Group"]);
+              xAxis.addOrderRule(["0-10","11-20", "21-30", "31-40", "41-50", "51-60", "61-70","71-80"])
+              var yAxis = chart.addPctAxis("y", "Count");
+              var Series = chart.addSeries("Survived", dimple.plot.bar);
+              Series.addOrderRule(["Survived","Perished"]);
+              var Legend = chart.addLegend(60, 23, 350, 20, "right");
+              svg4.append("text")
+                // Position in the center of the shape (vertical position is
+                // manually set due to cross-browser problems with baseline)
+                  .attr("x", chart._xPixels() + chart._widthPixels() / 2)
+                  .attr("y", chart._yPixels() - 25)
+                   // Align to center
+                  .style("text-anchor", "middle")
+                  .style("font-weight", "bold")
+                  .style("font-family", "sans-serif")
+                  .text("Survival per Embarked location by sex ")
+    chart.draw();
+    yAxis.titleShape.text("Procent of Passangers");
+    });
                           
