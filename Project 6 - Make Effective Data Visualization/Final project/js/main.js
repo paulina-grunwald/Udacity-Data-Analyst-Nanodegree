@@ -58,12 +58,6 @@
     d3.select("#btn_1").on("click", function() {
       d3.select("svg").remove();
 
-      scaler = 0.5
-      "use strict";
-      var margin = 60,
-      width = 800 * scaler,
-      height = 600 * scaler;
-
       var svg1 = d3.select("#chart1")
               .append("svg")
               .attr("width", width + margin)
