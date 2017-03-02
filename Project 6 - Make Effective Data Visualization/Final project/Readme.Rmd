@@ -8,6 +8,14 @@ knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
 ```
 
 
+**Summary** 
+
+In this project for creating my visualization I will use Titanic dataset which contains information of 891 passangers out of 2224 passangers and crew on board of the Titanic. The dataset contains information such as passangers' age, sex, embarkment location, in which class were they located etc. The purpose of my data visualization is primarily to show which passangers had higher chance to survive looking at the sex, class, embarkment and age variables. As can be seen from the visualization, most males and third class passengers did not survive the disaster.
+
+**Dataset wrangling***
+
+Titanic dataset was provided in csv format. As a start of the cleaning process i have loaded the titanic csv file into R studio in order to clean the dataset and prepare final dataframe that will be used for my visualization.
+
 ```{r echo=FALSE,warning=FALSE, message=FALSE}
 #Load packages
 require(knitr)
@@ -21,10 +29,18 @@ library(RColorBrewer)
 titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 6 - Make Effective Data Visualization/Final project/train.csv"))
 ```
 
+Below you can find summary of the initital dataset:
 
-I will remove columns which i will not use in my investigation.
+```{r echo=FALSE,titanic_dataset}
+#View titanic dataset
+titanic
+```
+
+
+Since i have decided to use only age, sex, embarked and class data I will now remove other columns which i will not use in my investigation. I will also omit all passangers that have NA values for any of the variables. 
 
 ```{r echo=FALSE}
+#Remove not needed columns
 titanic$PassengerId <- NULL
 titanic$Cabin <- NULL
 titanic$Name <- NULL
@@ -34,36 +50,45 @@ titanic$Cabin <- NULL
 titanic$SibSp <- NULL
 titanic$Parch <- NULL
 
+#Omit NA values
 titanic<- na.omit(titanic)
 titanic[complete.cases(titanic),]
-
 ```
 
+Now i will view summary of my cleaned dataset:
 
 ```{r echo=FALSE}
+#Display statistical summary of titanic dataset
 summary(titanic)
 ```
 
-
+I will continue with cleaning process. I have decided to create new columns.
 ```{r echo=FALSE}
+
+#Create new column Age_Type to separate aduls and childen into two groups
 titanic$Age_Type  = ""
 titanic$Age_Type[titanic$Age < 18] = "Child"
 titanic$Age_Type[titanic$Age >= 18] = "Adult"
 
+#Assign 0 to Perished and 1 to survived in Survived column for easier understanding
 titanic$Survived[titanic$Survived == 0] = "Perished"
 titanic$Survived[titanic$Survived == 1] = "Survived"
 
+#Rename Pclass column to Class
 colnames(titanic)[colnames(titanic)=="Pclass"] <- "Class"
 
+#Rename Class number of for easier understanding
 titanic$Class[titanic$Class == 1] = "First"
 titanic$Class[titanic$Class == 2] = "Second"
 titanic$Class[titanic$Class == 3] = "Third"
 
+#Rename Location of embarkment for easie understanding
 titanic$Embarked <- as.character(titanic$Embarked)
 titanic$Embarked[titanic$Embarked == "S"] = "Southampton"
 titanic$Embarked[titanic$Embarked == "Q"] = "Queenstown"
 titanic$Embarked[titanic$Embarked == "C"] = "Cherbourg"
 
+#Create Age_Group column - passangers will be separated into age buckets
 titanic$Age_Group   = ""
 titanic$Age_Group <- as.character(titanic$Age_Group )
 titanic$Age_Group[titanic$Age <= 10] = "0-10"
@@ -75,20 +100,58 @@ titanic$Age_Group[titanic$Age > 50 & titanic$Age <= 60] = "51-60"
 titanic$Age_Group[titanic$Age > 60 & titanic$Age <= 70] = "61-70"
 titanic$Age_Group[titanic$Age > 70 & titanic$Age <= 80] = "71-80"
 
+titanic$Class_Sex   = ""
+titanic$Class_Sex <- as.character(titanic$Class_Sex )
+titanic$Class_Sex[titanic$Class == "First" & titanic$Sex == "female"] = "First Class Female"
+titanic$Class_Sex[titanic$Class == "First" & titanic$Sex == "male"] = "First Class Male"
+titanic$Class_Sex[titanic$Class == "Second" & titanic$Sex == "female"] = "Second Class Female"
+titanic$Class_Sex[titanic$Class == "Second" & titanic$Sex == "male"] = "Second Class Male"
+titanic$Class_Sex[titanic$Class == "Third" & titanic$Sex == "female"] = "Third Class Female"
+titanic$Class_Sex[titanic$Class == "Third" & titanic$Sex == "male"] = "Third Class Male"
+
+
+#Create count column which will be filled with value of "1". This will help while creating barplot count in my d3.js visualization
 titanic$Count = ""
 titanic$Count <- as.character(titanic$Count)
 titanic$Count = "1"
 
 ```
 
+Final dataframe
+```{r}
+titanic
+```
 
-
+Now i will export the cleaned and reshaped dataframe into csv file which will be used for creating the visualization in D3.js
 ```{r echo=FALSE, export_to_csv}
 # Write CSV in R with headers
 write.table(titanic, file = "titanic.csv",row.names=FALSE, na="",col.names=TRUE, sep=",")
 ```
 
-Rescources:
+
+**Design**
+
+To create the data visualization, I first investigated the data to select the most important features associated with the passengers which had greater impact on their chance of survival. Two of the important features identified are the Passenger class (Pclass) and the Gender (Sex). As both of these features are categorical, a bar chart is a natural choice for a categorical variable.
+
+**Feedback**
+
+After I had my first iteration in working condition, I posted it in the Udacity website forum as well as Google+ Udacity group to get feedback from fellow students. I used the questions provided as guidance to ask for specific feedback such as:
+
+What do you notice in the visualization?
+What questions do you have about the data?
+What relationships do you notice?
+What do you think is the main takeaway from this visualization?
+Is there something you don't understand in the graphic?
+After submission of project for review I received feedback from the reviewer which is also added below. After my second submission, I got another feedback to do some finishing touches for polishing up the visualization.
+
+I got the following feedback:
+
+
+
+
+
+
+**Rescources:**
 
 https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color
 http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts

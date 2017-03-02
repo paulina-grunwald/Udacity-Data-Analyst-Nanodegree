@@ -58,12 +58,12 @@
     d3.select("#btn_1").on("click", function() {
       d3.select("svg").remove();
 
-      var svg1 = d3.select("#chart1")
+    var svg1 = d3.select("#chart1")
               .append("svg")
               .attr("width", width + margin)
               .attr("height", height + margin);
 
-      var svg1 = dimple.newSvg("#chart1");
+    var svg1 = dimple.newSvg("#chart1");
 
       d3.csv("data/titanic.csv", function (data) {
          var chart = new dimple.chart(svg1, data);
@@ -116,36 +116,66 @@
     });
 
 
+    //Chart representing age distribution of the passangers
 
-
-    //Chart 2 - Survival by sex and class;
-
-    var svg2 = d3.select("#chart1")
+  
+    var svg5 = d3.select("#chart1.1")
             .append("svg")
-            .attr("width", width + margin)
+            .attr("width", width + margin +50)
             .attr("height", height + margin);
 
     d3.csv("data/titanic.csv", function (data) {
-              var chart = new dimple.chart(svg2, data);
-              var xAxis = chart.addCategoryAxis("x", ["Age_Type"]);
-              xAxis.addOrderRule(["Adult", "Child"]);
-              var yAxis = chart.addMeasureAxis("y", "Count");
+              var chart = new dimple.chart(svg5, data);
+              var xAxis = chart.addCategoryAxis("x", ["Age_Group"]);
+              xAxis.addOrderRule(["0-10","11-20", "21-30", "31-40", "41-50", "51-60", "61-70","71-80"])
+              var yAxis = chart.addPctAxis("y", "Count");
               var Series = chart.addSeries("Survived", dimple.plot.bar);
               Series.addOrderRule(["Survived","Perished"]);
               var Legend = chart.addLegend(60, 23, 350, 20, "right");
-              svg2.append("text")
+              svg4.append("text")
+                // Position in the center of the shape (vertical position is
+                // manually set due to cross-browser problems with baseline)
                   .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                  .attr("y", chart._yPixels() - 50)
+                  .attr("y", chart._yPixels() - 25)
                    // Align to center
                   .style("text-anchor", "middle")
                   .style("font-weight", "bold")
                   .style("font-family", "sans-serif")
-                  .text("Survival by age group ")
+                  .text("Survival per Embarked location by sex ")
+      chart.draw();
+      yAxis.titleShape.text("Procent of Passangers");
+      });
 
+    //Chart 2 - Survival by sex and class;
+
+     var svg5 = d3.select("#chart4")
+        .append("svg")
+        .attr("width", width + margin +50)
+        .attr("height", height + margin);
+
+      d3.csv("data/titanic.csv", function (data) {
+              var chart = new dimple.chart(svg5, data);
+              var xAxis = chart.addCategoryAxis("x", ["Age_Group"]);
+              xAxis.addOrderRule(["0-10","11-20", "21-30", "31-40", "41-50", "51-60", "61-70","71-80"])
+              var yAxis = chart.addPctAxis("y", "Count");
+              var Series = chart.addSeries("Survived", dimple.plot.bar);
+              Series.addOrderRule(["Survived","Perished"]);
+              var Legend = chart.addLegend(60, 23, 350, 20, "right");
+              svg4.append("text")
+                // Position in the center of the shape (vertical position is
+                // manually set due to cross-browser problems with baseline)
+                  .attr("x", chart._xPixels() + chart._widthPixels() / 2)
+                  .attr("y", chart._yPixels() - 25)
+                   // Align to center
+                  .style("text-anchor", "middle")
+                  .style("font-weight", "bold")
+                  .style("font-family", "sans-serif")
+                  .text("Survival per Embarked location by sex ")
     chart.draw();
-    //Change title of y axis
-    yAxis.titleShape.text("Number of Passangers")
-    });
+    yAxis.titleShape.text("Procent of Passangers");
+    });;
+
+
 
 
 //description graph1
