@@ -79,7 +79,11 @@
     //Change title of y axis
     yAxis.titleShape.text("Number of Passangers");
 
-
+    //description graph1
+    var Desc1 = d3.select('#description1')
+                                .append("h4")
+                                .text("Looking at above displayed plots we can clearly observe that more women than men survived. Only about 1/5 of all male passangers survived wheras 3/4 of female managed to save their lifes. Being a child (people below and including 18 years old are considered as children) also turned out have positive infuence on the chances of survival.")
+                                .attr("align","center");
 
 
     //Chart representing age distribution of the passangers
@@ -110,9 +114,10 @@
       chart.draw();
       yAxis.titleShape.text("Procent of Passangers");
 
+
     // Upon clicking the button, chart of Class perspective will be created
 
-    d3.select("#btn_1").on("click", function() {
+  d3.select("#btn_1").on("click", function() {
       d3.selectAll("#svg3").remove();
 
       var svg4 = d3.select("#chart2")
@@ -169,19 +174,49 @@
                     .style("font-weight", "bold")
                     .style("font-family", "sans-serif")
                     .text("Survival per Embarked location by sex ")
-        chart.draw();
-        yAxis.titleShape.text("Procent of Passangers");
+      chart.draw();
+      yAxis.titleShape.text("Procent of Passangers");
+
+
   });
 
-  //description graph1
-    var Desc1 = d3.select('#description1')
+//description2
+  var Desc2 = d3.select('#description2')
                                 .append("h4")
-                                .text("Looking at above displayed plots we can clearly observe that more women than men survived. Only about 1/5 of all male passangers survived wheras 3/4 of female managed to save their lifes. Being a child (people below and including 18 years old are considered as children) also turned out have positive infuence on the chances of survival.")
+                                .text("Loolo survival.")
                                 .attr("align","center");
+                              
 
-//description 
-    var question = d3.select('#question2')
+//question 
+  var question = d3.select('#question2')
                                 .append("h5")
                                 .text("Rich vs. poor?")
                                 .attr("align","center");
+
+
+//Chart 4: Class versus sex
+  var svg4 = d3.select("#chart3")
+            .append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin);
+
+              var chart = new dimple.chart(svg4, data);
+              var xAxis = chart.addCategoryAxis("x", ["Class", "Class_Sex"]);
+              //xAxis.addOrderRule(["First Class Female","First Class Male", "Second Class Female", "Second Class Male", "Third Class Female", "Third Class Male"]);
+              var yAxis = chart.addMeasureAxis("y", "Count");
+              var Series = chart.addSeries("Survived", dimple.plot.bar);
+              Series.addOrderRule(["Survived","Perished"]);
+              var Legend = chart.addLegend(60, 23, 350, 20, "right");
+              svg4.append("text")
+              // Position in the center of the shape (vertical position is
+              // manually set due to cross-browser problems with baseline)
+                  .attr("x", chart._xPixels() + chart._widthPixels() / 2)
+                  .attr("y", chart._yPixels() - 25)
+                   // Align to center
+                  .style("text-anchor", "middle")
+                  .style("font-weight", "bold")
+                  .style("font-family", "sans-serif")
+                  .text("Survival per Class and ex ")
+              chart.draw();
+              yAxis.titleShape.text("Number of Passangers");
   });

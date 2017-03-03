@@ -214,7 +214,7 @@
 
 
 //description set of graphs 2
-    var Desc3 = d3.select('#description3')
+    var Desc3 = d3.select("#chart2")
                                 .append("h6")
                                 .text("Titanic's passangers were separated in three classes. The Titanic's first-class passengers were rich and prominent members of the upper class. Second class' passengers were leisure tourists, academics, members of the clergy and middle class English and American families. The third class passengers were rather poor and left their countires in hope of starting new life in the United States.Third class and crew cabins were located in the hold, while promenade areas were on lower decks and in the quarter. They were separated from the promenade decks for wealthier passengers by special partitions – staircases leading to upper decks had metalgates, the keys to which were kept by stewards. Some sources claim that these partitions were required by American immigration laws at the time. The majority of passengers on the Titanic were emigrants. Only 25 percent of the Titanic’s thirdclass passengers survived. On the other hand we can observe high survival rate in the passangers in the first class. It also has to be taken into the account that there were quite big precent of woman in the first class. Titanic passangers could embark in three ports: Cherbourg (Northern France), Moreover, Passangers embarked in Southampton (The Great Britain) and Queenstown (Ireland). Cherbourg had higher chances of survival than passangers embarked in Queenstown (from literature we know that mostly third class passangeres embarked there) or Southampton.")
                                 .attr("align","enter");
