@@ -43,9 +43,5 @@ h6 {
         font-weight: lighter;
         font-family: "Palatino Linotype";
         font-size: 14px;
-        height: 200px;
+        height: 400px;
     }
-
-.Aligner-item {
-  max-width: 50%;
-}
