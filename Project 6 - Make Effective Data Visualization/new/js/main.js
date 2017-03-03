@@ -52,6 +52,7 @@
     yAxis.titleShape.text("Number of Passangers");
 
   //Chart 2 Aduls vs Children
+
     var svg2 = d3.select("#chart1")
               .append("svg")
               .attr("width", width + margin)
@@ -65,15 +66,13 @@
               Series.addOrderRule(["Survived","Perished"]);
               var Legend = chart.addLegend(60, 23, 350, 20, "right");
               svg2.append("text")
-              // Position in the center of the shape (vertical position is
-              // manually set due to cross-browser problems with baseline)
-                .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                .attr("y", chart._yPixels() - 25)
-                 // Align to center
-                .style("text-anchor", "middle")
-                .style("font-weight", "bold")
-                .style("font-family", "sans-serif")
-                .text("Survival rate by age group ")
+                  .attr("x", chart._xPixels() + chart._widthPixels() / 2)
+                  .attr("y", chart._yPixels() - 50)
+                   // Align to center
+                  .style("text-anchor", "middle")
+                  .style("font-weight", "bold")
+                  .style("font-family", "sans-serif")
+                  .text("Survival by age group ")
 
     chart.draw();
     //Change title of y axis
