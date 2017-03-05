@@ -2,7 +2,6 @@
 // header
     var Title = d3.select('#title')
                                 .append("h2")
-                        
                                 .text("Survival chances of the Titanic's passangers");
 //description 
     var Header = d3.select('#description')
@@ -30,10 +29,11 @@
               .append("svg")
               .attr("width", width + margin)
               .attr("height", height + margin);
-
               var chart = new dimple.chart(svg1, data);
               var xAxis = chart.addCategoryAxis("x", ["Sex"]);
               var yAxis = chart.addMeasureAxis("y", "Count");
+              chart.assignColor("Perished", "rgb(217,95,2)");
+              chart.assignColor("Survived", "rgb(27,158,119)");
               var Series = chart.addSeries("Survived", dimple.plot.bar);
               Series.addOrderRule(["Survived","Perished"]);
               var Legend = chart.addLegend(60, 23, 350, 20, "right");
@@ -53,27 +53,30 @@
     yAxis.titleShape.text("Number of Passangers");
 
   //Chart 2 Aduls vs Children
-
     var svg2 = d3.select("#chart1")
               .append("svg")
               .attr("width", width + margin)
               .attr("height", height + margin);
-
               var chart = new dimple.chart(svg2, data);
               var xAxis = chart.addCategoryAxis("x", ["Age_Type"]);
+              chart.assignColor("Perished", "rgb(217,95,2)");
+              chart.assignColor("Survived", "rgb(27,158,119)");
+              xAxis.title = 'Age group'
               xAxis.addOrderRule(["Adult", "Child"]);
               var yAxis = chart.addMeasureAxis("y", "Count");
               var Series = chart.addSeries("Survived", dimple.plot.bar);
               Series.addOrderRule(["Survived","Perished"]);
               var Legend = chart.addLegend(60, 23, 350, 20, "right");
               svg2.append("text")
-                  .attr("x", chart._xPixels() + chart._widthPixels() / 2)
-                  .attr("y", chart._yPixels() - 50)
-                   // Align to center
-                  .style("text-anchor", "middle")
-                  .style("font-weight", "bold")
-                  .style("font-family", "sans-serif")
-                  .text("Survival by age group ")
+              // Position in the center of the shape (vertical position is
+              // manually set due to cross-browser problems with baseline)
+                .attr("x", chart._xPixels() + chart._widthPixels() / 2)
+                .attr("y", chart._yPixels() - 25)
+                 // Align to center
+                .style("text-anchor", "middle")
+                .style("font-weight", "bold")
+                .style("font-family", "sans-serif")
+                .text("Survival rate by age group")
 
     chart.draw();
     //Change title of y axis
@@ -82,7 +85,7 @@
     //description graph1
     var Desc1 = d3.select('#description1')
                                 .append("h4")
-                                .text("Looking at above displayed plots we can clearly observe that more women than men survived. Only about 1/5 of all male passangers survived wheras 3/4 of female managed to save their lifes. Being a child (people below and including 18 years old are considered as children) also turned out have positive infuence on the chances of survival.")
+                                .text("Looking at above displayed plots we can clearly observe that more women than men survived. Only about 1/5 of all male passangers survived wheras 3/4 of female managed to save their lifes. Being a child (people below and including 18 years old are considered as children) also turned out have positive infuence on the chances of survival. Let's have a look at survival rate in various age groups. Click on procent and count button to display to change y Axis display.")
                                 .attr("align","center");
 
 
@@ -91,11 +94,14 @@
     var svg3 = d3.select("#chart2")
             .append("svg")
             .attr('id','svg3')
-            .attr("width", width + margin)
+            .attr("width", width + margin+80)
             .attr("height", height + margin);
 
               var chart = new dimple.chart(svg3, data);
               var xAxis = chart.addCategoryAxis("x", ["Age_Group"]);
+              xAxis.title = 'Age group'
+              chart.assignColor("Perished", "rgb(217,95,2)");
+              chart.assignColor("Survived", "rgb(27,158,119)");
               xAxis.addOrderRule(["0-10","11-20", "21-30", "31-40", "41-50", "51-60", "61-70","71-80"])
               var yAxis = chart.addMeasureAxis("y", "Count");
               var Series = chart.addSeries("Survived", dimple.plot.bar);
@@ -110,26 +116,30 @@
                   .style("text-anchor", "middle")
                   .style("font-weight", "bold")
                   .style("font-family", "sans-serif")
-                  .text("Survival per Embarked location by sex ")
+                  .text("Survival rate by age group")
       chart.draw();
       yAxis.titleShape.text("Procent of Passangers");
 
 
     // Upon clicking the button, chart of Class perspective will be created
 
-  d3.select("#btn_1").on("click", function() {
+  d3.select("#btn_procent").on("click", function() {
       d3.selectAll("#svg3").remove();
 
       var svg4 = d3.select("#chart2")
             .append("svg")
             .attr('id','svg3')
-            .attr("width", width + margin)
+            .attr("width", width + margin+80)
             .attr("height", height + margin);
 
                 var chart = new dimple.chart(svg4, data);
                 var xAxis = chart.addCategoryAxis("x", ["Age_Group"]);
+                chart.assignColor("Perished", "rgb(217,95,2)");
+                chart.assignColor("Survived", "rgb(27,158,119)");
+                xAxis.title = 'Age group'
                 xAxis.addOrderRule(["0-10","11-20", "21-30", "31-40", "41-50", "51-60", "61-70","71-80"])
                 var yAxis = chart.addPctAxis("y", "Count");
+                yAxis.title = 'Procent of Passangers'
                 var Series = chart.addSeries("Survived", dimple.plot.bar);
                 Series.addOrderRule(["Survived","Perished"]);
                 var Legend = chart.addLegend(60, 23, 350, 20, "right");
@@ -142,24 +152,27 @@
                     .style("text-anchor", "middle")
                     .style("font-weight", "bold")
                     .style("font-family", "sans-serif")
-                    .text("Survival per Embarked location by sex ")
+                    .text("Survival rate by age group")
         chart.draw();
-        yAxis.titleShape.text("Procent of Passangers");
+       
     
     });
 
-    d3.select("#btn_2").on("click", function() {
+    d3.select("#btn_count").on("click", function() {
       d3.selectAll("#svg3").remove();
 
       var svg4 = d3.select("#chart2")
             .append("svg")
             .attr('id','svg3')
-            .attr("width", width + margin)
+            .attr("width", width + margin+80)
             .attr("height", height + margin);
 
                 var chart = new dimple.chart(svg4, data);
                 var xAxis = chart.addCategoryAxis("x", ["Age_Group"]);
+                chart.assignColor("Perished", "rgb(217,95,2)");
+                chart.assignColor("Survived", "rgb(27,158,119)");
                 xAxis.addOrderRule(["0-10","11-20", "21-30", "31-40", "41-50", "51-60", "61-70","71-80"])
+                xAxis.title = 'Age group'
                 var yAxis = chart.addMeasureAxis("y", "Count");
                 var Series = chart.addSeries("Survived", dimple.plot.bar);
                 Series.addOrderRule(["Survived","Perished"]);
@@ -173,9 +186,9 @@
                     .style("text-anchor", "middle")
                     .style("font-weight", "bold")
                     .style("font-family", "sans-serif")
-                    .text("Survival per Embarked location by sex ")
+                    .text("Survival rate by group")
       chart.draw();
-      yAxis.titleShape.text("Procent of Passangers");
+      yAxis.titleShape.text("Number of Passangers");
 
 
   });
@@ -183,14 +196,14 @@
 //description2
   var Desc2 = d3.select('#description2')
                                 .append("h4")
-                                .text("Loolo survival.")
+                                .text("Having closer look at the survived versus perished passangers in various age group we can conclude that passangers from age 0 to 10 had the biggest chance of survial. The passangers in age group 61 to 80 had the lower chance of survival.")
                                 .attr("align","center");
                               
 
 //question 
   var question = d3.select('#question2')
                                 .append("h5")
-                                .text("Rich vs. poor?")
+                                .text("Did rich people had better chances of survival?")
                                 .attr("align","center");
 
 
@@ -203,6 +216,8 @@
               var chart = new dimple.chart(svg4, data);
               var xAxis = chart.addCategoryAxis("x", ["Class"]);
               xAxis.addOrderRule(["First","Second", "Third"]);
+              chart.assignColor("Perished", "rgb(217,95,2)");
+              chart.assignColor("Survived", "rgb(27,158,119)");
               var yAxis = chart.addMeasureAxis("y", "Count");
               var Series = chart.addSeries("Survived", dimple.plot.bar);
               Series.addOrderRule(["Survived","Perished"]);
@@ -216,7 +231,7 @@
                   .style("text-anchor", "middle")
                   .style("font-weight", "bold")
                   .style("font-family", "sans-serif")
-                  .text("Survival per Class and ex ")
+                  .text("Survival rate by class")
               chart.draw();
               yAxis.titleShape.text("Number of Passangers");
 
@@ -226,8 +241,11 @@
             .attr("height", height + margin);
 
               var chart = new dimple.chart(svg5, data);
-              var xAxis = chart.addCategoryAxis("x", ["Class_Sex"]);
-              xAxis.addOrderRule(["1st Class Female","1st Class Male", "2nd Class Female", "2nd Class Male", "3rd Class Female", "3rd Class Male"]);
+              var xAxis = chart.addCategoryAxis("x", ["Class","Sex"]);
+              xAxis.title = 'Class and Sex'
+              chart.assignColor("Perished", "rgb(217,95,2)");
+              chart.assignColor("Survived", "rgb(27,158,119)");
+              xAxis.addOrderRule(["First", "Second", "Third"])
               var yAxis = chart.addMeasureAxis("y", "Count");
               var Series = chart.addSeries("Survived", dimple.plot.bar);
               Series.addOrderRule(["Survived","Perished"]);
@@ -241,7 +259,12 @@
                   .style("text-anchor", "middle")
                   .style("font-weight", "bold")
                   .style("font-family", "sans-serif")
-                  .text("Survival per Class")
+                  .text("Survival by Class and Sex")
               chart.draw();
               yAxis.titleShape.text("Number of Passangers");
+
+    var Desc3 = d3.select("#description3")
+                                .append("h6")
+                                .text("Titanic's passangers were separated in three classes. The Titanic's first-class passengers were rich and prominent members of the upper class. Second class' passengers were leisure tourists, academics, members of the clergy and middle class English and American families. The third class passengers were rather poor and left their countires in hope of starting new life in the United States.Third class and crew cabins were located in the hold, while promenade areas were on lower decks and in the quarter. They were separated from the promenade decks for wealthier passengers by special partitions – staircases leading to upper decks had metalgates, the keys to which were kept by stewards. Some sources claim that these partitions were required by American immigration laws at the time. The majority of passengers on the Titanic were emigrants. Only 25 percent of the Titanic’s thirdclass passengers survived. On the other hand we can observe high survival rate in the passangers in the first class. In general men regardles in which class there were placed had bigger chance of loosing their life in comparision to woman. Taking this into the consideration men from first class suffered less lost lifes than men from second and third class.")
+                                .attr("align","enter");
   });

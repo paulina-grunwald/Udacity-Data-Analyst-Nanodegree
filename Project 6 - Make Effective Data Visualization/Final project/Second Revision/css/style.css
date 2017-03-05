@@ -1,6 +1,6 @@
 h2 {text-align: center;
     color: black;
-    color:  #005ce6;
+    font-weight: bold;
     font-family: "Palatino Linotype";
     font-size: 30px;
     height: 50px;
@@ -25,7 +25,7 @@ h4 {
         font-weight: lighter;
         font-family: "Palatino Linotype";
         font-size: 14px;
-        height: 70px;
+        height: 30px;
     }
 
 
@@ -43,5 +43,19 @@ h6 {
         font-weight: lighter;
         font-family: "Palatino Linotype";
         font-size: 14px;
-        height: 400px;
+        height: 200px;
     }
+
+button.procent {
+        background-color: rgb(253, 192, 134);
+        padding: 3px;
+        margin: 7px;
+        border-radius: 50%;
+      }
+
+button.count {
+        background-color: rgb(253, 192, 134);
+        padding: 3px;
+        margin: 7px;
+        border-radius: 50%;
+      }

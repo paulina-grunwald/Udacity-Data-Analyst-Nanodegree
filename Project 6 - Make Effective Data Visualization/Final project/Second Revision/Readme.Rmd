@@ -1,0 +1,193 @@
+Survival chances of the Titanic's passangers Analysis by Paulina Grunwald
+============================================================================
+
+```{r global_options, include=FALSE}
+
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+
+
+
+##Introduction
+******
+In this project for creating my visualization I will use Titanic dataset which contains information of 891 passangers out of 2224 passangers and crew on board of the Titanic. The dataset contains information such as passangers' age, sex, embarkment location, in which class were they located, ticket price etc. The purpose of my data visualization is primarily to show which passangers had higher chance to survive looking at the sex, class, embarkment and age variables. As can be seen from the visualization, most males and third class passengers did not survive the disaster.
+
+
+##Dataset wrangling
+******
+Titanic dataset was provided in csv format. As a start of the cleaning process i have loaded the titanic csv file into R studio in order to clean the dataset and prepare final dataframe that will be used for my visualization.
+
+```{r echo=FALSE,warning=FALSE, message=FALSE}
+#Load packages
+require(knitr)
+require(markdown)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+#Load csv file
+titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 6 - Make Effective Data Visualization/Final project/train.csv"))
+```
+
+Below you can find summary of the initital dataset:
+
+```{r echo=FALSE,titanic_dataset}
+#View titanic dataset
+titanic
+```
+
+
+Since i have decided to use only age, sex, embarked and class data I will now remove other columns which i will not use in my investigation. I will also omit all passangers that have NA values for any of the variables. 
+
+```{r echo=FALSE}
+#Remove not needed columns
+titanic$PassengerId <- NULL
+titanic$Cabin <- NULL
+titanic$Name <- NULL
+titanic$Ticket <- NULL
+titanic$Fare <- NULL
+titanic$Cabin <- NULL
+titanic$SibSp <- NULL
+titanic$Parch <- NULL
+
+#Omit NA values
+titanic<- na.omit(titanic)
+titanic[complete.cases(titanic),]
+```
+
+Now i will view summary of my cleaned dataset:
+
+```{r echo=FALSE}
+#Display statistical summary of titanic dataset
+summary(titanic)
+```
+
+I will continue with cleaning process. I have decided to create new columns.
+```{r echo=FALSE}
+
+#Create new column Age_Type to separate aduls and childen into two groups
+titanic$Age_Type  = ""
+titanic$Age_Type[titanic$Age < 18] = "Child"
+titanic$Age_Type[titanic$Age >= 18] = "Adult"
+
+#Assign 0 to Perished and 1 to survived in Survived column for easier understanding
+titanic$Survived[titanic$Survived == 0] = "Perished"
+titanic$Survived[titanic$Survived == 1] = "Survived"
+
+#Rename Pclass column to Class
+colnames(titanic)[colnames(titanic)=="Pclass"] <- "Class"
+
+#Rename Class number of for easier understanding
+titanic$Class[titanic$Class == 1] = "First"
+titanic$Class[titanic$Class == 2] = "Second"
+titanic$Class[titanic$Class == 3] = "Third"
+
+#Rename Location of embarkment for easie understanding
+titanic$Embarked <- as.character(titanic$Embarked)
+titanic$Embarked[titanic$Embarked == "S"] = "Southampton"
+titanic$Embarked[titanic$Embarked == "Q"] = "Queenstown"
+titanic$Embarked[titanic$Embarked == "C"] = "Cherbourg"
+
+#Create Age_Group column - passangers will be separated into age buckets
+titanic$Age_Group   = ""
+titanic$Age_Group <- as.character(titanic$Age_Group )
+titanic$Age_Group[titanic$Age <= 10] = "0-10"
+titanic$Age_Group[titanic$Age > 10 & titanic$Age <= 20] = "11-20"
+titanic$Age_Group[titanic$Age > 20 & titanic$Age <= 30] = "21-30"
+titanic$Age_Group[titanic$Age > 30 & titanic$Age <= 40] = "31-40"
+titanic$Age_Group[titanic$Age > 40 & titanic$Age <= 50] = "41-50"
+titanic$Age_Group[titanic$Age > 50 & titanic$Age <= 60] = "51-60"
+titanic$Age_Group[titanic$Age > 60 & titanic$Age <= 70] = "61-70"
+titanic$Age_Group[titanic$Age > 70 & titanic$Age <= 80] = "71-80"
+
+#Create class_sex column to seperate the passangers by class sex
+titanic$Class_Sex   = ""
+titanic$Class_Sex <- as.character(titanic$Class_Sex )
+titanic$Class_Sex[titanic$Class == "First" & titanic$Sex == "female"] = "1st Class Female"
+titanic$Class_Sex[titanic$Class == "First" & titanic$Sex == "male"] = "1st Class Male"
+titanic$Class_Sex[titanic$Class == "Second" & titanic$Sex == "female"] = "2nd Class Female"
+titanic$Class_Sex[titanic$Class == "Second" & titanic$Sex == "male"] = "2nd Class Male"
+titanic$Class_Sex[titanic$Class == "Third" & titanic$Sex == "female"] = "3rd Class Female"
+titanic$Class_Sex[titanic$Class == "Third" & titanic$Sex == "male"] = "3rd Class Male"
+
+
+#Create count column which will be filled with value of "1". This will help while creating barplot count in my d3.js visualization
+titanic$Count = ""
+titanic$Count <- as.character(titanic$Count)
+titanic$Count = "1"
+
+```
+
+Final dataframe
+```{r}
+titanic
+```
+
+Now i will export the cleaned and reshaped dataframe into csv file which will be used for creating the visualization in D3.js
+```{r echo=FALSE, export_to_csv}
+# Write CSV in R with headers
+write.table(titanic, file = "titanic.csv",row.names=FALSE, na="",col.names=TRUE, sep=",")
+```
+
+
+##Design
+******
+In order to create the data visualization, I have started first with the investigation of the data. I have tried to choose the most important data categories associated with the Titanic passangers. In my opinion the most important are Sex, Class and Age. I believe that they had the biggest impact on the chance of survival of the passangers. For my investigation i have chosen bar plot as in my opinion.
+
+For bar color selection i have used colorbrewer2.org. I wanted to use colorblind safe color scheme. I have chosen qualitative Dark2 palette. To visualize survived passangers I have chosen green color (color of life) and for perished passangers red color. The color and the order of axis are keep consistent over different charts.
+
+I have decided to create bar plots including age, sex and class. The first plot represents survival rate by sex. I wante to show that men had much small survival chance in comparision to woman. The second and third plot represents survivalrte by group. In the second plot I separated the passaners into adults and children (<=18 years old). On the third plot i presented survival rate of passangers in 8 different age groups (0-10, 11-20, 21-30, 41-50, 51-60, 61-70, 71-80 ). I have also added the button that changes the y axis to procent and then back to count. I did that in order to see exact procentages of survived and persihed passangers in all age groups (for example it was difficoult to see exacly the ratio of survivols to persi ed in last rwo age groups). On the fourth plot i have explored survival rate by class. I wanted to show that passangers in the third class were the most affected. On the fifth plot i added another layer to the fourth plot which was sex data. 
+
+##Feedback
+******
+
+After finishing my virst visualization (the visualization can be viewved at http://bl.ocks.org/paulina-grunwald/4914047cebb29ad0227fe086f164cf59) I posted it in the Udacity website forum as well as Google+ Udacity group to get feedback from fellow students. I used the questions provided as guidance to ask for specific feedback such as:
+
+What do you notice in the visualization?
+What questions do you have about the data?
+What relationships do you notice?
+What do you think is the main takeaway from this visualization?
+Is there something you don't understand in the graphic?
+After submission of project for review I received feedback from the reviewer which is also added below. After my second submission, I got another feedback to do some finishing touches for polishing up the visualization.
+
+
+I got the following feedback:
+
+Feedback from Shahrzad (Udacity data analyst forum):
+>Your Visualization looks good!
+>I want to know which age group and which gender was more successful to get survived. In the left bar chart I can conclude that >female passengers had >priority to be survived rather than male passengers. In the right bar chart, I cannot say for sure that >children or adults had priority to be survived. If >you are able to compare the proportions then we would be able to say which age >group had higher survival rate. For example if you compare the proportions >of the survived people in each age group through the >stacked percent bar chart then I think we can make better conclusions.
+
+Feedback from xueming_663398266218 (Udacity data analyst forum):
+>The visualisation is very clean with nice colour, the story you want to tell is also clear for me. 
+>Only one minor question: In the last figure, you used PctAxis as the y axis, while you used counts for the other charts, is there >a special reason?
+
+Feedback from Yannis Pappas (Google +)
+>nice visualization.  Some suggestion I could give is that you missed the title on your second bar plot (Age_Type) and that on the >last two bar plots it is >not clear which column represent which gender.
+
+Feedback Sarah Silva (Google +)
+>I really appreciated the overall contextualization you gave, leveling everyone's knowledge about the story. I agree with Yannis' >observations. The label >"Survived: Perished" was a bit confusion also. I found it interesting the conclusions about which sex and >class had a higher survival rate. I don't know >why the embarking location would be important, though. That's all, congrats!
+
+##Post-feedback
+******
+Following the feedback from the 4 different udacity students, I have implemented the changes in my visualization:
+
+- added 2nd age group bar plot to show exacly people in which age group had the highest chance of survival,
+- added buttons that change y Axis to procent and back to count for plot 3 (age group plot)
+- added titles and corrected y and x axis names for all plots
+- removed plot with embarked location information as it didn't serve very well the story i was trying to convey,
+- changed the colours of the plots to the ones that are more colorblind friendly (i have used Colorbrewer to find new colors).
+
+Improved visualization can be accessed at: 
+
+##Rescources:
+******
+https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color
+http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts
+https://bost.ocks.org/mike/bar/
+http://dimplejs.org/examples_viewer.html?id=bars_vertical_grouped
+https://en.wikipedia.org/wiki/RMS_Titanic
+http://chimera.labs.oreilly.com/books/1230000000345
+http://colorbrewer2.org/#type=qualitative&scheme=Dark2&n=3
