@@ -121,16 +121,23 @@ $(document).ready(function () {
 
 <div id="survival-chances-of-the-titanics-passangers-analysis-by-paulina-grunwald" class="section level1">
 <h1>Survival chances of the Titanic’s passangers Analysis by Paulina Grunwald</h1>
+<style type="text/css">
+
+body, td {
+   font-size: 18px;
+}
+
+</style>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <hr />
-<p>In this project for creating my visualization I will use Titanic dataset which contains information of 891 passangers out of 2224 passangers and crew on board of the Titanic. The dataset contains information such as passangers’ age, sex, embarkment location, in which class were they located, ticket price etc. The purpose of my data visualization is primarily to show which passangers had higher chance to survive looking at the sex, class, embarkment and age variables. As can be seen from the visualization, most males and third class passengers did not survive the disaster.</p>
+<p>In this data visualization project in d3.js and dimple.js I will use Titanic dataset. The dataset contains information of 891 passangers out of 2224 passangers and crew on board of the Titanic. The dataset contains information such as passangers’ age, sex, embarkment location, in which class were they located, ticket price, cabin number etc. The purpose of my data visualization is primarily to show which passangers had higher chance to survive looking at the sex, class and age variables. My visualizaions show that female and children had higher chance of survival than men. The highest survival rate was observed in passangers form the first class. Most of the males from the third class passengers did not survive the disaster.</p>
 </div>
 <div id="dataset-wrangling" class="section level2">
 <h2>Dataset wrangling</h2>
 <hr />
-<p>Titanic dataset was provided in csv format. As a start of the cleaning process i have loaded the titanic csv file into R studio in order to clean the dataset and prepare final dataframe that will be used for my visualization.</p>
-<p>Below you can find summary of the initital dataset:</p>
+<p>Titanic dataset was provided in csv format. As a start of the data preparation process I have loaded the titanic csv file into R studio in order to clean the dataset and prepare final dataframe that will be used for my visualization.</p>
+<p>Below you can find part of the initital dataset:</p>
 <pre><code>## # A tibble: 891 × 12
 ##    PassengerId Survived Pclass
 ##          &lt;int&gt;    &lt;int&gt;  &lt;int&gt;
@@ -147,7 +154,7 @@ $(document).ready(function () {
 ## # ... with 881 more rows, and 9 more variables: Name &lt;fctr&gt;, Sex &lt;fctr&gt;,
 ## #   Age &lt;dbl&gt;, SibSp &lt;int&gt;, Parch &lt;int&gt;, Ticket &lt;fctr&gt;, Fare &lt;dbl&gt;,
 ## #   Cabin &lt;fctr&gt;, Embarked &lt;fctr&gt;</code></pre>
-<p>Since i have decided to use only age, sex, embarked and class data I will now remove other columns which i will not use in my investigation. I will also omit all passangers that have NA values for any of the variables.</p>
+<p>Since i have decided to use only age, sex and and class variables I will now remove other columns which i will not use in my investigation. I will also omit all passangers that have NA values for any of the variables.</p>
 <pre><code>## # A tibble: 714 × 5
 ##    Survived Pclass    Sex   Age Embarked
 ##       &lt;int&gt;  &lt;int&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;fctr&gt;
@@ -170,7 +177,7 @@ $(document).ready(function () {
 ##  Mean   :0.4062   Mean   :2.237                Mean   :29.70   S:554   
 ##  3rd Qu.:1.0000   3rd Qu.:3.000                3rd Qu.:38.00           
 ##  Max.   :1.0000   Max.   :3.000                Max.   :80.00</code></pre>
-<p>I will continue with cleaning process. I have decided to create new columns.</p>
+<p>I will continue with cleaning process. I have decided to create new columns in order to get more insights from the dataset.</p>
 <p>Final dataframe</p>
 <pre><code>## # A tibble: 714 × 9
 ##    Survived  Class    Sex   Age    Embarked Age_Type Age_Group
@@ -187,19 +194,19 @@ $(document).ready(function () {
 ## 10 Survived  Third female     4 Southampton    Child      0-10
 ## # ... with 704 more rows, and 2 more variables: Class_Sex &lt;chr&gt;,
 ## #   Count &lt;chr&gt;</code></pre>
-<p>Now i will export the cleaned and reshaped dataframe into csv file which will be used for creating the visualization in D3.js</p>
+<p>Once the data wrangling process was finished, I have exported the cleaned and reshaped dataframe into csv file. This file will be used for creating the visualization in D3.js S</p>
 </div>
 <div id="design" class="section level2">
 <h2>Design</h2>
 <hr />
-<p>In order to create the data visualization, I have started first with the investigation of the data. I have tried to choose the most important data categories associated with the Titanic passangers. In my opinion the most important are Sex, Class and Age. I believe that they had the biggest impact on the chance of survival of the passangers. For my investigation i have chosen bar plot as in my opinion.</p>
-<p>For bar color selection i have used colorbrewer2.org. I wanted to use colorblind safe color scheme. I have chosen qualitative Dark2 palette. To visualize survived passangers I have chosen green color (color of life) and for perished passangers red color. The color and the order of axis are keep consistent over different charts.</p>
-<p>I have decided to create bar plots including age, sex and class. The first plot represents survival rate by sex. I wante to show that men had much small survival chance in comparision to woman. The second and third plot represents survivalrte by group. In the second plot I separated the passaners into adults and children (&lt;=18 years old). On the third plot i presented survival rate of passangers in 8 different age groups (0-10, 11-20, 21-30, 41-50, 51-60, 61-70, 71-80 ). I have also added the button that changes the y axis to procent and then back to count. I did that in order to see exact procentages of survived and persihed passangers in all age groups (for example it was difficoult to see exacly the ratio of survivols to persi ed in last rwo age groups). On the fourth plot i have explored survival rate by class. I wanted to show that passangers in the third class were the most affected. On the fifth plot i added another layer to the fourth plot which was sex data.</p>
+<p>In order to create the data visualization, I have started first with the investigation of the data. I have tried to choose the most important data categories associated with the Titanic passangers. In my opinion the most important are Sex, Class and Age. I believe that they had the biggest impact on the chance of survival of the passangers. As a prefered data visualization plot for my project i have chosen stacked bar plot because it provides a visual presentation of categorical data. I wanted to stay away from pie chart as they can be often confusing.</p>
+<p>For bar color selection i have used colorbrewer2.org. I wanted to use colorblind safe color scheme. I have chosen qualitative Dark2 palette. To visualize survived passangers I have chosen green color (color of life) and for perished passangers red color (color of blood). The color and the order of axis are keep consistent over different charts to help the viewer to have clear understanding of the story that I am trying to convey.</p>
+<p>I have decided to create bar plots including age, sex and class. I have found that those three variables and survival rate are very closely linked. The first plot represents survival rate by sex. I wanted to show that men had much small survival chance in comparision to woman. It is possible that woman had priority while entering the life boats. The second and third plot represents survival rate by age group. In the second plot I separated the passengers into adults and children (children were considered as &lt;=18 years old). On the third plot I presented survival rate of passengers in 8 different age groups (0-10, 11-20, 21-30, 41-50, 51-60, 61-70, 71-80 ). I have also added the button that changes the y axis to procent and then back to count. I did that in order to see exact procentages of survived and persihed passengers in all age groups (for example it was difficoult to see exacly the ratio of survivors to perished in last two age groups). On the fourth plot i have explored survival rate by class. I wanted to show that passangers in the third class were the most affected by titanic tragedy. On the fifth plot i added another layer to the fourth plot which was sex data. I wanted to show viewers how many men and women survived in class one, two and three.</p>
 </div>
 <div id="feedback" class="section level2">
 <h2>Feedback</h2>
 <hr />
-<p>After finishing my virst visualization (the visualization can be viewved at <a href="http://bl.ocks.org/paulina-grunwald/4914047cebb29ad0227fe086f164cf59" class="uri">http://bl.ocks.org/paulina-grunwald/4914047cebb29ad0227fe086f164cf59</a>) I posted it in the Udacity website forum as well as Google+ Udacity group to get feedback from fellow students. I used the questions provided as guidance to ask for specific feedback such as:</p>
+<p>After finishing my virst visualization (the visualization can be viewved at <a href="http://bl.ocks.org/paulina-grunwald/4914047cebb29ad0227fe086f164cf59" class="uri">http://bl.ocks.org/paulina-grunwald/4914047cebb29ad0227fe086f164cf59</a>) I have posted it in the Udacity website forum as well as Google+ Udacity group in order to get feedback from fellow students. I used the questions provided as guidance to ask for specific feedback such as:</p>
 <p>What do you notice in the visualization? What questions do you have about the data? What relationships do you notice? What do you think is the main takeaway from this visualization? Is there something you don’t understand in the graphic? After submission of project for review I received feedback from the reviewer which is also added below. After my second submission, I got another feedback to do some finishing touches for polishing up the visualization.</p>
 <p>I got the following feedback:</p>
 <p>Feedback from Shahrzad (Udacity data analyst forum):</p>
@@ -216,7 +223,7 @@ $(document).ready(function () {
 </blockquote>
 <p>Feedback Sarah Silva (Google +)</p>
 <blockquote>
-<p>I really appreciated the overall contextualization you gave, leveling everyone’s knowledge about the story. The label &gt; “Survived: Perished” was a bit confusion also. I found it interesting the conclusions about which sex and class had a higher survival rate. I don’t know why the embarking location would &gt; be important, though. That’s all, congrats!</p>
+<p>I really appreciated the overall contextualization you gave, leveling everyone’s knowledge about the story. The label “Survived: Perished” was a bit confusion also. I found it interesting the conclusions about which sex and class had a higher survival rate. I don’t know why the embarking location would &gt; be important, though. That’s all, congrats!</p>
 </blockquote>
 </div>
 <div id="post-feedback" class="section level2">
@@ -224,18 +231,20 @@ $(document).ready(function () {
 <hr />
 <p>Following the feedback from the 4 different udacity students, I have implemented the changes in my visualization:</p>
 <ul>
-<li>added 2nd age group bar plot to show exacly people in which age group had the highest chance of survival,</li>
-<li>added buttons that change y Axis to procent and back to count for plot 3 (age group plot)</li>
-<li>added titles and corrected y and x axis names for all plots</li>
-<li>removed plot with embarked location information as it didn’t serve very well the story i was trying to convey,</li>
-<li>changed the colours of the plots to the ones that are more colorblind friendly (i have used Colorbrewer to find new colors).</li>
+<li>I have added 2nd age group bar plot to show exacly people in which age group had the highest chance of survival,</li>
+<li>I have added buttons that change y Axis to procent and back to count for plot 3 (age group plot)</li>
+<li>I have added titles and corrected y and x axis names for all plots</li>
+<li>I have kept the “survived” and “perished” words in lengend of all of my graphs. I believe that they are self explenatory.</li>
+<li>I have removed plot with embarked location information as it didn’t serve very well the story i was trying to convey.</li>
+<li>I have changed the colours of the plots to the ones that are more colorblind friendly (i have used Colorbrewer to find new colors).</li>
 </ul>
+<p>The feedback from my fellow students helped me to improve my visualiztion and made me think about few other improvements that i have introduced in my final visualization.</p>
 <p>Improved visualization can be accessed at: <a href="http://bl.ocks.org/paulina-grunwald/1b38df3ac5faa3ce0f632d4797ad6972" class="uri">http://bl.ocks.org/paulina-grunwald/1b38df3ac5faa3ce0f632d4797ad6972</a></p>
 </div>
 <div id="rescources" class="section level2">
 <h2>Rescources:</h2>
 <hr />
-<p><a href="https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color" class="uri">https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color</a> <a href="http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts" class="uri">http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts</a> <a href="https://bost.ocks.org/mike/bar/" class="uri">https://bost.ocks.org/mike/bar/</a> <a href="http://dimplejs.org/examples_viewer.html?id=bars_vertical_grouped" class="uri">http://dimplejs.org/examples_viewer.html?id=bars_vertical_grouped</a> <a href="https://en.wikipedia.org/wiki/RMS_Titanic" class="uri">https://en.wikipedia.org/wiki/RMS_Titanic</a> <a href="http://chimera.labs.oreilly.com/books/1230000000345" class="uri">http://chimera.labs.oreilly.com/books/1230000000345</a> <a href="http://colorbrewer2.org/#type=qualitative&amp;scheme=Dark2&amp;n=3" class="uri">http://colorbrewer2.org/#type=qualitative&amp;scheme=Dark2&amp;n=3</a></p>
+<p><a href="https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color" class="uri">https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.color</a> <a href="http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts" class="uri">http://stackoverflow.com/questions/25416063/title-for-charts-and-axes-in-dimple-js-charts</a> <a href="https://bost.ocks.org/mike/bar/" class="uri">https://bost.ocks.org/mike/bar/</a> <a href="http://dimplejs.org/examples_viewer.html?id=bars_vertical_grouped" class="uri">http://dimplejs.org/examples_viewer.html?id=bars_vertical_grouped</a> <a href="https://en.wikipedia.org/wiki/RMS_Titanic" class="uri">https://en.wikipedia.org/wiki/RMS_Titanic</a> <a href="http://chimera.labs.oreilly.com/books/1230000000345" class="uri">http://chimera.labs.oreilly.com/books/1230000000345</a> <a href="http://colorbrewer2.org/#type=qualitative&amp;scheme=Dark2&amp;n=3" class="uri">http://colorbrewer2.org/#type=qualitative&amp;scheme=Dark2&amp;n=3</a> <a href="https://en.wikipedia.org/wiki/Bar_chart" class="uri">https://en.wikipedia.org/wiki/Bar_chart</a></p>
 </div>
 </div>
 

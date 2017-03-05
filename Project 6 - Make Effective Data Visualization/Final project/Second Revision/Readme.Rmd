@@ -4,8 +4,15 @@ Survival chances of the Titanic's passangers Analysis by Paulina Grunwald
 ---
 date: "March 3, 2017"
 output: html_document
-fontsize: 12pt
 ---
+
+<style type="text/css">
+
+body, td {
+   font-size: 18px;
+}
+
+</style>
 
 
 ```{r global_options, include=FALSE}
@@ -18,12 +25,12 @@ knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
 
 ##Introduction
 ******
-In this project for creating my visualization I will use Titanic dataset which contains information of 891 passangers out of 2224 passangers and crew on board of the Titanic. The dataset contains information such as passangers' age, sex, embarkment location, in which class were they located, ticket price etc. The purpose of my data visualization is primarily to show which passangers had higher chance to survive looking at the sex, class, embarkment and age variables. As can be seen from the visualization, most males and third class passengers did not survive the disaster.
+In this data visualization project in d3.js and dimple.js  I will use Titanic dataset. The dataset contains information of 891 passangers out of 2224 passangers and crew on board of the Titanic. The dataset contains information such as passangers' age, sex, embarkment location, in which class were they located, ticket price, cabin number etc. The purpose of my data visualization is primarily to show which passangers had higher chance to survive looking at the sex, class and age variables. My visualizaions show that female and children had higher chance of survival than men. The highest survival rate was observed in passangers form the first class. Most of the males from the third class passengers did not survive the disaster.
 
 
 ##Dataset wrangling
 ******
-Titanic dataset was provided in csv format. As a start of the cleaning process i have loaded the titanic csv file into R studio in order to clean the dataset and prepare final dataframe that will be used for my visualization.
+Titanic dataset was provided in csv format. As a start of the data preparation process I have loaded the titanic csv file into R studio in order to clean the dataset and prepare final dataframe that will be used for my visualization.
 
 ```{r echo=FALSE,warning=FALSE, message=FALSE}
 #Load packages
@@ -38,7 +45,7 @@ library(RColorBrewer)
 titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 6 - Make Effective Data Visualization/Final project/Second Revision/titanic_data.csv"))
 ```
 
-Below you can find summary of the initital dataset:
+Below you can find part of the initital dataset:
 
 ```{r echo=FALSE,titanic_dataset}
 #View titanic dataset
@@ -46,7 +53,7 @@ titanic
 ```
 
 
-Since i have decided to use only age, sex, embarked and class data I will now remove other columns which i will not use in my investigation. I will also omit all passangers that have NA values for any of the variables. 
+Since i have decided to use only age, sex and and class variables I will now remove other columns which i will not use in my investigation. I will also omit all passangers that have NA values for any of the variables. 
 
 ```{r echo=FALSE}
 #Remove not needed columns
@@ -71,7 +78,7 @@ Now i will view summary of my cleaned dataset:
 summary(titanic)
 ```
 
-I will continue with cleaning process. I have decided to create new columns.
+I will continue with cleaning process. I have decided to create new columns in order to get more insights from the dataset. 
 ```{r echo=FALSE}
 
 #Create new column Age_Type to separate aduls and childen into two groups
@@ -132,7 +139,8 @@ Final dataframe
 titanic
 ```
 
-Now i will export the cleaned and reshaped dataframe into csv file which will be used for creating the visualization in D3.js
+Once the data wrangling process was finished, I have  exported the cleaned and reshaped dataframe into csv file. This file will be used for creating the visualization in D3.js
+S
 ```{r echo=FALSE, export_to_csv}
 # Write CSV in R with headers
 write.table(titanic, file = "titanic.csv",row.names=FALSE, na="",col.names=TRUE, sep=",")
@@ -141,16 +149,16 @@ write.table(titanic, file = "titanic.csv",row.names=FALSE, na="",col.names=TRUE,
 
 ##Design
 ******
-In order to create the data visualization, I have started first with the investigation of the data. I have tried to choose the most important data categories associated with the Titanic passangers. In my opinion the most important are Sex, Class and Age. I believe that they had the biggest impact on the chance of survival of the passangers. For my investigation i have chosen bar plot as in my opinion.
+In order to create the data visualization, I have started first with the investigation of the data. I have tried to choose the most important data categories associated with the Titanic passangers. In my opinion the most important are Sex, Class and Age. I believe that they had the biggest impact on the chance of survival of the passangers. As a prefered data visualization plot for my project i have chosen stacked bar plot because it provides a visual presentation of categorical data. I wanted to stay away from pie chart as they can be often confusing.
 
-For bar color selection i have used colorbrewer2.org. I wanted to use colorblind safe color scheme. I have chosen qualitative Dark2 palette. To visualize survived passangers I have chosen green color (color of life) and for perished passangers red color. The color and the order of axis are keep consistent over different charts.
+For bar color selection i have used colorbrewer2.org. I wanted to use colorblind safe color scheme. I have chosen qualitative Dark2 palette. To visualize survived passangers I have chosen green color (color of life) and for perished passangers red color (color of blood). The color and the order of axis are keep consistent over different charts to help the viewer to have clear understanding of the story that I am trying to convey.
 
-I have decided to create bar plots including age, sex and class. The first plot represents survival rate by sex. I wante to show that men had much small survival chance in comparision to woman. The second and third plot represents survivalrte by group. In the second plot I separated the passaners into adults and children (<=18 years old). On the third plot i presented survival rate of passangers in 8 different age groups (0-10, 11-20, 21-30, 41-50, 51-60, 61-70, 71-80 ). I have also added the button that changes the y axis to procent and then back to count. I did that in order to see exact procentages of survived and persihed passangers in all age groups (for example it was difficoult to see exacly the ratio of survivols to persi ed in last rwo age groups). On the fourth plot i have explored survival rate by class. I wanted to show that passangers in the third class were the most affected. On the fifth plot i added another layer to the fourth plot which was sex data. 
+I have decided to create bar plots including age, sex and class. I have found that those three variables and survival rate are very closely linked. The first plot represents survival rate by sex. I wanted to show that men had much small survival chance in comparision to woman. It is possible that woman had priority while entering the life boats. The second and third plot represents survival rate by age group. In the second plot I separated the passengers into adults and children (children were considered as <=18 years old). On the third plot I presented survival rate of passengers in 8 different age groups (0-10, 11-20, 21-30, 41-50, 51-60, 61-70, 71-80 ). I have also added the button that changes the y axis to procent and then back to count. I did that in order to see exact procentages of survived and persihed passengers in all age groups (for example it was difficoult to see exacly the ratio of survivors to perished in last two age groups). On the fourth plot i have explored survival rate by class. I wanted to show that passangers in the third class were the most affected by titanic tragedy. On the fifth plot i added another layer to the fourth plot which was sex data. I wanted to show viewers how many men and women survived in class one, two and three. 
 
 ##Feedback
 ******
 
-After finishing my virst visualization (the visualization can be viewved at http://bl.ocks.org/paulina-grunwald/4914047cebb29ad0227fe086f164cf59) I posted it in the Udacity website forum as well as Google+ Udacity group to get feedback from fellow students. I used the questions provided as guidance to ask for specific feedback such as:
+After finishing my virst visualization (the visualization can be viewved at http://bl.ocks.org/paulina-grunwald/4914047cebb29ad0227fe086f164cf59) I have posted it in the Udacity website forum as well as Google+ Udacity group in order to get feedback from fellow students. I used the questions provided as guidance to ask for specific feedback such as:
 
 What do you notice in the visualization?
 What questions do you have about the data?
@@ -188,11 +196,14 @@ Feedback Sarah Silva (Google +)
 ******
 Following the feedback from the 4 different udacity students, I have implemented the changes in my visualization:
 
-- added 2nd age group bar plot to show exacly people in which age group had the highest chance of survival,
-- added buttons that change y Axis to procent and back to count for plot 3 (age group plot)
-- added titles and corrected y and x axis names for all plots
-- removed plot with embarked location information as it didn't serve very well the story i was trying to convey,
-- changed the colours of the plots to the ones that are more colorblind friendly (i have used Colorbrewer to find new colors).
+- I have added 2nd age group bar plot to show exacly people in which age group had the highest chance of survival,
+- I have added buttons that change y Axis to procent and back to count for plot 3 (age group plot)
+- I have added titles and corrected y and x axis names for all plots
+- I have kept the "survived" and "perished" words in lengend of all of my graphs. I believe that they are self explenatory.
+- I have removed plot with embarked location information as it didn't serve very well the story i was trying to convey.
+- I have changed the colours of the plots to the ones that are more colorblind friendly (i have used Colorbrewer to find new colors).
+
+The feedback from my fellow students helped me to improve my visualiztion and made me think about few other improvements that i have introduced in my final visualization.
 
 Improved visualization can be accessed at: http://bl.ocks.org/paulina-grunwald/1b38df3ac5faa3ce0f632d4797ad6972
 
@@ -206,3 +217,4 @@ http://dimplejs.org/examples_viewer.html?id=bars_vertical_grouped
 https://en.wikipedia.org/wiki/RMS_Titanic
 http://chimera.labs.oreilly.com/books/1230000000345
 http://colorbrewer2.org/#type=qualitative&scheme=Dark2&n=3
+https://en.wikipedia.org/wiki/Bar_chart
