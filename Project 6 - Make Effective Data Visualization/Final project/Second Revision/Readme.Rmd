@@ -1,12 +1,18 @@
 Survival chances of the Titanic's passangers Analysis by Paulina Grunwald
 ============================================================================
 
+---
+date: "March 3, 2017"
+output: html_document
+fontsize: 12pt
+---
+
+
 ```{r global_options, include=FALSE}
 
 knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
                       echo=FALSE, warning=FALSE, message=FALSE)
 ```
-
 
 
 
@@ -29,7 +35,7 @@ library(ggplot2)
 library(RColorBrewer)
 
 #Load csv file
-titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 6 - Make Effective Data Visualization/Final project/train.csv"))
+titanic <-  tbl_df(read.csv("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 6 - Make Effective Data Visualization/Final project/Second Revision/titanic_data.csv"))
 ```
 
 Below you can find summary of the initital dataset:
@@ -157,18 +163,26 @@ After submission of project for review I received feedback from the reviewer whi
 I got the following feedback:
 
 Feedback from Shahrzad (Udacity data analyst forum):
->Your Visualization looks good!
->I want to know which age group and which gender was more successful to get survived. In the left bar chart I can conclude that >female passengers had >priority to be survived rather than male passengers. In the right bar chart, I cannot say for sure that >children or adults had priority to be survived. If >you are able to compare the proportions then we would be able to say which age >group had higher survival rate. For example if you compare the proportions >of the survived people in each age group through the >stacked percent bar chart then I think we can make better conclusions.
+
+> Your Visualization looks good! I want to know which age group and which gender was more successful to get survived. In the left bar chart I can conclude 
+> that female passengers had  priority to be survived rather than male passengers. In the right bar chart, I cannot say for sure that children or adults 
+> had priority to be survived. If you are able to compare the proportions then we would be able to say which age group had higher survival rate. For 
+> example if you compare the proportions of the survived people in each age group through the >stacked percent bar chart then I think we can make better 
+> conclusions.
 
 Feedback from xueming_663398266218 (Udacity data analyst forum):
->The visualisation is very clean with nice colour, the story you want to tell is also clear for me. 
->Only one minor question: In the last figure, you used PctAxis as the y axis, while you used counts for the other charts, is there >a special reason?
+
+> The visualisation is very clean with nice colour, the story you want to tell is also clear for me. Only one minor question: In the last figure, you used 
+> PctAxis as the y axis, while you used counts for the other charts, is there >a special reason?
 
 Feedback from Yannis Pappas (Google +)
->nice visualization.  Some suggestion I could give is that you missed the title on your second bar plot (Age_Type) and that on the >last two bar plots it is >not clear which column represent which gender.
+
+> Nice visualization.  Some suggestion I could give is that you missed the title on your second bar plot (Age_Type) and that on the last two bar plots it is > not clear which column represent which gender.
 
 Feedback Sarah Silva (Google +)
->I really appreciated the overall contextualization you gave, leveling everyone's knowledge about the story. I agree with Yannis' >observations. The label >"Survived: Perished" was a bit confusion also. I found it interesting the conclusions about which sex and >class had a higher survival rate. I don't know >why the embarking location would be important, though. That's all, congrats!
+
+> I really appreciated the overall contextualization you gave, leveling everyone's knowledge about the story. The label "Survived: Perished" was a bit 
+> confusion also. I found it interesting the conclusions about which sex and class had a higher survival rate. I don't know why the embarking location would > be important, though. That's all, congrats!
 
 ##Post-feedback
 ******
@@ -180,7 +194,8 @@ Following the feedback from the 4 different udacity students, I have implemented
 - removed plot with embarked location information as it didn't serve very well the story i was trying to convey,
 - changed the colours of the plots to the ones that are more colorblind friendly (i have used Colorbrewer to find new colors).
 
-Improved visualization can be accessed at: 
+Improved visualization can be accessed at: http://bl.ocks.org/paulina-grunwald/1b38df3ac5faa3ce0f632d4797ad6972
+
 
 ##Rescources:
 ******

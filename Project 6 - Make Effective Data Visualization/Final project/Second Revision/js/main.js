@@ -6,7 +6,7 @@
 //description 
     var Header = d3.select('#description')
                                 .append("h3")
-                                .text("RMS Titanic was a British passenger liner that sank in the North Atlantic Ocean in the early morning of 15 April 1912, after colliding with an iceberg during her maiden voyage from Southampton to New York City. Of the 2,224 passengers and crew aboard, more than 1,500 died in the sinking, making it one of the deadliest commercial peacetime maritime disasters in modern history. Passengers and some crew members were evacuated in lifeboats and many of them were launched only partially loaded. There were not enought lifeboats for all the passangers and due to the ocean's temperature it was not possible to survive long time in the water. Below you will find a survivor's breakdown of the Titanic passangers. It will include following data: gender, class, age, port of embarkment. Unfortunatelly only the data of only 891 passengers were available. After the data clean-up of the original dataset (removing passangers that had missing data) 715 passangers remained.")
+                                .text("RMS Titanic was a British passenger liner that sank in the North Atlantic Ocean in the early morning of 15 April 1912, after colliding with an iceberg during her maiden voyage from Southampton to New York City. Of the 2,224 passengers and crew aboard, more than 1,500 died in the sinking, making it one of the deadliest commercial peacetime maritime disasters in modern history. Passengers and some crew members were evacuated in lifeboats and many of them were launched only partially loaded. There were not enough lifeboats for all the passengers and due to the ocean's temperature it was not possible to survive long time in the water. Below you will find a survivor's breakdown of the Titanic passengers. It will include following data: gender, class, age, port of embankment. Unfortunately only the data of only 891 passengers were available. After the data clean-up of the original dataset (removing passengers that had missing data) 715 passengers remained.")
                                 .attr("align","center");
     //description 
     var question = d3.select('#question')
@@ -85,7 +85,7 @@
     //description graph1
     var Desc1 = d3.select('#description1')
                                 .append("h4")
-                                .text("Looking at above displayed plots we can clearly observe that more women than men survived. Only about 1/5 of all male passangers survived wheras 3/4 of female managed to save their lifes. Being a child (people below and including 18 years old are considered as children) also turned out have positive infuence on the chances of survival. Let's have a look at survival rate in various age groups. Click on procent and count button to display to change y Axis display.")
+                                .text("Looking at above displayed plots we can clearly observe that more women than men survived. Only about 1/5 of all male passengers survived whereas 3/4 of female managed to save their life. Being a child (in my investigation people below and including 18 years old are considered as children) also turned out have positive influence on the chances of survival. Let's have a look at survival rate in various age groups. Click on percent and count buttons to change y Axis display.")
                                 .attr("align","center");
 
 
@@ -118,7 +118,7 @@
                   .style("font-family", "sans-serif")
                   .text("Survival rate by age group")
       chart.draw();
-      yAxis.titleShape.text("Procent of Passangers");
+      yAxis.titleShape.text("Percent of Passangers");
 
 
     // Upon clicking the button, chart of Class perspective will be created
@@ -139,7 +139,7 @@
                 xAxis.title = 'Age group'
                 xAxis.addOrderRule(["0-10","11-20", "21-30", "31-40", "41-50", "51-60", "61-70","71-80"])
                 var yAxis = chart.addPctAxis("y", "Count");
-                yAxis.title = 'Procent of Passangers'
+                yAxis.title = 'Percent of Passangers'
                 var Series = chart.addSeries("Survived", dimple.plot.bar);
                 Series.addOrderRule(["Survived","Perished"]);
                 var Legend = chart.addLegend(60, 23, 350, 20, "right");
@@ -196,7 +196,7 @@
 //description2
   var Desc2 = d3.select('#description2')
                                 .append("h4")
-                                .text("Having closer look at the survived versus perished passangers in various age group we can conclude that passangers from age 0 to 10 had the biggest chance of survial. The passangers in age group 61 to 80 had the lower chance of survival.")
+                                .text("Having closer look at the survived versus perished passengers in various age group we can conclude that the passengers from age 0 to 10 had the biggest chance of survival. The passengers in age group 61 to 80 had the lowest chance of survival.")
                                 .attr("align","center");
                               
 
@@ -265,6 +265,6 @@
 
     var Desc3 = d3.select("#description3")
                                 .append("h6")
-                                .text("Titanic's passangers were separated in three classes. The Titanic's first-class passengers were rich and prominent members of the upper class. Second class' passengers were leisure tourists, academics, members of the clergy and middle class English and American families. The third class passengers were rather poor and left their countires in hope of starting new life in the United States.Third class and crew cabins were located in the hold, while promenade areas were on lower decks and in the quarter. They were separated from the promenade decks for wealthier passengers by special partitions – staircases leading to upper decks had metalgates, the keys to which were kept by stewards. Some sources claim that these partitions were required by American immigration laws at the time. The majority of passengers on the Titanic were emigrants. Only 25 percent of the Titanic’s thirdclass passengers survived. On the other hand we can observe high survival rate in the passangers in the first class. In general men regardles in which class there were placed had bigger chance of loosing their life in comparision to woman. Taking this into the consideration men from first class suffered less lost lifes than men from second and third class.")
+                                .text("Titanic's passengers were separated in three classes. The Titanic's first-class passengers were rich and prominent members of the upper class. Titanic second class passengers were leisure tourists, academics, members of the clergy and middle class English and American families. The third class consisted of rather poor passengers who left their countries in hope of starting new life in the United States. Third class and crew cabins were located in the hold, while promenade areas were on lower decks and in the quarter. They were separated from the promenade decks for wealthier passengers by special partitions – staircases leading to upper decks had metal gates. They key to the gates was kept by the vessel crew. Some sources claim that these partitions were required by American immigration laws at the time. The majority of passengers on the Titanic were emigrants. It Only 25 percent of the Titanic’s third class passengers survived. On the other hand we can observe high survival rate in the passengers in the first class. According to many sources they had easier access to the life boats. In general men (regardless in which class there were placed) had bigger chance of loosing their life in comparison to woman. We have to remember though that much bigger percent of men from 3rd class perished in comparison to the first class.")
                                 .attr("align","enter");
   });
