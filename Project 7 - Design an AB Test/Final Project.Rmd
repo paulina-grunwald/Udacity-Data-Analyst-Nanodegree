@@ -1,0 +1,111 @@
+White Wine Exploratory Data Analysis by Paulina Grunwald
+========================================================
+
+```{r global_options, include=FALSE}
+
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                      echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+
+```{r echo=FALSE,warning=FALSE, message=FALSE}
+#Load packages
+library(knitr)
+library(tibble)
+library(tidyr)
+library(dplyr)
+```
+
+```{r}
+setwd("c:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 7 - Design an AB Test")
+```
+
+
+# A/B Testing
+
+## Experiment Summary
+
+At the time of this experiment, Udacity courses currently have two options on the home page: "start free trial", and "access course materials". If the student clicks "start free trial", they will be asked to enter their credit card information, and then they will be enrolled in a free trial for the paid version of the course. After 14 days, they will automatically be charged unless they cancel first. If the student clicks "access course materials", they will be able to view the videos and take the quizzes for free, but they will not receive coaching support or a verified certificate, and they will not submit their final project for feedback.
+
+In the experiment, Udacity tested a change where if the student clicked "start free trial", they were asked how much time they had available to devote to the course. If the student indicated 5 or more hours per week, they would be taken through the checkout process as usual. If they indicated fewer than 5 hours per week, a message would appear indicating that Udacity courses usually require a greater time commitment for successful completion, and suggesting that the student might like to access the course materials for free. At this point, the student would have the option to continue enrolling in the free trial, or access the course materials for free instead. This screenshot shows what the experiment looks like.
+
+
+
+The hypothesis was that this might set clearer expectations for students upfront, thus reducing the number of frustrated students who left the free trial because they didn't have enough time-without significantly reducing the number of students to continue past the free trial and eventually complete the course. If this hypothesis held true, Udacity could improve the overall student experience and improve coaches' capacity to support students who are likely to complete the course.
+
+The unit of diversion is a cookie, although if the student enrolls in the free trial, they are tracked by user-id from that point forward. The same user-id cannot enroll in the free trial twice. For users that do not enroll, their user-id is not tracked in the experiment, even if they were signed in when they visited the course overview page.
+
+## Experiment Design
+
+
+
+## Metric Choice
+
+The most important part of any AB test is to identify correct Evaluation and Invariant Matrices. Evaluation metric defines the parameters that are expected to change between the control and the experiment group. Invariant matrices, used for sanity checking(explained in later section) , defines the parameters that are not expected to change between the control group and experiment group. For my experiment i will choose both Invariant and evaluation metric. 
+
+If the hypothesis is true, the number of user-ids to enroll would be reduced, eliminating the unprepared students, with payments/checkouts not decreasing.
+
+
+The metrics below were considered for this experiment. dmindmin is the practical significance boundary for each metric.
+
+Number of cookies: That is, number of unique cookies to view the course overview page. (dmin=3000dmin=3000)
+
+Number of user-ids: That is, number of users who enroll in the free trial. (dmin=50dmin=50)
+
+Number of clicks: That is, number of unique cookies to click the "Start free trial" button (which happens before the free trial screener is trigger). (dmin=240dmin=240)
+
+Click-through-probability: That is, number of unique cookies to click the "Start free trial" button divided by number of unique cookies to view the course overview page. (dmin=0.01dmin=0.01)
+
+Gross conversion: That is, number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. (dmin=0.01dmin=0.01)
+
+Retention: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by number of user-ids to complete checkout. (dmin=0.01dmin=0.01)
+
+Net conversion: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of unique cookies to click the "Start free trial" button. (dmin=0.0075dmin=0.0075)
+
+
+### Invariant Metric
+
+*Number of cookies*: The number of unique cookies to view the course overview page. It is a unit of diversion and it will not by affected by the experiment. T
+
+*Number of clicks*: The number of unique users/students (unique cookies) that click on the "start free trial" button. Here the button is clicked prior to the free trial screen appearing.
+
+*Click-through-probability*: The number of unique cookies to click on the "start free trail" button divided by the number of unique cookies to view the course overview page.
+
+
+*Number of User-Ids*: The number of users who enrolled in the free trial. I have decided not to use this metric we are interested in coming to know how many unique clicks we will on "start free trial" button. 
+
+
+### Evaluation Metric
+
+In order to launch the experiment, we want to decrease the enrollment of unprepared students, i.e the gross conversion should decrease, while not reducing the number of students who complete the free trial and make a payment, i.e the net converion should either stay the same or go up.
+
+*Gross conversion*: The number of user-ids that enroll in the free trial divided by the number of unique cookies to click on the "start free trial" button. The number of enrollments can be affected by the experiment and as a result the gross conversion; therefore this will be used as an evaluation metric. There should be a statisticial significant reduction in enrollment.
+
+*Retention*: The number of user-ids that stayed enrolled past the 14 day free trial (made a payment) divided by the number of unique cookies that clicked on the "start free trial" button. The number of payments can be affected the experiement and retention values; therefore this will be used as an evaluation metric.
+
+*Net conversion*: The number of user-ids to remain enrolled past the 14 day free trial (made a payment) divided by the number of unique cookies that clicked on the "start free trial" button. The number of payments can be affected by the experiment and as a result the net conversion, this will be used as an evaluation metric. There should be a statisticial significant increase in payment/continued enrollment after the free trial.
+
+If the stated before hypothesis is correct, we should be able to observe following changes in evaluation metric:
+
+- gross conversion should be lower (students are informed on how much time the study requires and those that may not have ebought time would likely not join 14th day trial,
+- since we expect the gross conversion to be lower naturally the rate should increase.
+- net conversion should not change. The number of studenets that would continue the study after 14 day trial should stay approx. similar.
+
+
+## Measuring Variability (stadard deviation)
+
+The below presented table contains rough estimates of the baseline values for these metrics (again, these numbers have been changed from Udacity's true numbers).
+
+```{r}
+setwd("C:/Personal/GitHub/Udacity-Data-Analyst-Nanodegree/Project 7 - Design an AB Test")
+baseline_values <- tbl_df(read.csv('baseline_values.csv', header = FALSE, colClasses = "character"))
+baseline_values
+```
+
+
+For each evaluation metric i have chosen, I will estimate its standard deviation analytically. The standard deviation is computed with - sqrt(p(1-p)/n)
+
+
+
+
+### Sizing
