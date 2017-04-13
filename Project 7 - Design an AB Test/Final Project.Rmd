@@ -56,13 +56,13 @@ The most important part of any AB test is to identify correct evaluation and inv
 
 ####**2.11 Invariant Metric**
 
+I have chosen following metrics as invariant:
 **Number of cookies**: The number of unique cookies to view the course overview page. It is a unit of diversion and it will not by affected by the experiment.
 
 **Number of clicks**: The number of unique users/students (unique cookies) that click on the "start free trial" button. Here the button is clicked prior to the free trial screen appearing.
 
 **Click-through-probability**: The number of unique cookies to click on the "start free trail" button divided by the number of unique cookies to view the course overview page.
 
-**Number of User-Ids**: The number of users who enrolled in the free trial. I have decided not to use this metric we are interested in coming to know how many unique clicks we will on "start free trial" button. 
 
 
 ####**2.12 Evaluation Metric**
@@ -75,9 +75,18 @@ Before we start the experiment we need to choose the evaluation metric that we a
 
 **Net conversion**: The number of user-ids to remain enrolled past the 14 day free trial (made a payment) divided by the number of unique cookies that clicked on the "start free trial" button. The number of payments can be affected by the experiment and as a result the net conversion, this will be used as an evaluation metric. There should be a statisticial significant increase in payment/continued enrollment after the free trial.
 
+I have decided not to use following metrics in my experiment:
+
+**Number of User-Ids**: The number of users who enrolled in the free trial. This metric can not be consider as invariat metric because it is expected to change between control and experiment group. I have decided not to use this metric because gross conversion already reflects number of id users (as a fraction of unique users not as a count) and I think it would better suit our experiment.
+
 The hypothesis for the experiment is following:
 - Since students will be will be informed by the new screener how much time they need to dedicate for the course we would expect that the gross conversion will decrease (less students will start 14 days trail). 
-- It is very likely that net conversion will stay the same. If the net conversion will decrease that would be negative feedback for our experiment. I 
+- It is very likely that net conversion will stay the same. If the net conversion will decrease that would be negative feedback for our experiment. 
+
+If our hypothesis is correct we are looking for the following results in order to launch the experiment :
+- gross conversion  decreases as students that do not have enought time to study would not join free trial due to the information included in the screener,
+- net conversion will stay the same as the number of students continuing the cours after 14 days trial has not changed,
+- retention would increase as only motivated students potentially joined the trial (rest was eliminated by the screener).
 
 Later on we will assess those metric to see if any change occured and if we can confirm the hypothesis.
 
@@ -182,9 +191,7 @@ The largest sample size would be required for retention. The number is quite big
 
 It's important to determine to translate our ideal size of the experiment into practical terms. For this duration, time of running the experiment and what fraction of the traffic would be send to the experiment. The number of the exposted users to the experiment will be related to the risk that it brings. You want to make sure that user will not get flustrated with the new feature. In case of our experiment the change is rather minor and most likely not bringing a lot of risk. This mean that we can divert majority of our traffic to the experiment.
 
-I will exlude retention as an evaluation metric as it requires too many pages views to complete experiment. The only limitation regarding pageviews in this experiment will be net conversion(685,325 pageviews). If we would divert 100% of traffic to the experiment then it would take approx. 18 days to complete. Since I do not want to divert all of our traffic i have decided divert 75% of the traffic. Divering 75% of traffic it means we will finish our experiment in: 685325/(40,000*0.75) = 23 days.
-
-23 days is just over three week times. This would assure that we have at least three weekends and weekdays of three weeks (we would have good grip of comparision of the traffic between weekend and weekdays). The experiment should also be run outside of any holiday days at those affect heavily trafic and user patterns.
+I will exclude retention as an evaluation metric as it requires too many pages views to complete experiment. The only limitation regarding pageviews in this experiment will be net conversion(685,325 pageviews). If we would divert 100% of traffic to the experiment then it would take approx. 18 days to complete. In my opinion the experiment is not risky. We are not dealing with the sensitive data and nobody can get hurt due to this experiment. I don't mind to divert 100% of trafic to my experiment but i have decided divert 75% of the traffic instead. Divering 75% of traffic it means we will finish our experiment in: 685325/(40,000*0.75) = 23 days.23 days is just over three week times. This would assure that we have at least three weekends and weekdays of three weeks (we would have good grip of comparision of the traffic between weekend and weekdays). The experiment should also be run outside of any holiday days at those affect heavily trafic and user patterns. I trust that 23 days experiment would bring us better view on the data over the course of weekend and weekdays.
 
 
 ##3.Experiment Analysis
@@ -207,8 +214,8 @@ $\alpha$ = 0.05
 Z (z score of the confidence level)  = 1.96  
 p (probability of diverting cookie in control or experiment group) = 0.5  
 
-SE = $\sqrt{\frac{0.5*(1 - 0.5)}{345543 + 344660}} = 0.00601841$  
-m (margin of error) = SE * 1.96 = 0.0011796  
+SE = $\sqrt{\frac{0.5*(1 - 0.5)}{345543 + 344660}} = 0.006$  
+m (margin of error) = SE * 1.96 = 0.0012  
 CI (confidence interval) = [0.5-m, 0.5+m] = [0.4988, 0.5012]  
 Observed value = $\frac{344,660}{690,203}$ = 0.50  
 This invartiant metric passes sanity check.  
@@ -222,10 +229,10 @@ Total pageview (in control and experiment group): 28378 + 28325 = 56703
 $\alpha$  = 0.05  
 z = 1.96  
 p =  0.5 (probability of diverting clicks in control or experiment group)  
-SE = $\sqrt{\frac{0.5*(1 - 0.5)}{28378 + 28325}} = 0.002099747$ 
+SE = $\sqrt{\frac{0.5*(1 - 0.5)}{28378 + 28325}} = 0.0021$ 
 m = SE*1.96 = 0.0041  
 CI = [0.5-m, 0.5+m] = [0.4959, 0.5041]  
-Observed value = $\frac{28,378}{56703}$ = 0.500467347
+Observed value = $\frac{28,378}{56703}$ = 0.5005
 
 This invartiant metric passes sanity check.
 
@@ -249,7 +256,7 @@ Z = 1.96
 | Enrollments      | 3785          | 3423            |
 ```
 
-$gc_{c} =\frac{3785}{17,293}$ = 0.21887 
+$gc_{c} =\frac{3785}{17,293}$ = 0.21897 
 
 $gc_{exp} =\frac{3423}{17,260}$ = 0.19832 
 
@@ -321,7 +328,7 @@ It can be also mentioned that analysis of the results showed that gross conversi
 
 ###4.4 Recommendation
 
-The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. Although, the number of students enrolling in the trial was lower the number of students continuing study after 14 days trial was not increased. We can conclude that our test work only partialy. I trust that taking all described above we should not launch the test. 
+The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. The number of students enrolling in the trial (gross conversion) was lower as expected but the number of students continuing study after 14 days trial (net conversion) did not remain the same but also decrease.  We can conclude that our test work only partialy (the previously stated sypothesis got confirmed the gross conversion behaved as expected but net conversion . I trust that taking all described above we should not launch the test. 
 
 ##Follow-Up Experiment
 
