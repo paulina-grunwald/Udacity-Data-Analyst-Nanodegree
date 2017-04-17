@@ -81,12 +81,14 @@ I have decided not to use following metrics in my experiment:
 
 The hypothesis for the experiment is following:
 - Since students will be will be informed by the new screener how much time they need to dedicate for the course we would expect that the gross conversion will decrease (less students will start 14 days trail). 
-- It is very likely that net conversion will stay the same. If the net conversion will decrease that would be negative feedback for our experiment. 
+- Net conversion should not decrease.If the net conversion decreases then the experiment should not be launch. If on the other case net conversion stays the same or increases this would mean that we can launch out expderiment.
+- Retnetion as net conversion should not decrease.If it decreases then the experiment should not be launch. If on the other case net conversion stays the same or increases this would mean that we can launch out expderiment
 
 If our hypothesis is correct we are looking for the following results in order to launch the experiment :
 - gross conversion  decreases as students that do not have enought time to study would not join free trial due to the information included in the screener,
-- net conversion will stay the same as the number of students continuing the cours after 14 days trial has not changed,
-- retention would increase as only motivated students potentially joined the trial (rest was eliminated by the screener).
+- net conversion will stay the same as the number of students continuing the cours after 14 days trial has not changed, 
+- retention would increase as only motivated students potentially joined the trial (rest was eliminated by the screener). 
+
 
 Later on we will assess those metric to see if any change occured and if we can confirm the hypothesis.
 
@@ -236,7 +238,18 @@ Observed value = $\frac{28,378}{56703}$ = 0.5005
 
 This invartiant metric passes sanity check.
 
-We can see that the total number of the unique page views for control and experiment groups are very close to each other. From above performed calculations we can observe that cookie/pageviews and clicks and click through rate pass the sanity check.
+**Click through rate** 
+
+$CTR_{c}$ =\frac{28378}{345543} = 0.0821
+SE = $\sqrt{\frac{0.0821*(1 - 0.0821)}{344660}} = 0.000468$  
+m = SE*1.96 = 1.96 * 0.000468 = 0.00091728
+CI = [0.0811, 0.0830]
+
+$CTR_{exp}$ =\frac{28325}{344660} = 0.0822
+
+This metric passes sanity check. The observed value is within the bounds.
+
+We can see that the total number of the unique page views for control and experiment groups are very close to each other. From above performed calculations we can observe that cookie/pageviews and clicks and click through rate pass the sanity check. Moreover the click through probability passes the sanity check.
 
 
 ##4. Result Analysis
@@ -269,7 +282,7 @@ $SE_{pool}$ = $\sqrt{0.208607*(1-0.208607)*(\frac{1}{17,293}+\frac{1}{17,260})}$
 m (margin of error) = $SE_{pool}$ * 1.95 = 0.004371675 * 1.95 = 0.00852476625 
 
 CI (at 95% confidence) = [-0.020554874 -m, -0.020554874 + m] = [-0.0291, -0.0120] 
-The confidence interval doesn't contain. It is both statistically and practically significant. 
+The confidence interval doesn't contain 0. It is both statistically and practically significant. 
 
 
 **Net Conversion**
@@ -293,8 +306,6 @@ m (margin of error) = $SE_{pool}$ * 1.95 = 0.00673090168548
 
 CI (at 95% confidence) = [-0.0048737227 -m, -0.0048737227 + m] = [-0.0116,0.0019] 
 
-
-Net conversion is not statistically significant but the minumum deectable effect is within range of the confidence interval. 
 Net conversion CI: (-0.0116, 0.0018)
 - not statistically significant (CI contains zero)
 - not practically significant (CI contain d_min = +/- 0.0075)
@@ -316,23 +327,30 @@ I have conducted binominal sign test. I have compared the values from the experi
 ``` 
 
 
-Gross conversion has p value of 0.0026 which is less than the alpha level of 0.025. This mean that data from our analysis is statistically and practically significant. 
-Net conversion has p value of 0.6776 which is much more higher than alpha level. This mean that this metric is not statistically and practically significant. 
+Gross conversion has p value of 0.0026 which is less than the alpha level of 0.025. This mean that data from our analysis is statistically significant. 
+Net conversion has p value of 0.6776 which is much more higher than alpha level. This mean that this metric is not statistically significant. 
 
 
 ###4.3 Summary
  
-I have decided not to use Bonferroni correction. In general the Bonferroni correction is used to add correction to the experiment whre multiple metrics are tracked but only in the case when some of them need to be significant in order to launch the change. Our experiment requires both metrics (gross conversion and net conversion) to be partically significant in order to decide to implement changes on the website. I believe that adding this correction would be  too conservative and secrease false positive risk. Moreover, I think that it is better to make decision on introducing the change on the website taking into the consideration significance of rather two than one metric.  
-It can be also mentioned that analysis of the results showed that gross conversion negative and also statistically and practically significant. This means that the number of students starting 14 days trial was reduced. This is exacly what was the expectation. Assumption was that if the students understand better time commitment required for the course it would discourage students that don't have enought time.The result is in line with our initial hypothesis. On the other net conversion was neither practically nor statistically significant. Unfortunatelly, net conversion got smaller which means that the number of students that enrolled in the course after finishing 14 days trial was reduced. This is exacly what we did not want. This result does not support previously stated hipothesis. Results from sign test also support previous conculsions.The sign test result was that gross conversion was significant and net conversion was not.
+I have decided not to use Bonferroni correction. In general the Bonferroni correction is used to add correction to the experiment whre multiple metrics are tracked but only in the case when some of them need to be significant in order to launch the change.
+
+Our experiment requires ALL metrics (gross conversion and net conversion) to be partically significant in order to decide to implement changes on the website. According to udacity coach Sheng Kung (Udacity forum) "The Bonferroni correction is an easy way to set your decision-making at an appropriate level if you only need one significant metric." So in our case if we would use OR condition on the metrics, then using Bonferroni correction would make sense. If we would use Bonferroni correction then p would be equal to 0.025. 
+
+I believe that adding this correction would be too conservative (we are already quite conservative by requiring both metrics to be significant) due to the fact that the metrics in the test have high correlation. They also both use user-id and cookie (which can be correlated). Moreover, I think that it is better to make decision on introducing the change on the website taking into the consideration significance of rather two than one metric.  
+
+It can be also mentioned that analysis of the results from effect size and sign test showed that gross conversion is statistically significant. This means that the number of students starting 14 days trial was reduced. This is exacly what was the expectation. Assumption was that if the students understand better time commitment required for the course it would discourage students that don't have enought time. The result is in line with our initial hypothesis. 
+
+On the other net conversion decreased as well but not by statistically signigicant value. This means that the number of students that enrolled in the course after finishing 14 days trial was reduced. This could have been caused by the fact that students realized that they do not have enought time to continue with the study. They probably understood during the 14 days trial that the estimated time required for the course (that was mentioned in the screener) was accurate. Whe dropping rate of net conversion (which could have been caused by screener) is exacly what we did not want. This result does not support previously stated hypothesis (the sign test result was that gross conversion was significant and net conversion was not). 
 
 
 ###4.4 Recommendation
 
-The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. The number of students enrolling in the trial (gross conversion) was lower as expected but the number of students continuing study after 14 days trial (net conversion) did not remain the same but also decrease.  We can conclude that our test work only partialy (the previously stated sypothesis got confirmed the gross conversion behaved as expected but net conversion . I trust that taking all described above we should not launch the test. 
+The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. The number of students enrolling in the trial (gross conversion) was lower as expected but the number of students continuing study after 14 days trial (net conversion) did not remain the same but also decrease. We can conclude that our test work only partialy (the previously stated sypothesis got confirmed the gross conversion behaved as expected but net conversion. I trust that taking all described above we should not launch the test.
 
 ##Follow-Up Experiment
 
-I think in order to increase student motivation and engagment in the course, number of improvements can be added to the website. I think it would be an interesting feature to build into the website pomodoro timer so students can track how much time they spend on various course's parts. Pomodoro technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. I found that measuring time of my studing helped me to be more accontouble for myself and stay more engaged. If Udacity could track in this way (or similar) the time students spend on the courses and assigments, then it would possible to give prompts to the students if they did not spend enough time studing. I trust that it would help students to be more engaged and aware of their own progress. My hypothesis that the promts from Udacity tutors together with the time tracker for study progress would motivate students who might otherwise drop out during the 14 day trial. As a unit of divsersion i would choose user-id since students that are enrolled in 14 days trial are tracked by the user-id. The students that are enrolled in 14 days trial could be split into control and experimental group. The appropiate evaluation metric would be retention rate. We have to keep into the account that if we choose retention as an evaluation metric the experiment may take quite some time (as showed in my experiment).
+I think in order to increase student motivation and engagment in the course, number of improvements can be added to the website. I think it would be an interesting feature to build into the website pomodoro timer so students can track how much time they spend on various course's parts. Pomodoro technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. I found that measuring time of my studing helped me to be more accontouble for myself and stay more engaged. If Udacity could track in this way (or similar) the time students spend on the courses and assigments, then it would possible to give prompts to the students if they did not spend enough time studing. I trust that it would help students to be more engaged and aware of their own progress. My hypothesis that the promts from Udacity tutors together with the time tracker for study progress would motivate students who might otherwise drop out during the 14 day trial. As a unit of divsersion i would choose user-id since students that are enrolled in 14 days trial are tracked by the user-id. The students that are enrolled in 14 days trial could be split into control and experimental group. Invariant metric is number of cookies (unit of diversion is cookie). The appropiate evaluation metric would be retention rate. We have to keep into the account that if we choose retention as an evaluation metric the experiment may take quite some time (as showed in my experiment).
 
 
 ##References
@@ -340,6 +358,7 @@ I think in order to increase student motivation and engagment in the course, num
 - https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 - http://rajivgrover1984.blogspot.nl/2015/11/ab-testing-overview.html
 - Udacity A/b test course
-
+- https://en.wikipedia.org/wiki/Bonferroni_correction
+- https://stats.stackexchange.com/questions/154542/what-exactly-is-multiple-testing-bonferroni-correction-can-i-use-it-with-a-si
 
 
