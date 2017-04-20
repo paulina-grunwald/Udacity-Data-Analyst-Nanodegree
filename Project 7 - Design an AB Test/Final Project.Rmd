@@ -353,7 +353,7 @@ I think in order to increase student motivation and engagment in the course, num
 
 My hypothesis that the promts from Udacity tutors together with the time tracker for study progress would motivate students who might otherwise drop out during the 14 day trial. As a unit of divsersion i would choose user-id since students that are enrolled in 14 days trial are tracked by the user-id. The students that are enrolled in 14 days trial could be split into control and experimental group. 
 
-Invariant metric would be user id (unit of diversion is user-id (the experiment will be performed after the users are logged in). The appropiate evaluation metric would be retention rate. We have to keep into the account that if we choose retention as an evaluation metric the experiment may take quite some time (as showed in my experiment).
+Invariant metric would be user id (unit of diversion is user-id) because the experiment will be performed after the users are logged in. The appropiate evaluation metric would be retention rate. We have to keep into the account that if we choose retention as an evaluation metric the experiment may take quite some time (as showed in my experiment).
 
 
 ##References
