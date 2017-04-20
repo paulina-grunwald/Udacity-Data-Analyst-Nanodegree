@@ -1,4 +1,4 @@
-White Wine Exploratory Data Analysis by Paulina Grunwald
+Design an A/B test by Paulina Grunwald   
 ========================================================
 
 ```{r global_options, include=FALSE}
@@ -16,7 +16,7 @@ library(tidyr)
 library(dplyr)
 ```
 
-# A/B Testing
+
 
 ## 1. Experiment Summary
 
