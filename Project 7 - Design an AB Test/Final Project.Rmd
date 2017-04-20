@@ -81,13 +81,13 @@ I have decided not to use following metrics in my experiment:
 
 The hypothesis for the experiment is following:
 - Since students will be will be informed by the new screener how much time they need to dedicate for the course we would expect that the gross conversion will decrease (less students will start 14 days trail). 
-- Net conversion should not decrease.If the net conversion decreases then the experiment should not be launch. If on the other case net conversion stays the same or increases this would mean that we can launch out expderiment.
-- Retnetion as net conversion should not decrease.If it decreases then the experiment should not be launch. If on the other case net conversion stays the same or increases this would mean that we can launch out expderiment
+- Net conversion should not decrease. If the net conversion decreases then the experiment should not be launch. If on the other case net conversion stays the same or increases this would mean that we can launch out experiment.
+- Retnetion and net conversion should not decrease. If they decreases then the experiment should not be launch. If on the other case net conversion stays the same or increases this would mean that we can launch out experiment.
 
 If our hypothesis is correct we are looking for the following results in order to launch the experiment :
 - gross conversion  decreases as students that do not have enought time to study would not join free trial due to the information included in the screener,
-- net conversion will stay the same as the number of students continuing the cours after 14 days trial has not changed, 
-- retention would increase as only motivated students potentially joined the trial (rest was eliminated by the screener). 
+- net conversion will stay the same or incease. Many students that joined the course were enought motivated during registration that screener would not change their decision on enrolling in the course after 14 days trial so net conversion would stay the same. There is also chance that the net conversion icreases (additional students who otherwise wouldn't join the course decided to join free trial after seeing the screener) by any chance it would be very positive for our experiment and then we would launch the change on the website.
+- retention will stay the same or increase. The situation with retention is exacly the same as with the net conversion. The retention and net conversion measure the same goal. 
 
 
 Later on we will assess those metric to see if any change occured and if we can confirm the hypothesis.
@@ -308,7 +308,7 @@ CI (at 95% confidence) = [-0.0048737227 -m, -0.0048737227 + m] = [-0.0116,0.0019
 
 Net conversion CI: (-0.0116, 0.0018)
 - not statistically significant (CI contains zero)
-- not practically significant (CI contain d_min = +/- 0.0075)
+- not practically significant (lower bound of CI interval is - 0.0075)
  
  
   
@@ -327,8 +327,8 @@ I have conducted binominal sign test. I have compared the values from the experi
 ``` 
 
 
-Gross conversion has p value of 0.0026 which is less than the alpha level of 0.025. This mean that data from our analysis is statistically significant. 
-Net conversion has p value of 0.6776 which is much more higher than alpha level. This mean that this metric is not statistically significant. 
+Gross conversion has p value of 0.0026 which is less than the alpha level of 0.025 This mean that data from our analysis is statistically significant. 
+Net conversion has p value of 0.6776 which is much more higher than alpha level of 0.05. This mean that this metric is not statistically significant. 
 
 
 ###4.3 Summary
@@ -341,16 +341,19 @@ I believe that adding this correction would be too conservative (we are already 
 
 It can be also mentioned that analysis of the results from effect size and sign test showed that gross conversion is statistically significant. This means that the number of students starting 14 days trial was reduced. This is exacly what was the expectation. Assumption was that if the students understand better time commitment required for the course it would discourage students that don't have enought time. The result is in line with our initial hypothesis. 
 
-On the other net conversion decreased as well but not by statistically signigicant value. This means that the number of students that enrolled in the course after finishing 14 days trial was reduced. This could have been caused by the fact that students realized that they do not have enought time to continue with the study. They probably understood during the 14 days trial that the estimated time required for the course (that was mentioned in the screener) was accurate. Whe dropping rate of net conversion (which could have been caused by screener) is exacly what we did not want. This result does not support previously stated hypothesis (the sign test result was that gross conversion was significant and net conversion was not). 
-
+Looking at the results of the test we can observe that net conversion rate dropped by 0.05% (from 0.1175620193 to 0.1126882966) between control and experiment group. The decrease is not statistically significant at 95% CI (and thus not practically significant). Moreover,the lower end of the CI is below the practical significance threshold which brings us quite some concern. The lower of the CI for net conversion -0.0116 which is relatively close to - 0.0075 but still lower than -0.0075.  The reduction of net conversion is not in line with the initial hypothesis (our hypohesis was that net conversion will will stay the same or increase). The reduced number of students that enrolled in the course after finishing 14 days trialc could have been caused by the fact that students realized that they do not have enought time to continue with the study. They probably understood during the 14 days trial that the estimated time required for the course (that was mentioned in the screener) was accurate. The dropping rate of net conversion (which could have been caused by the screener) is exacly what we did not want. 
 
 ###4.4 Recommendation
 
-The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. The number of students enrolling in the trial (gross conversion) was lower as expected but the number of students continuing study after 14 days trial (net conversion) did not remain the same but also decrease. We can conclude that our test work only partialy (the previously stated sypothesis got confirmed the gross conversion behaved as expected but net conversion. I trust that taking all described above we should not launch the test.
+The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. The number of students enrolling in the trial (gross conversion) was lower as expected but the number of students continuing study after 14 days trial (net conversion) did not remain the same but also decrease. We can conclude that our test worked only partialy (the previously stated hypothesis got confirmed the gross conversion behaved as expected but net conversion didn't). I trust that taking all described above we should not launch the test.
 
 ##Follow-Up Experiment
 
-I think in order to increase student motivation and engagment in the course, number of improvements can be added to the website. I think it would be an interesting feature to build into the website pomodoro timer so students can track how much time they spend on various course's parts. Pomodoro technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. I found that measuring time of my studing helped me to be more accontouble for myself and stay more engaged. If Udacity could track in this way (or similar) the time students spend on the courses and assigments, then it would possible to give prompts to the students if they did not spend enough time studing. I trust that it would help students to be more engaged and aware of their own progress. My hypothesis that the promts from Udacity tutors together with the time tracker for study progress would motivate students who might otherwise drop out during the 14 day trial. As a unit of divsersion i would choose user-id since students that are enrolled in 14 days trial are tracked by the user-id. The students that are enrolled in 14 days trial could be split into control and experimental group. Invariant metric is number of cookies (unit of diversion is cookie). The appropiate evaluation metric would be retention rate. We have to keep into the account that if we choose retention as an evaluation metric the experiment may take quite some time (as showed in my experiment).
+I think in order to increase student motivation and engagment in the course, number of improvements can be added to the website. I think it would be an interesting feature to build into the website pomodoro timer so students can track how much time they spend on various course's parts. Pomodoro technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. I found that measuring time of my studing helped me to be more accontouble for myself and stay more engaged. If Udacity could track in this way (or similar) the time students spend on the courses and assigments, then it would possible to give prompts to the students if they did not spend enough time studing. I trust that it would help students to be more engaged and aware of their own progress. 
+
+My hypothesis that the promts from Udacity tutors together with the time tracker for study progress would motivate students who might otherwise drop out during the 14 day trial. As a unit of divsersion i would choose user-id since students that are enrolled in 14 days trial are tracked by the user-id. The students that are enrolled in 14 days trial could be split into control and experimental group. 
+
+Invariant metric would be user id (unit of diversion is user-id (the experiment will be performed after the users are logged in). The appropiate evaluation metric would be retention rate. We have to keep into the account that if we choose retention as an evaluation metric the experiment may take quite some time (as showed in my experiment).
 
 
 ##References
