@@ -345,7 +345,9 @@ Looking at the results of the test we can observe that net conversion rate dropp
 
 ###4.4 Recommendation
 
-The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. The number of students enrolling in the trial (gross conversion) was lower as expected but the number of students continuing study after 14 days trial (net conversion) did not remain the same but also decrease. We can conclude that our test worked only partialy (the previously stated hypothesis got confirmed the gross conversion behaved as expected but net conversion didn't). I trust that taking all described above we should not launch the test.
+The goal of the experiment was new message after clicking on "start free trial" was tested. The new message window seem to work to reduce number of students that would start 14 days trial. The number of students enrolling in the trial (gross conversion) was lower as expected.
+It is also possible the number of students continuing study after 14 days trial (net conversion) decrased by an amount that would be important for the buisness (the result for net conversion was not statistically significant so we cannot be sure if it was affected negatively in our experiment with statistical certainty). Our hypothesis called for the net conversion to remain the same or increase but the results of the analysis showed that there is possible decrease. The potential decrease of the net conversion is not acceptable. Taking into the consideration I trust that we should not launch the test.
+
 
 ##Follow-Up Experiment
 
