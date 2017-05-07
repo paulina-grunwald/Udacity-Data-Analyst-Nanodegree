@@ -32,10 +32,16 @@ plt.show()
 ### visualization code (prettyPicture) to show you the decision boundary
 
 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.tree import DecisionTreeClassifier
 
-
-
-
+clf = RandomForestClassifier(n_estimators=40)
+clf = clf.fit(features_train, labels_train)
+scores = cross_val_score(clf, features_test, labels_test)
+ome = scores.mean()
+print ome
 
 
 try:
