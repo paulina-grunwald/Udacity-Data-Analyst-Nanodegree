@@ -20,8 +20,15 @@ import pickle
 #load dataset
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 
-print len(enron_data)
+print "Number of data points in enron dataset":,len(enron_data)
 
+
+features_list = []
+
+for i in enron_data:
+    features_list.append(len(i))
+
+print "Minimum features number:",min(features_list)
 
 
 
