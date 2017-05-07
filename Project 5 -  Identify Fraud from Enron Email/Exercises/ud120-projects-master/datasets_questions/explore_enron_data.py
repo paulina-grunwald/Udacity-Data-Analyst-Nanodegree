@@ -20,15 +20,29 @@ import pickle
 #load dataset
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 
-print "Number of data points in enron dataset":,len(enron_data)
+print "Number of data points in enron dataset:",len(enron_data)
 
 
 features_list = []
 
 for i in enron_data:
     features_list.append(len(i))
-
 print "Minimum features number:",min(features_list)
 
 
+for key in enron_data.iterkeys():
+    print len(enron_data[key])
 
+
+##Quiz: Finding POIs In The Enron Data
+
+from collections import Counter
+countList = []
+for key in enron_data.keys():
+    countList.append(enron_data[key]['poi'])
+
+print Counter(countList)
+
+##How Many POIs Exist?
+for name in enron_data.keys():
+    print name, enron_data[name]['poi']
