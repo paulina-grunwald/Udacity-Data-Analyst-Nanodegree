@@ -44,5 +44,12 @@ for key in enron_data.keys():
 print Counter(countList)
 
 ##How Many POIs Exist?
+count_Poi = []
 for name in enron_data.keys():
-    print name, enron_data[name]['poi']
+    #print counter(enron_data[name]['poi'])
+    for enron_data[name]['poi']:
+        count_Poi.append(enron_data[name]['poi'])
+    else:
+        continue
+    print Counter(count_Poi)
+    #print name, enron_data[name]['poi']
