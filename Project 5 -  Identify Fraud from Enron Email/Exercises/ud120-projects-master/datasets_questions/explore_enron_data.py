@@ -45,11 +45,23 @@ print Counter(countList)
 
 ##How Many POIs Exist?
 count_Poi = []
-for name in enron_data.keys():
+for i in enron_data.keys():
     #print counter(enron_data[name]['poi'])
-    for enron_data[name]['poi']:
-        count_Poi.append(enron_data[name]['poi'])
+    if enron_data[key]['poi'] == True:
+        count_Poi.append(enron_data[key]['poi'])
     else:
         continue
-    print Counter(count_Poi)
+    print len(count_Poi)
     #print name, enron_data[name]['poi']
+
+import pandas as pd
+counter = 0
+for i in enron_data.values():
+	if i['poi'] == True:
+		counter+=1
+print " # POI is %d " %counter
+
+
+
+value_jamesp = enron_data["PRENTICE JAMES"]["total_stock_value"]
+print "Total stock value for James Prentice is:", value_jamesp
