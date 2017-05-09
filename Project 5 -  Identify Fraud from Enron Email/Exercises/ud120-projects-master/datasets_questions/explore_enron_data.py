@@ -65,3 +65,9 @@ print " # POI is %d " %counter
 
 value_jamesp = enron_data["PRENTICE JAMES"]["total_stock_value"]
 print "Total stock value for James Prentice is:", value_jamesp
+
+from_messages_ColwellW = enron_data["COLWELL WESLEY"]["from_this_person_to_poi"]
+print "Messages from Wesley Corwell to POI:", from_messages_ColwellW
+
+stock_value_JeffreyKSkilling = enron_data["SKILLING JEFFREY K"]["exercised_stock_options"]
+print "Stock value Jeffrey K Skilling:", stock_value_JeffreyKSkilling
