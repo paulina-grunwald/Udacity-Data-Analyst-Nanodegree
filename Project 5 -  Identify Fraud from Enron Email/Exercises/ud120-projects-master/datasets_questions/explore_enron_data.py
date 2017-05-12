@@ -94,3 +94,8 @@ for k,v in enron_data.iteritems():
 		emails.append(v)
 print "Number of people that have e-mail in dataset:", len(emails)
 
+
+
+print "Number of people +10", len(enron_data)+10
+
+print "Number with NaN for total payments +10", sum(1 for person in enron_data.values() if person['total_payments'] == 'NaN')+10
