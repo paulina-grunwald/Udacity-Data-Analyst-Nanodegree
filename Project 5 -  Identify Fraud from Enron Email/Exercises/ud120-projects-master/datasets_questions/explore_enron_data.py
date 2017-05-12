@@ -71,3 +71,26 @@ print "Messages from Wesley Corwell to POI:", from_messages_ColwellW
 
 stock_value_JeffreyKSkilling = enron_data["SKILLING JEFFREY K"]["exercised_stock_options"]
 print "Stock value Jeffrey K Skilling:", stock_value_JeffreyKSkilling
+
+max_payment = [[enron_data["LAY KENNETH L"]["total_payments"],"LAY KENNETH L"],
+               [enron_data["FASTOW ANDREW S"]["total_payments"],"FASTOW ANDREW S"],
+               [enron_data["SKILLING JEFFREY K"]["total_payments"],"SKILLING JEFFREY K"]]
+print "Max payment:", max(max_payment),
+print max_payment
+
+integers = []
+for k,v in enron_data.iteritems():
+	if v['salary'] != 'NaN':
+		integers.append(v)
+print "Number of people that have salary in dataset:",len(integers)
+
+
+#QUIZ 27
+#How many folks in this dataset have a quantified salary? What about a known email address?
+emails = []
+for k,v in enron_data.iteritems():
+	if v['email_address'] != 'NaN':
+        #check for non_NaN emails
+		emails.append(v)
+print "Number of people that have e-mail in dataset:", len(emails)
+
