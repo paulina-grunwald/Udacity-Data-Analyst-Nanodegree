@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.5.2 (C:\Users\Paulina\Anaconda3\python.exe)" project-jdk-type="Python SDK" />
+  <component name="IpnbSettings">
+    <option name="arguments" value="" />
+    <option name="workingDirectory" value="C:\Personal\GitHub\Udacity-Data-Analyst-Nanodegree\Project 5 -  Identify Fraud from Enron Email\Exercises\ud120-projects-master\tools" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.12 (C:\Users\Paulina\Anaconda2\python.exe)" project-jdk-type="Python SDK" />
 </project>

@@ -22,19 +22,29 @@ enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r")
 
 print "Number of data points in enron dataset:",len(enron_data)
 
-
+################################
+#create features list
 features_list = []
-
 for i in enron_data:
     features_list.append(len(i))
 print "Minimum features number:",min(features_list)
 
+################################
 
-for key in enron_data.iterkeys():
-    print len(enron_data[key])
+##print strucutre of the data
+#for key in enron_data.iterkeys():
+#    print key
+#    print enron_data[key]
+
+#Count number of features
 
 
-##Quiz: Finding POIs In The Enron Data
+################################
+
+print "Number of features is:",(len(enron_data[(next(iter(enron_data)))]))
+
+################################
+#Quiz: Finding POIs In The Enron Data
 
 from collections import Counter
 countList = []
@@ -42,6 +52,8 @@ for key in enron_data.keys():
     countList.append(enron_data[key]['poi'])
 
 print Counter(countList)
+
+################################
 
 ##How Many POIs Exist?
 count_Poi = []
@@ -54,15 +66,8 @@ for i in enron_data.keys():
     print len(count_Poi)
     #print name, enron_data[name]['poi']
 
-import pandas as pd
-counter = 0
-for i in enron_data.values():
-	if i['poi'] == True:
-		counter+=1
-print " # POI is %d " %counter
-
-
-
+################################
+#Calculate stock value for three people of intrest
 value_jamesp = enron_data["PRENTICE JAMES"]["total_stock_value"]
 print "Total stock value for James Prentice is:", value_jamesp
 
@@ -77,6 +82,10 @@ max_payment = [[enron_data["LAY KENNETH L"]["total_payments"],"LAY KENNETH L"],
                [enron_data["SKILLING JEFFREY K"]["total_payments"],"SKILLING JEFFREY K"]]
 print "Max payment:", max(max_payment),
 print max_payment
+################################
+
+#QUIZ 27
+#How many folks in this dataset have a quantified salary? What about a known email address?
 
 integers = []
 for k,v in enron_data.iteritems():
@@ -84,18 +93,46 @@ for k,v in enron_data.iteritems():
 		integers.append(v)
 print "Number of people that have salary in dataset:",len(integers)
 
-
-#QUIZ 27
-#How many folks in this dataset have a quantified salary? What about a known email address?
 emails = []
 for k,v in enron_data.iteritems():
 	if v['email_address'] != 'NaN':
         #check for non_NaN emails
 		emails.append(v)
 print "Number of people that have e-mail in dataset:", len(emails)
+################################
 
+###Quiz 29: what percentage of people in the dataset have "NaN" for their total payments?
+num_NAN = len(enron_data)
+print "Number of people +10 is:", num_NAN
+num_NAN_total = ((sum(1 for person in enron_data.values() if person['total_payments'] == 'NaN')))
+print "Number with NaN for total payments is:", num_NAN_total
 
+print "...."
 
-print "Number of people +10", len(enron_data)+10
+count = 0
+for i in enron_data:
+    if enron_data[i]['total_payments'] == 'NaN':
+        count+=1
+print "Number of people with total payments NaN:", count
 
-print "Number with NaN for total payments +10", sum(1 for person in enron_data.values() if person['total_payments'] == 'NaN')+10
+percent = count/float(len(enron_data))
+print "Percent of people who have NaN as total_payment", percent
+
+################################
+
+#Quiz 30: What percentage of POIs in the dataset have "NaN for their total payments?
+count = 0
+for k in enron_data:
+    if enron_data[k]['poi'] is True and enron_data[k]['total_payments'] == "NaN":
+        count += 1
+print count
+#this code prints 0! check!!
+
+################################
+
+#Quiz 31: If a machine learning algorithm were to use total_payments as a feature,
+# would you expect it to associate a “NaN” value with POIs or non-POIs?
+#No training points would have "NaN" for total_payments when the class label is "POI"
+
+################################
+
