@@ -136,3 +136,22 @@ print count
 
 ################################
 
+### QUIZ: Stock Option Range
+#(NB: if you look at finance_features, there are some "NaN" values that have been cleaned away and replaced with zeroes--
+# so while those might look like the minima, it's a bit deceptive because they're more like points for
+# which we don't have information, and just have to put in a number. So for this question, go back to data_dict
+# and look for the maximum and minimum numbers that show up there, ignoring all the "NaN" entries.)
+
+max_value = float("-inf")
+
+min_value = float("inf")
+
+for k, v in data_dict.iteritems():
+    if v["exercised_stock_options"] != "NaN":
+        if v["exercised_stock_options"] > max_value:
+            max_value = v["exercised_stock_options"]
+        if v["exercised_stock_options"] < min_value:
+            min_value = v["exercised_stock_options"]
+
+print "max_value exercised_stock_options: ",max_value
+print "min_value exercised_stock_options: ",min_value
