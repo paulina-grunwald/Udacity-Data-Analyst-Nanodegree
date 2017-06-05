@@ -13,7 +13,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
-
 from IPython.display import Image
 import matplotlib.pyplot as plt
 import sys
@@ -80,8 +79,8 @@ plt.xlabel("Salary")
 plt.ylabel("Bonus")
 plt.show()
 
+##################################################################
 ### Task 2: Remove outliers
-### remove any outliers before proceeding further
 ### remove any outliers before proceeding further
 
 features = ["salary", "bonus"]
@@ -99,12 +98,10 @@ outliers_final = (sorted(outliers,key=lambda x:x[1],reverse=True)[:4])
 print outliers_final
 
 #plot with removed outliers
-
-features = ["salary", "bonus"]
-#data_dict.pop('TOTAL', 0)
-data = featureFormat(data_dict, features)
+features2 = ["salary", "bonus"]
+data2 = featureFormat(data_dict, features2)
 ### plot features
-for point in data:
+for point in data2:
     salary = point[0]
     bonus = point[1]
     plt.scatter( salary, bonus )
@@ -112,6 +109,8 @@ for point in data:
 plt.xlabel("salary")
 plt.ylabel("bonus")
 plt.show()
+
+
 
 ##############################################
 ### Task 3: Create new feature(s)
@@ -147,11 +146,15 @@ labels, features = targetFeatureSplit(data)
 from sklearn.naive_bayes import GaussianNB
 clf = GaussianNB()
 
-### Task 5: Tune your classifier to achieve better than .3 precision and recall 
+
+
+
+
+### Task 5: Tune your classifier to achieve better than .3 precision and recall
 ### using our testing script. Check the tester.py script in the final project
 ### folder for details on the evaluation method, especially the test_classifier
 ### function. Because of the small size of the dataset, the script uses
-### stratified shuffle split cross validation. For more info: 
+### stratified shuffle split cross validation. For more info:
 ### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
 
 # Example starting point. Try investigating other evaluation techniques!
@@ -165,3 +168,6 @@ features_train, features_test, labels_train, labels_test = \
 ### generates the necessary .pkl files for validating your results.
 
 #dump_classifier_and_data(clf, my_dataset, features_list)
+#pickle.dump(clf, open("my_classifier.pkl", "w") )
+#pickle.dump(data_dict, open("my_dataset.pkl", "w") )
+#pickle.dump(features_list, open("my_feature_list.pkl", "w") )
