@@ -130,9 +130,8 @@ print count
 
 ################################
 
-#Quiz 31: If a machine learning algorithm were to use total_payments as a feature,
-# would you expect it to associate a “NaN” value with POIs or non-POIs?
-#No training points would have "NaN" for total_payments when the class label is "POI"
+#Quiz 31: If a machine learning algorithm were to use total_payments as a feature,#
+#No training points would have "NaN" for total_payments when the class label is "POI"#
 
 ################################
 
@@ -145,8 +144,10 @@ print count
 max_value = float("-inf")
 
 min_value = float("inf")
+### there's an outlier--remove it!
+enron_data.pop("TOTAL",0)
+for k, v in enron_data.iteritems():
 
-for k, v in data_dict.iteritems():
     if v["exercised_stock_options"] != "NaN":
         if v["exercised_stock_options"] > max_value:
             max_value = v["exercised_stock_options"]
@@ -155,3 +156,19 @@ for k, v in data_dict.iteritems():
 
 print "max_value exercised_stock_options: ",max_value
 print "min_value exercised_stock_options: ",min_value
+
+
+###
+import pandas as pd
+
+df = pd.DataFrame(enron_data)
+df.loc['exercised_stock_options',:] = pd.to_numeric(df.loc['exercised_stock_options',:], errors='coerce')
+print df.loc['exercised_stock_options',:].max(skipna=True)
+print df.loc['exercised_stock_options',:].min(skipna=True)
+
+
+##QUIZ:Salary Range
+
+df.loc['salary',:] = pd.to_numeric(df.loc['salary',:], errors='coerce')
+print "Max. Salary:", df.loc['salary',:].max(skipna=True)
+print "Min. Salary:", df.loc['salary',:].min(skipna=True)

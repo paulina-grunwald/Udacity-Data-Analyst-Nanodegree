@@ -7,6 +7,19 @@ import math
 import matplotlib.pyplot as plt
 
 #import sklearn libraries
+
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+from sklearn.grid_search import GridSearchCV
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+
+from IPython.display import Image
+import matplotlib.pyplot as plt
+import sys
+import pickle
+from sklearn import preprocessing
+from time import time
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 from sklearn.grid_search import GridSearchCV
@@ -16,6 +29,8 @@ from sklearn.metrics import recall_score
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
+
+
 ### Task 1: Select what features you'll use.
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
@@ -29,18 +44,61 @@ features_list = ['poi','salary','bonus','total_payments','total_stock_value',
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
-#add the dataset to the new variable
-my_dataset = data_dict
-
-print "There are", len(my_dataset), "people in Enron dataset."
 
 
-data = featureFormat(my_dataset, features_list, sort_keys = True)
+data = featureFormat(data_dict, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
-#Task 1: Asses outliers
+#Task 2: Access the outliers
+#2.1. Explore dataset
+
+print "There are ", len(data_dict.keys()), " employees in the Enron Dataset."
+#print first 40 names
+print "Those are names of the first 40 Enron employees:", data_dict.keys()[:40]
+#Print data for one person
+print data_dict["METTS MARK"]
+print "Number of features is:",(len(data_dict[(next(iter(data_dict)))]))
+
+#Count number of POIs
+num_poi = 0
+for poi in data_dict.values():
+    if poi['poi'] == 1: num_poi += 1
+
+print "Number of POIs is: ", num_poi
 
 #Plot salaries vs. bonuses of people employed by Enron in order to asses the outlier in the data.
+### plot features
+features = ["salary", "bonus"]
+data = featureFormat(data_dict, features)
+### plot features
+for point in data:
+    salary = point[0]
+    bonus = point[1]
+    plt.scatter( salary, bonus )
+
+plt.xlabel("Salary")
+plt.ylabel("Bonus")
+plt.show()
+
+### Task 2: Remove outliers
+### remove any outliers before proceeding further
+### remove any outliers before proceeding further
+
+features = ["salary", "bonus"]
+data_dict.pop('TOTAL', 0)
+### remove NAN's from dataset
+outliers = []
+for key in data_dict:
+    val = data_dict[key]['salary']
+    if val == 'NaN':
+        continue
+    outliers.append((key, int(val)))
+
+outliers_final = (sorted(outliers,key=lambda x:x[1],reverse=True)[:4])
+### print top 4 salaries
+print outliers_final
+
+#plot with removed outliers
 
 features = ["salary", "bonus"]
 #data_dict.pop('TOTAL', 0)
@@ -55,30 +113,8 @@ plt.xlabel("salary")
 plt.ylabel("bonus")
 plt.show()
 
-### Task 2: Remove outliers
-### remove any outliers before proceeding further
-features = ["salary", "bonus"]
-data_dict.pop('TOTAL', 0)
-data = featureFormat(data_dict, features)
-
-### remove NAN's from dataset
-outliers = []
-for key in data_dict:
-    val = data_dict[key]['salary']
-    if val == 'NaN':
-        continue
-    outliers.append((key, int(val)))
-
-outliers_final = (sorted(outliers,key=lambda x:x[1],reverse=True)[:4])
-### print top 4 salaries
-print outliers_final
-
-
-
-
+##############################################
 ### Task 3: Create new feature(s)
-
-
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
 

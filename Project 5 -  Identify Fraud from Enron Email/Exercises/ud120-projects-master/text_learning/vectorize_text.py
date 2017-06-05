@@ -4,6 +4,8 @@ import os
 import pickle
 import re
 import sys
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 sys.path.append( "../tools/" )
 from parse_out_email_text import parseOutText
@@ -22,54 +24,68 @@ from parse_out_email_text import parseOutText
     The data is stored in lists and packed away in pickle files at the end.
 """
 
+sw = ["sara", "shackleton", "chris", "germani"]
+with open("from_sara.txt", "r") as from_sara, open("from_chris.txt", "r") as from_chris:
+    from_data = []
+    word_data = []
 
-from_sara  = open("from_sara.txt", "r")
-from_chris = open("from_chris.txt", "r")
+    ### temp_counter is a way to speed up the development--there are
+    ### thousands of emails from Sara and Chris, so running over all of them
+    ### can take a long time
+    ### temp_counter helps you only look at the first 200 emails in the list so you
+    ### can iterate your modifications quicker
+    temp_counter = 0
 
-from_data = []
-word_data = []
+    for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
+        for path in from_person:
+            ### only look at first 200 emails when developing
+            ### once everything is working, remove this line to run over full dataset
 
-### temp_counter is a way to speed up the development--there are
-### thousands of emails from Sara and Chris, so running over all of them
-### can take a long time
-### temp_counter helps you only look at the first 200 emails in the list so you
-### can iterate your modifications quicker
-temp_counter = 0
+            # temp_counter += 1
+            if temp_counter < 200:
+                path = os.path.join('..', path[:-1])
 
+                with open(path, 'r') as email:
+                    ### use parseOutText to extract the text from the opened email
+                    text = parseOutText(email)
 
-for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
-    for path in from_person:
-        ### only look at first 200 emails when developing
-        ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
-        if temp_counter < 200:
-            path = os.path.join('..', path[:-1])
-            print path
-            email = open(path, "r")
+                    ### use str.replace() to remove any instances of the words
+                    ### ["sara", "shackleton ", "chris", "germani"]
+                    for word in sw:
+                        if (word in text):
+                            text = text.replace(word, "")
 
-            ### use parseOutText to extract the text from the opened email
+                    ### append the text to word_data
+                    word_data.append(text.replace('\n', ' ').strip())
 
-            ### use str.replace() to remove any instances of the words
-            ### ["sara", "shackleton", "chris", "germani"]
+                    ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+                    if name == 'sara':
+                        from_data.append(0)
+                    else:
+                        from_data.append(1)
 
-            ### append the text to word_data
+pickle.dump(word_data, open("your_word_data.pkl", "w"))
+pickle.dump(from_data, open("your_email_authors.pkl", "w"))
 
-            ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+print word_data[152]
 
-
-            email.close()
-
-print "emails processed"
-from_sara.close()
-from_chris.close()
-
-pickle.dump( word_data, open("your_word_data.pkl", "w") )
-pickle.dump( from_data, open("your_email_authors.pkl", "w") )
-
-
-
+# word data is a list of strings that we get by stemming the emails
 
 
 ### in Part 4, do TfIdf vectorization here
+#Transform the word_data into a tf-idf matrix using the sklearn TfIdf transformation. Remove english stopwords.
+#You can access the mapping between words and feature numbers using get_feature_names(), which returns a
+# list of all the words in the vocabulary. How many different words are there?
 
+vectorizer = TfidfVectorizer(stop_words="english", lowercase=True)
+vectorizer.fit_transform(word_data)
 
+feature_names = vectorizer.get_feature_names()
+
+print 'Number of different words: {0}'.format(len(feature_names))
+
+#What is word 34597 in the Tfldf that you just made?
+#(Just to be clear--if the question were "what is word number 100," we would be looking for the word corresponding to vocab_list[100].
+# Zero-indexed arrays are so confusing to talk about sometimes.)
+print feature_names[34597]
+#answer: stephaniethank

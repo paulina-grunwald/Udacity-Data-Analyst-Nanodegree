@@ -77,7 +77,7 @@ Draw(pred, finance_features, poi, name="clusters_before_scaling.pdf", f1_name=fe
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
-    Draw(pred, finance_features, poi, mark_poi=False, name_3="clusters3.pdf", f1_name=feature_1, f2_name=feature_2)
+    Draw(pred, finance_features, poi, mark_poi=False, name_3="cluster.pdf", f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print "no predictions object named pred found, no clusters to plot"
 
@@ -91,7 +91,7 @@ except NameError:
 max_value = float("-inf")
 
 min_value = float("inf")
-
+data_dict.pop("TOTAL",0)
 for k, v in data_dict.iteritems():
     if v["exercised_stock_options"] != "NaN":
         if v["exercised_stock_options"] > max_value:
@@ -101,3 +101,12 @@ for k, v in data_dict.iteritems():
 
 print "max_value: ",max_value
 print "min_value: ",min_value
+
+
+import pandas as pd
+df = pd.DataFrame(data_dict)
+df.loc['exercised_stock_options',:] = pd.to_numeric(df.loc['exercised_stock_options',:], errors='coerce')
+print df.loc['exercised_stock_options',:].max(skipna=True)
+print df.loc['exercised_stock_options',:].min(skipna=True)
+
+### QUIZ: Stock Option Range
