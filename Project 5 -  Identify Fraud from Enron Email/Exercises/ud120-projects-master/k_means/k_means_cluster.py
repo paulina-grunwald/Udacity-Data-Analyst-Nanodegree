@@ -5,16 +5,12 @@
 """
 
 
-
-
 import pickle
 import numpy
 import matplotlib.pyplot as plt
 import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
-
-
 
 
 def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
@@ -40,73 +36,53 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 
 ### load in the dict of dicts containing all the data on each person in the dataset
 data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
-### there's an outlier--remove it! 
+### there's an outlier--remove it!
 data_dict.pop("TOTAL", 0)
 
-
-### the input features we want to use 
-### can be any key in the person-level dictionary (salary, director_fees, etc.) 
+### the input features we want to use
+### can be any key in the person-level dictionary (salary, director_fees, etc.)
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
-feature_3 = "total_payments"
 poi  = "poi"
-features_list = [poi, feature_1, feature_2, feature_3]
-data = featureFormat(data_dict, features_list )
-poi, finance_features = targetFeatureSplit( data )
+features_list = ["poi", "salary", "exercised_stock_options"]
+
+def finance_kmeans(data_dict, features_list):
+    data = featureFormat(data_dict, features_list )
+    poi, finance_features = targetFeatureSplit( data )
 
 
-### in the "clustering with 3 features" part of the mini-project,
-### you'll want to change this line to 
-### for f1, f2, _ in finance_features:
-### (as it's currently written, the line below assumes 2 features)
-for f1, f2, _ in finance_features:
-    plt.scatter( f1, f2, _ )
-plt.show()
+    ### in the "clustering with 3 features" part of the mini-project,
+    ### you'll want to change this line to
+    ### for f1, f2, _ in finance_features:
+    ### (as it's currently written, the line below assumes 2 features)
+
+    for f in finance_features:
+        plt.scatter( f[0], f[1] )
+    #plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
-from sklearn.cluster import KMeans
-features_list = ["poi", feature_1, feature_2, feature_3]
-data2 = featureFormat(data_dict, features_list )
-poi, finance_features = targetFeatureSplit( data2 )
-clf = KMeans(n_clusters=3)
-pred = clf.fit_predict( finance_features )
-Draw(pred, finance_features, poi, name="clusters_before_scaling.pdf", f1_name=feature_1, f2_name=feature_2)
+
+    from sklearn.cluster import KMeans
+    clf = KMeans(2)
+    clf.fit(finance_features)
+    pred = clf.predict(finance_features)
+
 
 
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
-try:
-    Draw(pred, finance_features, poi, mark_poi=False, name_3="cluster.pdf", f1_name=feature_1, f2_name=feature_2)
-except NameError:
-    print "no predictions object named pred found, no clusters to plot"
+    try:
+        Draw(pred, finance_features, poi, mark_poi=False, name="clusters.pdf", f1_name=features_list[1], f2_name=features_list[2])
+    except NameError:
+        print "no predictions object named pred found, no clusters to plot"
+
+    return None
+print finance_kmeans(data_dict, features_list)
 
 
-### QUIZ: Stock Option Range
-#(NB: if you look at finance_features, there are some "NaN" values that have been cleaned away and replaced with zeroes--
-# so while those might look like the minima, it's a bit deceptive because they're more like points for
-# which we don't have information, and just have to put in a number. So for this question, go back to data_dict
-# and look for the maximum and minimum numbers that show up there, ignoring all the "NaN" entries.)
+#Clustering example with 3 features
 
-max_value = float("-inf")
+features_list = ['poi', 'salary', 'exercised_stock_options', 'total_payments']
 
-min_value = float("inf")
-data_dict.pop("TOTAL",0)
-for k, v in data_dict.iteritems():
-    if v["exercised_stock_options"] != "NaN":
-        if v["exercised_stock_options"] > max_value:
-            max_value = v["exercised_stock_options"]
-        if v["exercised_stock_options"] < min_value:
-            min_value = v["exercised_stock_options"]
-
-print "max_value: ",max_value
-print "min_value: ",min_value
-
-
-import pandas as pd
-df = pd.DataFrame(data_dict)
-df.loc['exercised_stock_options',:] = pd.to_numeric(df.loc['exercised_stock_options',:], errors='coerce')
-print df.loc['exercised_stock_options',:].max(skipna=True)
-print df.loc['exercised_stock_options',:].min(skipna=True)
-
-### QUIZ: Stock Option Range
+finance_kmeans(data_dict, features_list)
