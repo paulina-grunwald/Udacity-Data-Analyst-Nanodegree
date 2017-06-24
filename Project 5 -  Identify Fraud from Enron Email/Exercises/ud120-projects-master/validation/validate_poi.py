@@ -27,6 +27,25 @@ labels, features = targetFeatureSplit(data)
 
 
 
-### it's all yours from here forward!  
+########## it's all yours from here forward!
+
+#Load necessary packages
+from sklearn import datasets
+from sklearn.svm import SVC
+from sklearn import cross_validation
 
 
+### Your First (Overfit) POI Identifier
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier()
+clf.fit(features,labels)
+score = clf.score(features,labels)
+print "accuracy is", score
+
+
+######Deploying A Training/Testing Regime
+features_train, features_test, labels_train, labels_test = cross_validation.train_test_split(features, labels, test_size=0.3, random_state=42)
+clf2 = DecisionTreeClassifier()
+clf2.fit(features_train, labels_train)
+score2 = clf2.score(features_test, labels_test)
+print "accuracy is", score2

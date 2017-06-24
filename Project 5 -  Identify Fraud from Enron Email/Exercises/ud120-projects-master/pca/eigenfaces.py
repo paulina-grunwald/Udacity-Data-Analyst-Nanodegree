@@ -14,8 +14,6 @@ The dataset used in this example is a preprocessed excerpt of the
 
 """
 
-
-
 print __doc__
 
 from time import time
@@ -40,7 +38,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 lfw_people = fetch_lfw_people(min_faces_per_person=70, resize=0.4)
 
 # introspect the images arrays to find the shapes (for plotting)
-n_samples, h, w = lfw_people.images.shape
+n_samples, h, w = lfw_people.images.shapef
 np.random.seed(42)
 
 # for machine learning we use the data directly (as relative pixel
@@ -144,3 +142,41 @@ eigenface_titles = ["eigenface %d" % i for i in range(eigenfaces.shape[0])]
 plot_gallery(eigenfaces, eigenface_titles, h, w)
 
 pl.show()
+
+
+print 'Variance explained by the first principal component:  {0}'.format(pca.explained_variance_ratio_[0])
+print 'Variance explained by the second principal component: {0}'.format(pca.explained_variance_ratio_[1])
+
+
+
+####QUIZ 36, Lesson 13
+#Change n_components to the following values: [10, 15, 25, 50, 100, 250]. For each number of principal components, note the F1
+#score for Ariel Sharon. (For 10 PCs, the plotting functions in the code will break,
+# but you should be able to see the F1 scores.) If you see a higher F1 score, does it mean the classifier is
+#  doing better, or worse?
+
+for n_components in [10, 15, 25, 50, 100, 250]:
+  pca = RandomizedPCA(n_components=n_components, whiten=True).fit(X_train)
+
+  eigenfaces = pca.components_.reshape((n_components, h, w))
+
+  X_train_pca = pca.transform(X_train)
+  X_test_pca = pca.transform(X_test)
+
+
+  # Train a SVM classification model
+  param_grid = {
+           'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+            'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1],
+            }
+  clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'), param_grid)
+  clf = clf.fit(X_train_pca, y_train)
+
+
+  # Quantitative evaluation of the model quality on the test set
+  y_pred = clf.predict(X_test_pca)
+
+  if n_components==10:
+    print 'n_components' + classification_report(y_test, y_pred, target_names=target_names).split('\n')[0]
+
+  print '{0:12d}'.format(n_components) + classification_report(y_test, y_pred, target_names=target_names).split('\n')[2]

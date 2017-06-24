@@ -26,6 +26,8 @@ labels, features = targetFeatureSplit(data)
 
 
 
-### your code goes here 
+print len(features_list["poi"])
+
+
 
 

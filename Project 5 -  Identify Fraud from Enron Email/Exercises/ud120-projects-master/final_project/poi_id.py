@@ -132,6 +132,34 @@ plt.show()
 
 #########################Feature processing##################################
 
+features_list = [
+                 'poi',
+                 'salary',
+                 # 'deferral_payments',
+                 # 'total_payments',
+                 # 'loan_advances',
+                 'bonus',
+                 'bonus_salary_ratio',
+                 # 'restricted_stock_deferred',
+                 # 'deferred_income',
+                 'total_stock_value',
+                 # 'expenses',
+                 'exercised_stock_options',
+                 # 'other',
+                 # 'long_term_incentive',
+                 # 'restricted_stock',
+                 # 'director_fees',
+                 # 'to_messages',
+                 # 'from_poi_to_this_person',
+                 # 'from_poi_to_this_person_percentage',
+                 # 'from_messages',
+                 # 'from_this_person_to_poi',
+                 'from_this_person_to_poi_percentage',
+                 'shared_receipt_with_poi'
+                 ]
+
+
+
 ###Print scatterplot from_poi_to_person vs. "from_this_person_to_poi", marking POIs on red
 import numpy as np
 import matplotlib.pyplot
@@ -205,55 +233,114 @@ labels, features = targetFeatureSplit(data)
 
 ################Algorithm Selection###################
 
-#choose features
-features_list = ["poi", "salary", "bonus", "fraction_from_poi_email", "fraction_to_poi_email",
-                 'deferral_payments', 'total_payments', 'loan_advances', 'restricted_stock_deferred',
-                 'deferred_income', 'total_stock_value', 'expenses', 'exercised_stock_options',
-                 'long_term_incentive', 'shared_receipt_with_poi', 'restricted_stock', 'director_fees']
+my_dataset = data_dict
 
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.feature_selection import SelectKBest
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+f
+rom sklearn.pipeline import Pipeline
 
-#use enron dataset and previously prepared feature list
-data = featureFormat(data_dict, features_list)
-#split the data into labels and features
-labels, features = targetFeatureSplit(data)
-#split data into training and testing datasets
-from sklearn import cross_validation
-features_train, features_test, labels_train, labels_test = cross_validation.train_test_split(features, labels, test_size=0.1, random_state=42)
+# Potential pipeline steps
+scaler = MinMaxScaler()
+select = SelectKBest()
+dtc = DecisionTreeClassifier()
+svc = SVC()
+knc = KNeighborsClassifier()
 
+# Load pipeline steps into list
+steps = [
+    # Preprocessing
+    # ('min_max_scaler', scaler),
 
-### try Naive Bayes for prediction
-#t0 = time()
-#clf = GaussianNB()
-#clf.fit(features_train, labels_train)
-#pred = clf.predict(features_test)
-#accuracy = accuracy_score(pred,labels_test)
-#print 'Naive Bayes', accuracy
-#print "NB algorithm time:", round(time()-t0, 3), "s"
+    # Feature selection
+    ('feature_selection', select),
 
-#Try decision tree algorithm
-t0 = time()
-clf = DecisionTreeClassifier(min_samples_split=5)
-clf = clf.fit(features_train,labels_train)
-pred= clf.predict(features_test)
-print("done in %0.3fs" % (time() - t0))
+    # Classifier
+    ('dtc', dtc)
+    # ('svc', svc)
+    # ('knc', knc)
+]
 
+# Create pipeline
+pipeline = Pipeline(steps)
 
+# Parameters to try in grid search
+parameters = dict(
+    feature_selection__k=[2, 3, 5, 6],
+    dtc__criterion=['gini', 'entropy'],
+    # dtc__splitter=['best', 'random'],
+    dtc__max_depth=[None, 1, 2, 3, 4],
+    dtc__min_samples_split=[1, 2, 3, 4, 25],
+    # dtc__min_samples_leaf=[1, 2, 3, 4],
+    # dtc__min_weight_fraction_leaf=[0, 0.25, 0.5],
+    dtc__class_weight=[None, 'balanced'],
+    dtc__random_state=[42]
+    # svc__C=[0.1, 1, 10, 100, 1000],
+    # svc__kernel=['rbf'],
+    # svc__gamma=[0.001, 0.0001]
+    # knc__n_neighbors=[1, 2, 3, 4, 5],
+    # knc__leaf_size=[1, 10, 30, 60],
+    # knc__algorithm=['auto', 'ball_tree', 'kd_tree', 'brute']
+)
 
-############################################################################################
-### Task 5: Tune your classifier
+### Task 5: Tune your classifier to achieve better than .3 precision and recall
+### using our testing script. Check the tester.py script in the final project
+### folder for details on the evaluation method, especially the test_classifier
+### function. Because of the small size of the dataset, the script uses
+### stratified shuffle split cross validation. For more info:
+### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
 
+from sklearn.cross_validation import train_test_split, StratifiedShuffleSplit
+from sklearn.grid_search import GridSearchCV
+from sklearn.metrics import classification_report
 
-# Example starting point. Try investigating other evaluation techniques!
-from sklearn.cross_validation import train_test_split
+# Create training sets and test sets
 features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.3, random_state=42)
+
+# Cross-validation for parameter tuning in grid search
+sss = StratifiedShuffleSplit(
+    labels_train,
+    n_iter=20,
+    test_size=0.5,
+    random_state=0
+)
+
+# Create, fit, and make predictions with grid search
+gs = GridSearchCV(pipeline,
+                  param_grid=parameters,
+                  scoring="f1",
+                  cv=sss,
+                  error_score=0)
+gs.fit(features_train, labels_train)
+labels_predictions = gs.predict(features_test)
+
+# Pick the classifier with the best tuned parameters
+clf = gs.best_estimator_
+print "\n", "Best parameters are: ", gs.best_params_, "\n"
+
+# Print features selected and their importances
+features_selected = [features_list[i + 1] for i in clf.named_steps['feature_selection'].get_support(indices=True)]
+scores = clf.named_steps['feature_selection'].scores_
+importances = clf.named_steps['dtc'].feature_importances_
+import numpy as np
+
+indices = np.argsort(importances)[::-1]
+print 'The ', len(features_selected), " features selected and their importances:"
+for i in range(len(features_selected)):
+    print "feature no. {}: {} ({}) ({})".format(i + 1, features_selected[indices[i]], importances[indices[i]],
+                                                scores[indices[i]])
+
+# Print classification report (focus on precision and recall)
+report = classification_report(labels_test, labels_predictions)
+print(report)
 
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
 ### that the version of poi_id.py that you submit can be run on its own and
 ### generates the necessary .pkl files for validating your results.
 
-dump_classifier_and_data(clf, data_dict, features_list)
-pickle.dump(clf, open("my_classifier.pkl", "w") )
-pickle.dump(data_dict, open("my_dataset.pkl", "w") )
-pickle.dump(features_list, open("my_feature_list.pkl", "w") )
+dump_classifier_and_data(clf, my_dataset, features_list)
