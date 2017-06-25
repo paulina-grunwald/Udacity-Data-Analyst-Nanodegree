@@ -25,8 +25,8 @@
       <file leaf-file-name="poi_id.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="297" column="0" lean-forward="true" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
+            <state relative-caret-position="265">
+              <caret line="272" column="21" lean-forward="true" selection-start-line="272" selection-start-column="21" selection-end-line="272" selection-end-column="21" />
               <folding>
                 <element signature="e#45#55#0" expanded="true" />
               </folding>
@@ -983,7 +983,7 @@
         <state relative-caret-position="185">
           <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
-            <element signature="e#86#99#0" expanded="true" />
+            <element signature="e#86#99#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1066,8 +1066,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="297" column="0" lean-forward="true" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
+        <state relative-caret-position="265">
+          <caret line="272" column="21" lean-forward="true" selection-start-line="272" selection-start-column="21" selection-end-line="272" selection-end-column="21" />
           <folding>
             <element signature="e#45#55#0" expanded="true" />
           </folding>
