@@ -291,8 +291,6 @@ print "Decision tree algorithm time:", round(time()-t0, 3), "s"
 
 t0 = time()
 clf_f = DecisionTreeClassifier(class_weight='balanced', criterion='gini',
-            max_depth=None, max_features=None, max_leaf_nodes=None,
-            min_impurity_split=1e-07, min_samples_leaf=2,
             min_samples_split=6, min_weight_fraction_leaf=0.0,
             presort=False, random_state=None, splitter='best')
 
