@@ -22,25 +22,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="poi_id.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="poi_id.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3002">
-              <caret line="243" column="0" lean-forward="false" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
+            <state relative-caret-position="436">
+              <caret line="297" column="0" lean-forward="true" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
               <folding>
                 <element signature="e#45#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="validate_poi.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ud120-projects-master/validation/validate_poi.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="549">
-              <caret line="49" column="20" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="46" />
-              <folding>
-                <element signature="e#233#246#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,14 +69,14 @@
       <file leaf-file-name="tester.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2951">
+            <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="evaluate_poi_identifier.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="evaluate_poi_identifier.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ud120-projects-master/evaluation/evaluate_poi_identifier.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="552">
@@ -141,7 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>lay</find>
       <find>fast</find>
       <find>import</find>
       <find>salary</find>
@@ -171,6 +158,7 @@
       <find>n_sa</find>
       <find>enron_da</find>
       <find>rom</find>
+      <find>clf</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -201,9 +189,9 @@
         <option value="$PROJECT_DIR$/ud120-projects-master/datasets_questions/explore_enron_data.py" />
         <option value="$PROJECT_DIR$/ud120-projects-master/k_means/k_means_cluster.py" />
         <option value="$PROJECT_DIR$/ud120-projects-master/pca/eigenfaces.py" />
-        <option value="$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py" />
         <option value="$PROJECT_DIR$/ud120-projects-master/validation/validate_poi.py" />
         <option value="$PROJECT_DIR$/ud120-projects-master/evaluation/evaluate_poi_identifier.py" />
+        <option value="$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py" />
       </list>
     </option>
   </component>
@@ -302,6 +290,24 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="final_project">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Exercises">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="ud120-projects-master">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="evaluation">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -374,7 +380,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.evaluate_poi_identifier">
+  <component name="RunManager" selected="Python.tester">
     <configuration default="false" name="poi_id" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -653,11 +659,11 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.evaluate_poi_identifier" />
-        <item index="1" class="java.lang.String" itemvalue="Python.validate_poi" />
-        <item index="2" class="java.lang.String" itemvalue="Python.poi_id" />
-        <item index="3" class="java.lang.String" itemvalue="Python.eigenfaces" />
-        <item index="4" class="java.lang.String" itemvalue="Python.tester" />
+        <item index="0" class="java.lang.String" itemvalue="Python.tester" />
+        <item index="1" class="java.lang.String" itemvalue="Python.poi_id" />
+        <item index="2" class="java.lang.String" itemvalue="Python.evaluate_poi_identifier" />
+        <item index="3" class="java.lang.String" itemvalue="Python.validate_poi" />
+        <item index="4" class="java.lang.String" itemvalue="Python.eigenfaces" />
       </list>
     </recent_temporary>
   </component>
@@ -1014,11 +1020,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/tester.py">
+    <entry file="file://$PROJECT_DIR$/ud120-projects-master/pca/eigenfaces.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2951">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="580">
+          <caret line="181" column="120" lean-forward="false" selection-start-line="181" selection-start-column="120" selection-end-line="181" selection-end-column="120" />
+          <folding>
+            <element signature="e#492#513#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ud120-projects-master/evaluation/evaluate_poi_identifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ud120-projects-master/validation/validate_poi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="49" column="20" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="46" />
+          <folding>
+            <element signature="e#233#246#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1030,41 +1056,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ud120-projects-master/pca/eigenfaces.py">
+    <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="181" column="120" lean-forward="false" selection-start-line="181" selection-start-column="120" selection-end-line="181" selection-end-column="120" />
-          <folding>
-            <element signature="e#492#513#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3002">
-          <caret line="243" column="0" lean-forward="false" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
+        <state relative-caret-position="436">
+          <caret line="297" column="0" lean-forward="true" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
           <folding>
             <element signature="e#45#55#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ud120-projects-master/validation/validate_poi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="49" column="20" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="46" />
-          <folding>
-            <element signature="e#233#246#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ud120-projects-master/evaluation/evaluate_poi_identifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
