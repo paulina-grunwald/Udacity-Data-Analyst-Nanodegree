@@ -116,6 +116,13 @@ enron = (sorted(enron,key=lambda x:x[1],reverse=True)[:5])
 #Print top 4 salaries
 print 'First 5 top salaries', enron
 
+
+
+
+
+
+
+
 ###Plot with removed outliers
 features = ["salary", "bonus"]
 data = featureFormat(data_dict, features)
