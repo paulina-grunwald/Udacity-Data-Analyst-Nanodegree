@@ -100,7 +100,7 @@ plt.ylabel("Bonus")
 plt.show()
 
 ###Remove any outliers before proceeding further
-outliers = ['TOTAL', 'THE TRAVEL AGENCY IN THE PARK']
+outliers = ['TOTAL', 'THE TRAVEL AGENCY IN THE PARK', 'LOCKHART EUGENE E']
 for outlier in outliers:
     data_dict.pop(outlier, 0)
 
@@ -118,11 +118,6 @@ print 'First 5 top salaries', enron
 
 
 
-
-
-
-
-
 ###Plot with removed outliers
 features = ["salary", "bonus"]
 data = featureFormat(data_dict, features)
@@ -136,35 +131,7 @@ plt.ylabel("bonus")
 plt.show()
 
 
-
 #########################Feature processing##################################
-
-features_list = [
-                 'poi',
-                 'salary',
-                 # 'deferral_payments',
-                 # 'total_payments',
-                 # 'loan_advances',
-                 'bonus',
-                 'bonus_salary_ratio',
-                 # 'restricted_stock_deferred',
-                 # 'deferred_income',
-                 'total_stock_value',
-                 # 'expenses',
-                 'exercised_stock_options',
-                 # 'other',
-                 # 'long_term_incentive',
-                 # 'restricted_stock',
-                 # 'director_fees',
-                 # 'to_messages',
-                 # 'from_poi_to_this_person',
-                 # 'from_poi_to_this_person_percentage',
-                 # 'from_messages',
-                 # 'from_this_person_to_poi',
-                 'from_this_person_to_poi_percentage',
-                 'shared_receipt_with_poi'
-                 ]
-
 
 
 ###Print scatterplot from_poi_to_person vs. "from_this_person_to_poi", marking POIs on red
@@ -298,9 +265,8 @@ print "Decision tree algorithm time:", round(time()-t0, 3), "s"
 
 t0 = time()
 clf_f = DecisionTreeClassifier(class_weight='balanced', criterion='gini',
-            min_samples_split=6, min_weight_fraction_leaf=0.0,
+            min_samples_split=5, min_weight_fraction_leaf=0.0,
             presort=False, random_state=None, splitter='best')
-
 clf_f = clf_f.fit(features_train,labels_train)
 pred = clf_f.predict(features_test)
 print("done in %0.3fs" % (time() - t0))
@@ -308,8 +274,6 @@ acccuracy=accuracy_score(labels_test, pred)
 print "accuracy after tuning = ", acccuracy
 print 'Precision is equal to', precision_score(labels_test,pred)
 print 'Recall is equal to', recall_score(labels_test,pred)
-
-
 
 
 

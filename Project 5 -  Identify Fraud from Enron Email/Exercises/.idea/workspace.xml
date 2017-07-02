@@ -25,8 +25,8 @@
       <file leaf-file-name="poi_id.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="120" column="0" lean-forward="true" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+            <state relative-caret-position="582">
+              <caret line="288" column="61" lean-forward="true" selection-start-line="288" selection-start-column="61" selection-end-line="288" selection-end-column="61" />
               <folding>
                 <element signature="e#45#55#0" expanded="true" />
               </folding>
@@ -59,18 +59,8 @@
       <file leaf-file-name="find_signature.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ud120-projects-master/feature_selection/find_signature.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1056">
+            <state relative-caret-position="582">
               <caret line="33" column="60" lean-forward="false" selection-start-line="33" selection-start-column="60" selection-end-line="33" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tester.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/tester.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -690,7 +680,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="-13" width="2586" height="1386" extended-state="7" />
+    <frame x="-13" y="-13" width="2586" height="1386" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2182035" sideWeight="0.48920864" order="0" side_tool="false" content_ui="combo" />
@@ -1001,14 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ud120-projects-master/feature_selection/find_signature.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1056">
-          <caret line="33" column="60" lean-forward="false" selection-start-line="33" selection-start-column="60" selection-end-line="33" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ud120-projects-master/pca/eigenfaces.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5610">
@@ -1042,19 +1024,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/Final_Project_Report_PG.ipynb" />
     <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="-260">
+          <caret line="2" column="58" lean-forward="true" selection-start-line="2" selection-start-column="58" selection-end-line="2" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/Final_Project_Report_PG.ipynb" />
+    <entry file="file://$PROJECT_DIR$/ud120-projects-master/feature_selection/find_signature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="33" column="60" lean-forward="false" selection-start-line="33" selection-start-column="60" selection-end-line="33" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ud120-projects-master/final_project/poi_id.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="120" column="0" lean-forward="true" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+        <state relative-caret-position="582">
+          <caret line="288" column="61" lean-forward="true" selection-start-line="288" selection-start-column="61" selection-end-line="288" selection-end-column="61" />
           <folding>
             <element signature="e#45#55#0" expanded="true" />
           </folding>
