@@ -1,6 +1,9 @@
-# Udacity-Data-Analyst-Nanodegree
-__About__
+# Udacity Data Analyst Nanodegree
+
 ![alt](https://github.com/paulina-grunwald/Udacity-Data-Analyst-Nanodegree/blob/master/diploma.png)
+
+
+__About__
 
 This repository contains project work for <em>[Udacity's Data Analyst Nanodegree Nanodegree](https://eu.udacity.com/course/data-analyst-nanodegree--nd002)</em>.
 
